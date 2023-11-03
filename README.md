@@ -1,7 +1,7 @@
 
 # HỆ THỐNG QUẢN LÝ SINH VIÊN THỰC TẬP CỦA BỘ MÔN CÔNG NGHỆ THÔNG TIN <br>
   <pre>
-    FONT END <br>
+    FONT-END <br>
     ## MÔ TẢ: sửa dụng React.js để thiết kế giáo diện, axios để lấy dữ liệu từ monggoDB bằng Node.js và Express
     -ĐĂNG NHẬP/ ĐĂNG KÝ <br>
     - QUYỀN SINH VIÊN <br>
@@ -19,5 +19,5 @@
         + ĐĂNG KÝ THỰC TẬP: thông tin công ty, thông tin đăng ký, thông tin cán bộ <br>
         + DANH SÁCH ĐĂNG KÝ: danh sách đơn ký <br>
         + CÁN BỘ HƯỚNG DẪN: danh sách cán bộ hướng dẫn <br>
-    BACK END <br>
+    BACK-END <br>
     ## MÔ TẢ: sử dụng Node.js và Express để lấy dữ liệu từ monggoDB theo mô hình MVC
