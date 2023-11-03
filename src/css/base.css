@@ -1,0 +1,135 @@
+.container {
+    position: relative;
+    /* background: rgba(255, 255, 255, 0.667); */
+    width: 100%;
+    height: 760px;
+}
+.ngancach {
+    border-bottom: 1px solid #6060602b;
+
+}
+.Navbar {
+    position: absolute;
+    width: 7%;
+    background: rgba(255, 255, 255, 0.892);
+    height: 100%;
+}
+.Navbar ul {
+    list-style: none;
+    padding: 0;
+}
+.icon {
+    display: block;
+    font-size: 30px;
+    margin: 10px;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.Navbar ul li {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+.Navbar ul li:hover {
+    background: rgba(80, 166, 237, 0.503);
+
+}
+.click {
+    background: rgba(80, 166, 237, 0.503);
+    border-right: 5px solid rgb(5 83 164);
+}
+.thongbao {
+    border-bottom: 1px solid #6060602b;
+}
+.dangxuat {
+    color: black;
+    text-decoration: none;
+    margin-top: 325px;
+    border-top: 1px solid #6060602b;
+
+}
+.data {
+    margin-left: 7%;
+    width: 90%;
+    height: 760px;
+    position: relative;
+
+}
+.header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    margin-bottom: 9px;
+}
+.header span {
+    font-size: 20px;
+    margin-top: 25px;
+}
+.content {
+    position: absolute;
+    width: 103%;
+    height: 700px;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.849);
+}
+.content h1 {
+    float: left;
+    display: block;
+    margin-left: 40px;
+    color: #0f0494;
+}
+.items {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 60px;
+    list-style: none;
+    height: 650px;
+}
+.items li {
+    border: 1px solid #1408af;
+    width: 95%;
+    margin-left: 40px;
+    text-align: center;
+    border-radius: 10px;
+    background: #cbe1ff85;
+    height: 80px;
+    display: list-item;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.items li h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0d0d84;
+    margin-top: 15px;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    margin-left: 20px;
+}
+.items li span {
+    display: block;
+    text-align: left;
+    margin-left: 20px;
+    font-style: italic;
+    color: #07108c;
+}
+a {
+    text-decoration: none;
+}
+table {
+    border: 2px solid #333333 !important;
+
+}
+.tieude_table {
+    height: 40px;
+    border: 2px solid #333333 !important;
+    width: 100%;
+    display: block;
+}
+.tieude_table th {
+    border-right: 2px solid #333333 !important;
+}

@@ -1,0 +1,114 @@
+.home {
+    
+    display: flex;
+    margin: auto;
+    margin-top: 10%;
+    z-index: 1000;
+}
+.error {
+    border: 1px solid #b30505;
+}
+.close {
+    display: none !important;
+}
+
+.message
+{
+    margin-bottom: 5px;
+    float: left;
+    width: 250px;
+    color: #b30505;
+    display: block;
+}
+.signUp, .signUpCompany {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.732);
+    width: 400px;
+    height: 510px;
+}
+.signUpCompany {
+    height: 565px !important;
+}
+.login {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.732);
+    width: 400px;
+    height: 300px;
+}
+
+.login h2, .signUp h2 {
+    color: rgb(8, 8, 110);
+}
+  
+input {
+    width:350px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 20px;
+    /* margin-right: 15px; */
+}
+a {
+    display: block;
+    color: rgb(8, 8, 110);
+    size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+a:hover {
+    color: rgba(8, 8, 110, 0.689);
+}
+button {
+    background-color: rgb(8, 8, 110);
+    padding: 10px;
+    width: 150px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgba(8, 8, 110, 0.689);
+
+}
+/* Hom index */
+.home_index {
+    display: block;
+    margin: auto;
+    margin-top: 10%;
+    z-index: 1000;
+}
+.loaitaikhoan {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    margin-top: 20px;
+}
+.chonloaitaikhoan {
+    display: block;
+    color: rgb(8, 8, 110);
+    size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-top: 5%;
+    font-size: 70px;
+    color: rgb(8, 8, 110);
+}
+.loaitaikhoan button {
+    width: 230px;
+    margin-bottom: 10px;
+}

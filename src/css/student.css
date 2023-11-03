@@ -1,0 +1,292 @@
+.dangxuatsinhvien {
+    margin-top: 270px;
+    color: black;
+    text-decoration: none;
+    border-top: 1px solid #6060602b;
+}
+.navbarSinhVien ul li {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 85px !important;
+}
+.thongtintaikhoan, .thongtinsinhvien, .doimatkhau {
+    list-style: none;
+    width: 95%;
+    height: 50px;
+    display: inline-flex;
+    justify-content: space-around;
+}
+.thongtintaikhoan li, .thongtinsinhvien li {
+    display: block;
+    height: 50px;
+}
+.thongtintaikhoan li .lable, .thongtinsinhvien li .lable {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #0a2689;
+    font-size: 16px;
+}
+.thongtintaikhoan li .info, .thongtinsinhvien li .info {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #0b2eac;
+    font-size: 18px;
+    font-style: italic;
+}
+.button_chinhsua {
+    float: right;
+    margin-right: 50px;
+    background: #ffffff8c;
+    border: 1px solid #0c20b8ba;
+    color: #0a09c6;
+}
+.button_chinhsua:hover {
+    background-color: rgb(252, 252, 254);
+}
+.icon_button {
+    font-size: 15px;
+    margin-right: 5px;
+}
+.lable_chitiet {
+    font-size: 25px;
+}
+.doimatkhau input {
+    height: 30px;
+    border: 1px solid #33333370;
+    border-radius: 5px;
+}
+.button_luu {
+    margin-right: 10px;
+    width: 80px;
+    background: rgb(12 12 166 / 85%);
+    color: white;
+    float: right;
+}
+.button_luu:hover {
+    background: rgba(12, 12, 166, 0.614);
+}
+.button_huy {
+    margin-right: 10px;
+    width: 80px;
+    background: rgba(251, 251, 251, 0.85);
+    color: rgb(0, 0, 0);
+    float: right;
+}
+.button_huy:hover {
+    background: rgba(242, 2, 2, 0.793);
+}
+
+/* Trang sinh viên: thực tập */
+.thongtincanhan, .luachoncongty, .thongtincongty, .dinhkem {
+    margin: 15px;
+    border: 1px solid #00000069;
+    border-radius: 30px;
+    background: #fff;
+}
+.luachoncongty {
+    height: 55%;
+}
+.thongtincongty {
+    height: 80%;
+}
+.luachoncongty ul, .thongtincongty ul, .dinhkem ul {
+    justify-content: space-between;
+}
+.luachoncongty li input, .thongtincongty li input, .dinhkem li input {
+    height: 30px;
+    border: 1px solid #33333370;
+    border-radius: 5px;
+    width: 100%;
+    width: 350px;
+}
+.thongtincongty li select {
+    height: 40px;
+    font-size: 20px;
+    color: #333333b5;
+    border: 1px solid #33333370;
+    border-radius: 5px;
+    width: 100%;
+    width: 350px;
+}
+.fullsize_input {
+    width: 94% !important;
+    float: left;
+    margin-left: 15px;
+}
+.fullsize {
+    display: block;
+    width: 100%;
+}
+.nguoiphutrach {
+    justify-content: flex-start !important;
+}
+.nguoiphutrach input {
+    margin-right: 15px;
+}
+.luachoncongty button, .thongtincongty button {
+    width: 20%;
+    float: left;
+    margin-left: 50px;
+}
+.luachoncongty button:hover, .thongtincongty button:hover{
+    background-color: #07108c;
+    color: #ffff;
+}
+.description {
+    width: 100%;
+    height: 200px !important;
+    text-decoration: auto;
+    text-align: start;
+    margin-bottom: 25px;
+}
+.dinhkem ul li {
+    display: flex;
+    width: 100%;
+}
+.dinhkem ul li input {
+    margin-right: 15px;
+    color: #0000008a;
+}
+.nutbam {
+    width: 97%;
+    height: 60px;
+}
+.tuanthuctap {
+    float: left;
+    margin-top: 55px;
+    display: block;
+    width: 75%;
+    height: 45px;
+    font-size: 18px;
+    color: #070189;
+    border-radius: 5px;
+}
+.nopbai {
+    margin-top: 0;
+}
+.nopbai button {
+    height: 35px;
+}
+.nopbai button:hover {
+    background: #7878786b;
+}
+.thongtinthuctap {
+    justify-content: start;
+}
+
+.thongtinthuctap li {
+    margin-right: 300px;
+    margin-left: 140px;
+    display: flex;
+}
+.thongtinthuctap .lable {
+    margin-right: 6px;
+}
+/* Danh sách đăng ký công ty */
+.danhsachcongty, .danhsachcanbo {
+    background: rgb(247, 250, 253);
+    width: 91%;
+    height: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    position: absolute;
+    border: 1px solid #72707033;
+    z-index: 10000;
+    
+}
+.danhsachcongty input, .danhsachcanbo input {
+    margin: 15px;
+    float: left;
+    height: 20px;
+}
+
+.danhsachcongty .button_search, .danhsachcanbo .button_search {
+    float: left;
+    margin-top: 15px;
+    height: 35px;
+    width: 120px;
+    text-align: center;
+    padding: 0;
+    background: #3d95e3;
+    margin-bottom: 15px;
+}
+.danhsachcongty .button_search:hover, .danhsachcanbo .button_search:hover {
+    background: #3177b5;
+}
+.danhsachcongty table, .danhsachcanbo table {
+    width: 96%;
+    height: 450px;
+    margin: 0 2% 20px;
+    overflow: auto;
+    border: 1px solid #3333;
+    background: white;
+    display: block;
+}
+.danhsachcongty table tr, .danhsachcanbo table tr {
+    height: 40px;
+    border: 1px solid #3333;
+    width: 100%;
+    display: block;
+}
+.danhsachcongty table .info, .danhsachcanbo table .info {
+    color: #333333d5;
+    font-size: 15px;
+    font-weight: 100;
+}
+.danhsachcongty table th, .danhsachcanbo table th {
+    border-right: 1px solid #3333;
+}
+#stt {
+    padding: 10px;
+    width: 50px;
+}
+#checked {
+    width: 50px;
+}
+#checked input {
+    width: 30px;
+    margin: auto;
+    margin-left: 10px;
+}
+#tencongty {
+    width: 300px;
+}
+#diachi {
+    width: 320px;
+}
+#sdt {
+    width: 170px;
+}
+.danhsachcanbo #vitri {
+    width: 260px;
+    height: 38px;
+}
+.danhsachcanbo .info #vitri {
+    width: 275px;
+}
+#chucvu {
+    width: 250px;
+}
+.danhsachcanbo .info #email {
+    width: 260px;
+}
+.danhsachcanbo #email {
+    width: 270px;
+}
+.danhsachcongty #email {
+    width: 278px;
+    border: 0;
+}
+.danhsachcongty .nutbam button, .danhsachcanbo .nutbam button {
+    float: right;
+}
+.danhsachcongty .nutbam .button_luu, .danhsachcanbo .nutbam .button_luu {
+    width: 150px;
+}
+.close {
+    display: none;
+}
+

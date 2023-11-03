@@ -1,0 +1,105 @@
+.dangxuat {
+    margin-top: 175px !important;
+}
+/* Quản lý thực tập */
+.nutbam button {
+    width: 150px;
+}
+.danhsachdondangky {
+    width: 91%;
+    height: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    position: absolute;
+}
+.danhsachdondangky input {
+    margin: 15px;
+    float: left;
+    height: 20px;
+}
+
+.danhsachdondangky .button_search {
+    float: left;
+    margin-top: 15px;
+    height: 35px;
+    width: 120px;
+    text-align: center;
+    padding: 0;
+    background: #3d95e3;
+    margin-bottom: 15px;
+}
+.danhsachdondangky .button_search:hover {
+    background: #3177b5;
+}
+.danhsachdondangky table {
+    width: 96%;
+    height: 555px;
+    margin: 0 2% 20px;
+    overflow: auto;
+    border: 1px solid #3333;
+    background: white;
+    display: block;
+}
+.danhsachdondangky table tr {
+    height: 40px;
+    border: 1px solid #3333;
+    width: 100%;
+    display: block;
+}
+.danhsachdondangky table .info {
+    color: #333333d5;
+    font-size: 15px;
+    font-weight: 100;
+}
+.danhsachdondangky table th {
+    border-right: 1px solid #3333;
+}
+#stt {
+    padding: 10px;
+    width: 50px;
+}
+#masinhvien {
+    width: 125px;
+}
+#checked input {
+    width: 30px;
+    margin: auto;
+    margin-left: 10px;
+}
+#tensinhvien {
+    width: 300px;
+}
+#tencongty {
+    width: 320px;
+}
+#ngaytaodon {
+    width: 170px;
+}
+.danhsachdondangky #trangthai {
+    width: 278px;
+    border: 0;
+}
+.danhsachdondangky .nutbam button {
+    float: right;
+}
+.danhsachdondangky .nutbam .button_luu {
+    width: 150px;
+}
+/* Sinh viên */
+#emailsinhvien {
+    width: 320px;
+}
+.info #emailsinhvien {
+    width: 300px;
+}
+/* Công ty */
+#diachicongty {
+    width: 500px;
+
+}
+#vitri {
+    width: 400px;
+}
+#soluong {
+    width: 100px;
+}
