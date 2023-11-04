@@ -10,16 +10,25 @@
     align-items: center;
     height: 85px !important;
 }
+.thongtindondangky{
+    list-style: none;
+    width: 95%;
+    height: 50px;
+    display: inline-flex;
+    justify-content: space-between;
+}
 .thongtintaikhoan, .thongtinsinhvien, .doimatkhau {
     list-style: none;
     width: 95%;
     height: 50px;
     display: inline-flex;
-    justify-content: space-around;
+    justify-content: center;
+    margin-left: 140px;
 }
 .thongtintaikhoan li, .thongtinsinhvien li {
     display: block;
     height: 50px;
+    width: 400px;
 }
 .thongtintaikhoan li .lable, .thongtinsinhvien li .lable {
     display: block;

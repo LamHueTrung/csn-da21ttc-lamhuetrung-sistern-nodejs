@@ -54,7 +54,7 @@ function XuLyLogin() {
                     {
                         src = "company";
                     }
-                    navigate(`/${src}/tintuc`);
+                    navigate(`/${src}/thuctap/taikhoan?taikhoan=${taiKhoan}`);
                     alert("Đăng nhập thành công");
                 } else {
                     if(loaitaikhoanDN == 'sinhvien')

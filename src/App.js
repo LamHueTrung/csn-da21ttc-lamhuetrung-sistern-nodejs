@@ -69,11 +69,11 @@ const router = createBrowserRouter([
     element: <Tintuc />,
   },
   {
-    path: "/student/dondangky",
+    path: "/student/dondangky/:slug",
     element: <DonThuctap />,
   },
   {
-    path: "/student/thuctap",
+    path: "/student/thuctap/:slug",
     element: <Thuctap />,
   },
   {
@@ -81,7 +81,7 @@ const router = createBrowserRouter([
     element: <Quanlythuctap />,
   },
   {
-    path: "/teacher/tintuc",
+    path: "/teacher/tintuc/:slug",
     element: <TintucGV />,
   },
   {
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
     element: <Dangkythuctap />,
   },
   {
-    path: "/company/tintuc",
+    path: "/company/tintuc/:slug",
     element: <TintucCT />,
   },
   {
