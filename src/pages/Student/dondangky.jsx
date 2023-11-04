@@ -91,31 +91,31 @@ function Thuctap() {
           };
         }
     });
-    function dang_ky_thuc_tap() {
-      const dataToAdd = {
-        trangthaidon: "Chưa duyệt",
-        mathuctap: ThongTinSinhVien.masinhvien,
-        masinhvien: ThongTinSinhVien.masinhvien,
-        loai: document.getElementById("hocphanthuctap").value,
-        magiaovien: ThongTinGiaoVien.magiaovien,
-        macongty: ThongTinCongTy.macongty,
-        macanbohuongdan: ThongTinCanBoHD.macanbo,
-        ngaybatdau: document.getElementById("ngaybatdau").value,
-        ngayketthuc: document.getElementById("ngayketthuc").value,
-        sobuoi: document.getElementById("sobuoi").value,
-        sotuan: document.getElementById("sotuan").value, 
-        noidungthuctap: document.getElementById("noidungthuctap").value
-      }
-        axios.post('http://localhost:3001/student/dangkythuctap', dataToAdd)
-        .then(response => {
-          alert('Đăng ký thực tập thành công, chờ xét duyệt');
-          console.log(dataToAdd)
-        })
-        .catch(error => {
-          alert("Đăng ký thất bại !");
-          console.error('Lỗi khi thêm dữ liệu:', error);
-        });
+  function dang_ky_thuc_tap() {
+    const dataToAdd = {
+      trangthaidon: "Chưa duyệt",
+      mathuctap: ThongTinSinhVien.masinhvien,
+      masinhvien: ThongTinSinhVien.masinhvien,
+      loai: document.getElementById("hocphanthuctap").value,
+      magiaovien: ThongTinGiaoVien.magiaovien,
+      macongty: ThongTinCongTy.macongty,
+      macanbohuongdan: ThongTinCanBoHD.macanbo,
+      ngaybatdau: document.getElementById("ngaybatdau").value,
+      ngayketthuc: document.getElementById("ngayketthuc").value,
+      sobuoi: document.getElementById("sobuoi").value,
+      sotuan: document.getElementById("sotuan").value, 
+      noidungthuctap: document.getElementById("noidungthuctap").value
     }
+      axios.post('http://localhost:3001/student/dangkythuctap', dataToAdd)
+      .then(response => {
+        alert('Đăng ký thực tập thành công, chờ xét duyệt');
+        console.log(dataToAdd)
+      })
+      .catch(error => {
+        alert("Đăng ký thất bại !");
+        console.error('Lỗi khi thêm dữ liệu:', error);
+      });
+  }
   function open() {
     const danhsachdangky = document.querySelector('.danhsachcongty');
     danhsachdangky.classList.remove('close');
@@ -180,8 +180,8 @@ function Thuctap() {
           <div className='Navbar navbarSinhVien'>
             <ul id='navbar'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/student/tintuc"><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/student/dondangky"><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/student/tintuc/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/student/dondangky/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
               <Link to={`/student/thuctap/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
               {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}
             </ul>

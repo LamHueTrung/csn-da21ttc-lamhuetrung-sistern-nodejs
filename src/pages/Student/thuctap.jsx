@@ -40,7 +40,7 @@ function Thuctap() {
       };
       };
     });
-    
+
     //lấy thông tin đơn thực tập từ masinhvien trong taikhoan
     var ThongTinThucTap = {};
     var tblThucTap = {};
@@ -140,7 +140,7 @@ function Thuctap() {
           <div className='Navbar navbarSinhVien'>
             <ul id='navbar'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/student/tintuc"><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/student/tintuc/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
               <Link to={`/student/dondangky/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href="" ><li id='thuctap'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
               <Link to={`/student/thuctap/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
               {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}

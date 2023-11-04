@@ -11,7 +11,9 @@ import '../../css/base.css';
 
 function Tintuc() {
   const [TinTucs, setTinTucs] = useState([]);
-
+  const url = window.location.search;
+  const urlParams = new URLSearchParams(url);
+  const taikhoan = urlParams.get("taikhoan");
   useEffect(() => {
     axios.get('http://localhost:3001/student/tintuc') // Điều chỉnh URL tương ứng với tuyến đường API
       .then((response) => setTinTucs(response.data))
@@ -25,9 +27,9 @@ function Tintuc() {
           <div className='Navbar navbarSinhVien'>
             <ul id='navbar'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/student/tintuc"><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/student/dondangky"><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to="/student/thuctap/:slug"><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/student/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/student/dondangky/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/student/thuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
               {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatsinhvien'><FiLogOut className='icon'/>Đăng xuất</a></Link>

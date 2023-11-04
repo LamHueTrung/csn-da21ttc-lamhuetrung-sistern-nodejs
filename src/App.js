@@ -65,7 +65,7 @@ const router = createBrowserRouter([
     element: <Thongtin />,
   },
   {
-    path: "/student/tintuc",
+    path: "/student/tintuc/:slug",
     element: <Tintuc />,
   },
   {
