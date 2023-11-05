@@ -15,28 +15,28 @@ function XuLyLogin() {
             console.error('Lỗi react:', error);
           });
       }, []);
+      var taiKhoan = "";
+      var matKhau = "";
+      var loaitaikhoanDN = "";
+      const tkTrue = TaiKhoans.map(tk => {
+          if (tk.taikhoan == urlParams.get("taikhoan"))
+          {
+              taiKhoan = tk.taikhoan;
+          }
+      });
+      const mkTrue = TaiKhoans.map(mk => {
+          if(mk.taikhoan == taiKhoan){
+              matKhau = mk.matkhau;
+          };
+      });
+      const loaitaikhoan = TaiKhoans.map(ltk => {
+          if(ltk.taikhoan == taiKhoan){
+              loaitaikhoanDN = ltk.loaitaikhoan
+              ;
+          };
+      });
     if (urlParams.get("xuly") == "dangnhap")
         {
-            var taiKhoan = "";
-            var matKhau = "";
-            var loaitaikhoanDN = "";
-            const tkTrue = TaiKhoans.map(tk => {
-                if (tk.taikhoan == urlParams.get("taikhoan"))
-                {
-                    taiKhoan = tk.taikhoan;
-                }
-            });
-            const mkTrue = TaiKhoans.map(mk => {
-                if(mk.taikhoan == taiKhoan){
-                    matKhau = mk.matkhau;
-                };
-            });
-            const loaitaikhoan = TaiKhoans.map(ltk => {
-                if(ltk.taikhoan == taiKhoan){
-                    loaitaikhoanDN = ltk.loaitaikhoan
-                    ;
-                };
-            });
             var kieutaikhoan = "";
             var src = "";
         
@@ -54,7 +54,7 @@ function XuLyLogin() {
                     {
                         src = "company";
                     }
-                    navigate(`/${src}/thuctap/taikhoan?taikhoan=${taiKhoan}`);
+                    navigate(`/${src}/tintuc/taikhoan?taikhoan=${taiKhoan}`);
                     alert("Đăng nhập thành công");
                 } else {
                     if(loaitaikhoanDN == 'sinhvien')
@@ -87,48 +87,43 @@ function XuLyLogin() {
                         alert(`Tài khoản hoặc mật khẩu nhập không chính xác`);
                 }
             };
-    } else {
-            var taiKhoanDaLuu = "";
-            var loaitaikhoanDK = "";
-            const tkTrue = TaiKhoans.map(tk => {
-                if (tk.taikhoan == urlParams.get("email"))
+    } else 
+    {
+        var taiKhoanDaLuu = taiKhoan;
+        var loaitaikhoanDK = urlParams.get("loaitaikhoan");
+            const dataToAdd = {
+                taikhoan: urlParams.get("taikhoan"),
+                matkhau: urlParams.get("matkhau"),
+                loaitaikhoan: urlParams.get("loaitaikhoan")
+            };
+            if(urlParams.get("xuly") == "dangky")
+            {
+                console.log(taiKhoanDaLuu != dataToAdd.taikhoan)
+                if (taiKhoanDaLuu == dataToAdd.taikhoan)
                 {
-                    taiKhoanDaLuu = tk.taikhoan;
+                    axios.post('http://localhost:3001/taikhoan/dangkytaikhoan', dataToAdd)
+                    .then(response => {
+                        console.log('Dữ liệu đã được thêm vào MongoDB:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+                    alert("Đăng ký thành công");
                 }
-            });
-            loaitaikhoanDK = urlParams.get("loaitaikhoan");
-                const dataToAdd = {
-                    taikhoan: urlParams.get("email"),
-                    matkhau: urlParams.get("matkhau"),
-                    loaitaikhoan: urlParams.get("loaitaikhoan")
-                };
-                if(urlParams.get("xuly") == "dangky")
+                if(loaitaikhoanDK == 'sinhvien')
                 {
-                    if (taiKhoanDaLuu != urlParams.get("email"))
-                    {
-                        axios.post('http://localhost:3001/taikhoan/dangkytaikhoan', dataToAdd)
-                        .then(response => {
-                            console.log('Dữ liệu đã được thêm vào MongoDB:', response.data);
-                        })
-                        .catch(error => {
-                            console.error('Lỗi khi thêm dữ liệu:', error);
-                        });
-                        
-                        alert("Đăng ký thành công");
-                    }
-                    if(loaitaikhoanDK == 'sinhvien')
-                        {
-                            src = "student";
-                        } else if(loaitaikhoanDK == 'giaovien')
-                        {
-                            src = "teacher";
-                        } else if(loaitaikhoanDK == 'congty') 
-                        {
-                            src = "company";
-                        }
-                        navigate(`/${src}/?loaitaikhoan=${loaitaikhoanDK}`);
-            }
+                    src = "student";
+                } else if(loaitaikhoanDK == 'giaovien')
+                {
+                    src = "teacher";
+                } else if(loaitaikhoanDK == 'congty') 
+                {
+                    src = "company";
+                }
+                navigate(`/${src}/?loaitaikhoan=${loaitaikhoanDK}`);
+        }       
     }
+            
 }
 
 export default XuLyLogin;

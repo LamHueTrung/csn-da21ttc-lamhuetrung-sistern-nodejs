@@ -12,7 +12,9 @@ import '../../css/base.css';
 
 function Tintuc() {
   const [TinTucs, setTinTucs] = useState([]);
-
+  const url = window.location.search;
+  const urlParams = new URLSearchParams(url);
+  const taikhoan = urlParams.get("taikhoan");
   useEffect(() => {
     axios.get('http://localhost:3001/company/tintuc') // Điều chỉnh URL tương ứng với tuyến đường API
       .then((response) => setTinTucs(response.data))
@@ -25,10 +27,10 @@ function Tintuc() {
           <div className='Navbar'>
             <ul id='navbar' className='company'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/company/tintuc"><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/company/dangkythuctap"><a href=""><li id='thuctap' ><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to="/company/danhsachdangky"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
-              <Link to="/company/canbohuongdan"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
+              <Link to={`/company/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/company/dangkythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/company/danhsachdangky/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
+              <Link to={`/company/canbohuongdan/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatcongty'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>

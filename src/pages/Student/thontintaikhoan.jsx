@@ -9,7 +9,6 @@ import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
 import '../../css/student.css';
 import '../../css/base.css';
 function Thongtin() {

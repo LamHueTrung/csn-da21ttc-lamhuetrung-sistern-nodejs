@@ -17,7 +17,33 @@
     display: inline-flex;
     justify-content: space-between;
 }
-.thongtintaikhoan, .thongtinsinhvien, .doimatkhau {
+.thongtinsinhvien {
+    height: 35% !important;
+}
+.thongtinsinhvien .thongtintaikhoan {
+    list-style: none;
+    width: 95%;
+    height: 50px;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+.thongtinsinhvien .thongtintaikhoan li {
+    width: 350px !important;
+}
+.thongtincanhan .thongtintaikhoan {
+    list-style: none;
+    width: 95%;
+    height: 50px;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+.thongtincanhan .thongtintaikhoan li {
+    width: 350px !important;
+}
+.thongtincanhan .thongtintaikhoan li input {
+    width: 350px !important;
+}
+ .thongtinsinhvien, .doimatkhau {
     list-style: none;
     width: 95%;
     height: 50px;
@@ -87,7 +113,13 @@
 .button_huy:hover {
     background: rgba(242, 2, 2, 0.793);
 }
-
+.thongtincanhan li input {
+    height: 30px;
+    border: 1px solid #33333370;
+    border-radius: 5px;
+    width: 100%;
+    width: 350px;
+}
 /* Trang sinh viên: thực tập */
 .thongtincanhan, .luachoncongty, .thongtincongty, .dinhkem {
     margin: 15px;

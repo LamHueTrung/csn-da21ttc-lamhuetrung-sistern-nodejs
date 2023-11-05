@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
@@ -11,7 +10,6 @@ import '../../css/student.css';
 import '../../css/base.css';
 
 function Thuctap() {
-    const navigate = useNavigate();
     const [thuctaps, setthuctap] = useState([]);
     const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
@@ -132,17 +130,14 @@ function Thuctap() {
       };
       };
     }); 
-
-    
-
     return (
         <div className='container'>
           <div className='Navbar navbarSinhVien'>
             <ul id='navbar'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to={`/student/tintuc/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to={`/student/dondangky/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href="" ><li id='thuctap'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to={`/student/thuctap/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/student/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/student/dondangky/taikhoan?taikhoan=${taikhoan}`}><a href="" ><li id='thuctap'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/student/thuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
               {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatsinhvien'><FiLogOut className='icon'/>Đăng xuất</a></Link>
@@ -150,7 +145,7 @@ function Thuctap() {
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Thực tập</span></div>
               <div id='thongtinthuctap' className="content">
-                    <div className="thongtincanhan">
+                    <div className="thongtincanhan ">
                         <ul className='thongtintaikhoan'>
                             <li>
                                 <span className='lable'>Trạng thái đơn</span>

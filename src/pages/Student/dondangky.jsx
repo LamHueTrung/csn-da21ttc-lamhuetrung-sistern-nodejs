@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
@@ -10,6 +11,7 @@ import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
 import '../../css/student.css';
+import '../../css/company.css';
 import '../../css/base.css';
 
 function Thuctap() {
@@ -20,7 +22,8 @@ function Thuctap() {
   const url = window.location.search;
   const urlParams = new URLSearchParams(url);
   const taikhoan = urlParams.get("taikhoan");
-  
+  const navigate = useNavigate();
+ 
   useEffect(() => {
     axios.get('http://localhost:3001/student/danhsachsinhvien') 
       .then((response) => setSinhViens(response.data))
@@ -29,18 +32,7 @@ function Thuctap() {
       });
   }, []);
   var ThongTinSinhVien = {};
-    sinhViens.map(sv => {
-      if (sv.email == taikhoan){
-        ThongTinSinhVien = {
-          hoten: sv.hoten,
-          email: sv.email,
-          masinhvien: sv.masinhvien,
-          lop: sv.lop,
-          ngaysinh: sv.ngaysinh,
-          sodienthoai: sv.sodienthoai
-      };
-      };
-    });
+    
   useEffect(() => {
     axios.get('http://localhost:3001/company/canbohuongdan') 
       .then((response) => setCanBoHD(response.data))
@@ -57,6 +49,20 @@ function Thuctap() {
           };
         }
     });
+    var TTCBHD = [];
+    canbohds.map(cbhd => {
+      congtys.map(ct => {
+          if(ct.macongty == cbhd.macongty) {
+            TTCBHD.push({
+              tencongty: ct.tencongty,
+              vitri: cbhd.vitri,
+              tencanbo: cbhd.tencanbo,
+              sodienthoai: cbhd.sodienthoai,
+              email: cbhd.email
+            })
+          }
+      })});
+  
   useEffect(() => {
     axios.get('http://localhost:3001/company/danhsachcongty') 
       .then((response) => setCongTy(response.data))
@@ -64,18 +70,18 @@ function Thuctap() {
         console.error('Lỗi react:', error);
       });
   }, []);
-  var ThongTinCongTy = {};
+    var ThongTinCongTy = {};
     congtys.map(ct => {
         if(ct.tencongty == document.querySelector(".info_tencongty").value) {
           ThongTinCongTy = {
             tencongty: ct.tencongty,
-            macongty: ct.macongty
+            macongty: ct.macongty,
+            ngaybatdau: ct.ngaybatdau,
+            ngayketthuc: ct.ngayketthuc
           };
         }
     });
-  
-
-  useEffect(() => {
+    useEffect(() => {
     axios.get('http://localhost:3001/teacher/danhsachgiaovien') 
       .then((response) => setGiaoviens(response.data))
       .catch((error) => {
@@ -92,6 +98,21 @@ function Thuctap() {
         }
     });
   function dang_ky_thuc_tap() {
+    ThongTinSinhVien = {
+      masinhvien: document.getElementById('info_masinhvien').value,
+      email: document.getElementById('info_email').textContent,
+      hoten: document.getElementById('info_hoten').value,
+      lop:document.getElementById('info_lop').value,
+      ngaysinh: document.getElementById('info_ngaysinh').value,
+      sodienthoai: document.getElementById('info_sodienthoai').value
+  };
+  axios.post('http://localhost:3001/student/themthongtin', ThongTinSinhVien)
+      .then(response => {
+        console.log(ThongTinSinhVien)
+      })
+      .catch(error => {
+          console.error('Lỗi khi thêm dữ liệu:', error);
+      });
     const dataToAdd = {
       trangthaidon: "Chưa duyệt",
       mathuctap: ThongTinSinhVien.masinhvien,
@@ -106,13 +127,14 @@ function Thuctap() {
       sotuan: document.getElementById("sotuan").value, 
       noidungthuctap: document.getElementById("noidungthuctap").value
     }
+    console.log(dataToAdd)
       axios.post('http://localhost:3001/student/dangkythuctap', dataToAdd)
       .then(response => {
         alert('Đăng ký thực tập thành công, chờ xét duyệt');
         console.log(dataToAdd)
       })
       .catch(error => {
-        alert("Đăng ký thất bại !");
+        console.log(dataToAdd)
         console.error('Lỗi khi thêm dữ liệu:', error);
       });
   }
@@ -139,7 +161,10 @@ function Thuctap() {
     const diachi = document.querySelector('.info_diachi');
     const vitri = document.querySelector('.info_vitri');
     const email = document.querySelector('.info_email');
+    const ngaybatdau = document.getElementById("ngaybatdau");
+    const ngayketthuc = document.getElementById('ngayketthuc');
     const danhsachdangky = document.querySelector('.danhsachcongty');
+    
 
     if(inputChecked.checked)
     {
@@ -149,10 +174,23 @@ function Thuctap() {
         vitri: TTinput[2],
         email: TTinput[3],
       }
+        var ThoiGianThucTap = {};
+        congtys.map(ct => {
+          if(ct.tencongty ==congTyDuocChon.tencongty) {
+            ThoiGianThucTap = {
+              tencongty: ct.tencongty,
+              macongty: ct.macongty,
+              ngaybatdau: ct.ngaybatdau,
+              ngayketthuc: ct.ngayketthuc
+            };
+          }
+      });
       tencongty.value = congTyDuocChon.tencongty;
       diachi.value = congTyDuocChon.diachi;
       vitri.value = congTyDuocChon.vitri;
       email.value = congTyDuocChon.email;
+      ngaybatdau.value = ThoiGianThucTap.ngaybatdau;
+      ngayketthuc.value = ThoiGianThucTap.ngayketthuc;
       danhsachdangky.classList.add('close');
     }
   }
@@ -180,9 +218,9 @@ function Thuctap() {
           <div className='Navbar navbarSinhVien'>
             <ul id='navbar'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to={`/student/tintuc/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to={`/student/dondangky/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to={`/student/thuctap/taikhoan?taikhoan=${ThongTinSinhVien.email}`}><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/student/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/student/dondangky/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'  className='click'><LiaUserCogSolid className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/student/thuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'  ><LiaUserCogSolid className='icon'/>Thực tập</li></a></Link>
               {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatsinhvien'><FiLogOut className='icon'/>Đăng xuất</a></Link>
@@ -194,7 +232,6 @@ function Thuctap() {
                         <input type="text" placeholder='Công ty' /> 
                         <button className='button_search'> <AiOutlineSearch className='icon_button'/>Tìm kiếm</button>
                         <table>
-                          <thead>
                             <tr className='tieude_table'>
                               <th id='stt'>STT</th>
                               <th id='checked'></th>
@@ -203,7 +240,6 @@ function Thuctap() {
                               <th id='sdt'>Email</th>
                               <th id='email'>Vị trí thực tập</th>
                             </tr>
-                          </thead>
                           <tbody>
                             {congtys.map((congty, index) => {
                               return <tr className='info'>
@@ -231,16 +267,16 @@ function Thuctap() {
                             <th id='checked'></th>
                             <th id='tencongty'>Tên cán bộ</th>
                             <th id='vitri'>vị trí hướng dẫn</th>
-                            <th id='chucvu'>Chức vụ</th>
+                            <th id='chucvu'>Tên công ty</th>
                             <th id='sdt'>số điện thoại</th>
                             <th id='email'>Email</th>
                           </tr>
-                          {canbohds.map((canbohd) => {
+                          {TTCBHD.map((canbohd) => {
                               return <tr className='info'>
                               <th id='checked'><input id='choncanbo' type="radio" value ={[canbohd.tencanbo,canbohd.email]}/></th>
                               <th id='tencongty'>{canbohd.tencanbo}</th>
                               <th id='vitri'>{canbohd.vitri}</th>
-                              <th id='chucvu'>{canbohd.chucvu}</th>
+                              <th id='chucvu'>{canbohd.tencongty}</th>
                               <th id='sdt'>{canbohd.sodienthoai}</th>
                               <th id='email'>{canbohd.email}</th>
                             </tr>
@@ -252,36 +288,31 @@ function Thuctap() {
                         <button className='button_luu'onClick={chonCanBo}> <AiOutlineCheck className='icon_button'/>Xác nhận</button>
                       </div>
                       </div>
-                    <div className="thongtincanhan">
+                    <div className="thongtincanhan ">
                       <h1 className="lable_chitiet">Thông tin sinh viên</h1>
-                      <ul className='thongtintaikhoan'>
-                          <li>
-                              <span className='lable'>Họ tên</span>
-                              <span className='info'>{ThongTinSinhVien.hoten}</span>
+                      <ul className='thongtintaikhoan email_dangky'>
+                          <li className='thong_tin_email'>
+                              <span className='lable'>Email sinh viên</span>
+                              <span id="info_email" className='info'>{taikhoan}</span>
                           </li>
                           <li>
-                              <span className='lable'>Mã sinh viên</span>
-                              <span className='info'>{ThongTinSinhVien.masinhvien}</span>
+                              <input id='info_masinhvien' type="text" placeholder='Mã sinh viên' /> 
                           </li>
                           <li>
-                              <span className='lable'>Ngày sinh</span>
-                              <span className='info'>{ThongTinSinhVien.ngaysinh}</span>
+                              <input type="text" id='info_lop' placeholder='Lớp'/>
                           </li>
                       </ul>
-                      <ul className='thongtintaikhoan'>
+                      <ul className='thongtintaikhoan email_dangky'>
                           <li>
-                              <span className='lable'>Số điện thoại</span>
-                              <span className='info'>{ThongTinSinhVien.sodienthoai}</span>
+                              <input type="text" id='info_hoten' placeholder='Họ tên'/>
                           </li>
                           <li>
-                              <span className='lable'>Email</span>
-                              <span className='info'>{ThongTinSinhVien.email}</span>
+                              <input  id='info_ngaysinh' type="text" placeholder='Ngày sinh' /> 
                           </li>
                           <li>
-                              <span className='lable'>Lớp</span>
-                              <span className='info'>{ThongTinSinhVien.lop}</span>
+                              <input  id='info_sodienthoai' type="text" placeholder='Số điện thoại' /> 
                           </li>
-                      </ul>
+                      </ul>  
                     </div>
                     <div className="luachoncongty">
                       <h1 className="lable_chitiet">Lựa chọn công ty</h1>
@@ -310,7 +341,7 @@ function Thuctap() {
                       {/* <button className='button_chinhsua'> <AiOutlineCheck className='icon_button'/>Đăng ký thêm mới công ty</button> */}
                     </div>
                     <div className="thongtincongty">
-                      <h1 className="lable_chitiet">2. Thông tin đăng ký</h1>
+                      <h1 className="lable_chitiet">Thông tin đăng ký</h1>
                       <ul className='thongtindondangky'>
                           <li>
                             <select name="" id="hocphanthuctap">

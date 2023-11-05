@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/login.css'
 
 function Home() {
+  
   const navigate = useNavigate();
   
   const sinhvien = (event) => {
-    navigate('/student/?loaitaikhoan=sinhvien');
-    alert("Bạn đăng nhập với vai trò sinh viên");
+    event.preventDefault();
+      navigate('/student/?loaitaikhoan=sinhvien');
+      alert("Bạn đăng nhập với vai trò sinh viên");
   };
   const giaovien = (event) => {
+    event.preventDefault();
     alert("Bạn đăng nhập với vai trò giáo viên");
     navigate('/teacher/?loaitaikhoan=giaovien');
   };
   const congty = (event) => {
+    event.preventDefault();
     alert("Bạn đăng nhập với vai trò công ty");
     navigate('/company/?loaitaikhoan=congty');
   };

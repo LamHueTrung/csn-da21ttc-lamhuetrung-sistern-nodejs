@@ -17,3 +17,41 @@
     width: 120px !important;
     height: 35px;
 }
+.thongtincongty .thongtindangkythuctap {
+    list-style: none;
+    width: 95%;
+    height: 50px;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+.thongtincongty .thongtindangkythuctap li {
+    width: 350px !important;
+}
+.thongtincongty .thongtindangkythuctap li input {
+    width: 350px !important;
+}
+.email_dangky {
+    list-style: none;
+    width: 300px;
+    height: 50px;
+    display: inline-flex;
+    justify-content: center;
+}
+.email_dangky .lable {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #0a2689;
+    font-size: 16px;
+}
+.email_dangky .info {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #0b2eac;
+    font-size: 18px;
+    font-style: italic;
+}
+.thong_tin_email {
+    width: 350px;
+}

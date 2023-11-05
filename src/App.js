@@ -1,8 +1,8 @@
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Outlet,
+  BrowserRouter, 
+  Route
 } from "react-router-dom";
 import React from 'react';
 import './App.css';
@@ -12,7 +12,6 @@ import XulyLogin from '../src/xulylogin';
 import Tintuc from '../src/pages/Student/tintuc';
 import Thuctap from '../src/pages/Student/thuctap';
 import DonThuctap from '../src/pages/Student/dondangky';
-import Thongtin from '../src/pages/Student/thontintaikhoan';
 import TintucCT from '../src/pages/Company/tintuc';
 import Dangkythuctap from '../src/pages/Company/dangkythuctap';
 import Danhsachdangky from '../src/pages/Company/danhsachdangky';
@@ -27,44 +26,6 @@ import Congty from '../src/pages/Teacher/congty';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Index />,
-  },
-  {
-    path: "/student/",
-    element:<Login />,
-    
-  },
-  {
-    path: "/student/:slug",
-    element:<XulyLogin />,
-    
-  },
-  {
-    path: "/teacher",
-    element:<Login />,
-    
-  },
-  {
-    path: "/teacher/:slug",
-    element:<XulyLogin />,
-    
-  },
-  {
-    path: "/company",
-    element:<Login />,
-    
-  },
-  {
-    path: "/company/:slug",
-    element:<XulyLogin />,
-    
-  },
-  {
-    path: "/student/thongtintaikhoan",
-    element: <Thongtin />,
-  },
-  {
     path: "/student/tintuc/:slug",
     element: <Tintuc />,
   },
@@ -77,7 +38,17 @@ const router = createBrowserRouter([
     element: <Thuctap />,
   },
   {
-    path: "/teacher/quanlythuctap",
+    path: "/teacher",
+    element:<Login />,
+    
+  },
+  {
+    path: "/teacher/xuly/",
+    element:<XulyLogin />,
+    
+  },
+  {
+    path: "/teacher/quanlythuctap/:slug",
     element: <Quanlythuctap />,
   },
   {
@@ -85,45 +56,70 @@ const router = createBrowserRouter([
     element: <TintucGV />,
   },
   {
-    path: "/teacher/quanlythuctap/thongtindangky/",
+    path: "/teacher/quanlythuctap/thongtindangky/:slug",
     element: <Thongtindangky />,
   },
   {
-    path: "/teacher/sinhvien",
+    path: "/teacher/sinhvien/:slug",
     element: <Sinhvien />,
   },
   {
-    path: "/teacher/giaovien",
+    path: "/teacher/giaovien/:slug",
     element: <Giaovien />,
   },
   {
-    path: "/teacher/congty",
+    path: "/teacher/congty/:slug",
     element: <Congty />,
   },
   {
-    path: "/company/dangkythuctap",
-    element: <Dangkythuctap />,
+    path: "/company",
+    element:<Login />,
+    
+  },
+  {
+    path: "/company/xuly/",
+    element:<XulyLogin />,
+    
   },
   {
     path: "/company/tintuc/:slug",
     element: <TintucCT />,
   },
   {
-    path: "/company/danhsachdangky",
+    path: "/company/dangkythuctap/:slug",
+    element: <Dangkythuctap />,
+  },
+  {
+    path: "/company/danhsachdangky/:slug",
     element: <Danhsachdangky />,
   },
   {
-    path: "/company/canbohuongdan",
+    path: "/company/canbohuongdan/:slug",
     element: <Danhsachcanbo />,
   },
-  
+  {
+    path: "/student/tintuc/:slug",
+    element: <Tintuc />
+  },
+  {
+    path: "/student/xuly/",
+    element:<XulyLogin />,
+    
+  },
+  {
+    path: "/student",
+    element:<Login />,
+    
+  },
+  {
+    path: "/",
+    element: <Index />
+  },
 ]);
 function App() {
   return (
     <div className="App">
-      <main>
         <RouterProvider router={router} />
-      </main>
     </div>
   );
 }

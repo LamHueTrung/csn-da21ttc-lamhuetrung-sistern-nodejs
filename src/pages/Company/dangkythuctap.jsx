@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
@@ -10,92 +11,136 @@ import { PiStudentDuotone } from 'react-icons/pi';
 import { AiOutlineHome } from 'react-icons/ai';
 import '../../css/student.css';
 import '../../css/base.css';
-
-function thuctap() {
+import '../../css/company.css';
+function DangKyThucTap() {
+  const [TaiKhoans, setTaiKhoans] = useState([]);
+  const url = window.location.search;
+  const urlParams = new URLSearchParams(url);
+  const taikhoan = urlParams.get("taikhoan");
+  useEffect(() => {
+    axios.get('http://localhost:3001/company/dangnhaptaikhoan') 
+      .then((response) => setTaiKhoans(response.data))
+      .catch((error) => {
+        console.error('Lỗi react:', error);
+      });
+  }, []);
+  var ThongTinCongTy = {};
+  TaiKhoans.map(tk => {
+      if (tk.taikhoan == taikhoan){
+        ThongTinCongTy = {  
+          email: tk.taikhoan,
+      };
+    };
+  });
+  function Dangky() {
+    var ThongTinDangKy = {};
+    const macongty = Math.floor(Math.random() * 100000) + 1;
+    ThongTinDangKy = {
+      email: ThongTinCongTy.email,
+      tencongty: document.getElementById('tencongty').value,
+      macongty: macongty,
+      diachi: document.getElementById('diachi').value,
+      vitri: document.getElementById('vitri').value,
+      ngaybatdau: document.getElementById('ngaybatdau').value,
+      ngayketthuc: document.getElementById('ngayketthuc').value,
+    }
+    axios.post('http://localhost:3001/company/dangkythongtin', ThongTinDangKy)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Lỗi khi thêm dữ liệu:', error);
+      });
+    var ThongTinCanBo ={};
+    ThongTinCanBo = {
+      macanbo: document.getElementById('macanbo').textContent,
+      macongty: macongty,
+      tencanbo: document.getElementById('tencanbo').value,
+      chucvu: document.getElementById('chucvu').value,
+      vitri: document.getElementById('vitrihuongdan').value,
+      email: document.getElementById('email').value,
+      sodienthoai: document.getElementById('sodienthoai').value,
+    }
+    axios.post('http://localhost:3001/company/themcanbo', ThongTinCanBo)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Lỗi khi thêm dữ liệu:', error);
+      });
+    alert("Đăng ký chương trình thực tập thành công");
+  }
     return (
         <div className='container'>
           <div className='Navbar'>
             <ul id='navbar' className='company'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/company/tintuc"><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/company/dangkythuctap"><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to="/company/danhsachdangky"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
-              <Link to="/company/canbohuongdan"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
+              <Link to={`/company/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/company/dangkythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/company/danhsachdangky/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
+              <Link to={`/company/canbohuongdan/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatcongty'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Đăng ký chương trình thực tập</span></div>
               <div id='dondangky' className="content">
-                
-                    <div className="thongtincanhan">
-                      <h1 className="lable_chitiet">Thông tin công ty</h1>
-                      <ul className='thongtintaikhoan'>
-                          <li>
-                              <span className='lable'>Tên công ty</span>
-                              <span className='info'>VTA</span>
-                          </li>
-                          <li>
-                              <span className='lable'>Địa chỉ</span>
-                              <span className='info'>Quận Bình Thạnh, TP.HCM</span>
-                          </li>
-                          <li>
-                              <span className='lable'>Số điện thoại</span>
-                              <span className='info'>0123456789</span>
-                          </li>
-                          <li>
-                              <span className='lable'>Email liên hệ</span>
-                              <span className='info'>example@gmail.com</span>
-                          </li>
-                      </ul>
-                    </div>
                     <div className="thongtincongty company">
                       <h1 className="lable_chitiet">Thông tin đăng ký</h1>
-                      <ul className='thongtintaikhoan'>
+                      <ul className='thongtindangkythuctap email_dangky'>
+                            <li className='thong_tin_email'>
+                                <span className='lable'>Email </span>
+                                <span className='info'>{ThongTinCongTy.email}</span>
+                            </li>
                           <li>
-                            <select name="" id="1">
-                              <option value="">--Chọn trường--</option>
-                              <option value="">Đại học Trà Vinh</option>
-                            </select>
+                            <input id='tencongty'  placeholder='Tên công ty' type="text"/>
                           </li>
-                          <li>
-                            <input  placeholder='Vị trí thực tập' type="text"/>
-                          </li>
-                      </ul>
-                      <ul className='thongtintaikhoan'>
                             <li>
-                              <input placeholder='Ngày kết thúc' type="text" />
+                              <input id='diachi' placeholder='Địa chỉ' type="text" />
+                            </li>
+                            
+                      </ul>
+                      <ul className='thongtindangkythuctap'>
+                          <li>
+                            <input id='vitri'  placeholder='Vị trí thực tập' type="text"/>
+                          </li>
+                            <li>
+                              <input id='ngaybatdau' placeholder='Ngày kết thúc' type="text" />
                             </li>
                             <li>
-                              <input  placeholder='Ngày bắt đầu' type="text"/>
+                              <input id='ngayketthuc'  placeholder='Ngày bắt đầu' type="text"/>
                             </li>
                       </ul>
                     </div>
                     <div className="thongtincongty company">
                       <h1 className="lable_chitiet">Thông tin cán bộ hướng dẫn</h1>
-                      <ul className='thongtintaikhoan'>
-                            <li>
-                              <input placeholder='Cán bộ hướng dẫn' type="text" />
+                      <ul className='thongtindangkythuctap email_dangky'>
+                            <li className='thong_tin_email'>
+                                <span className='lable'>Mã người phụ trách </span>
+                                <span className='info' id='macanbo'>{Math.floor(Math.random() * 100000) + 1}</span>
                             </li>
                             <li>
-                              <input  placeholder='chức vụ' type="text"/>
+                              <input id='tencanbo' placeholder='Phụ trách hướng dẫn' type="text" />
                             </li>
                             <li>
-                              <input  placeholder='vị trí hướng dẫn' type="text"/>
+                              <input id='vitrihuongdan' placeholder='vị trí hướng dẫn' type="text"/>
                             </li>
                       </ul>
-                      <ul className='thongtintaikhoan'>
-                            <li>
-                              <input  placeholder='Số điện thoại' type="text"/>
-                            </li>
-                            <li>
-                              <input  placeholder='email' type="text"/>
-                            </li>
+                      <ul className='thongtindangkythuctap '>
+                        <li>
+                          <input id='chucvu' placeholder='chức vụ' type="text"/>
+                        </li>
+                        <li>
+                          <input id='sodienthoai' placeholder='Số điện thoại' type="text"/>
+                        </li>
+                        <li>
+                          <input id='email' placeholder='email' type="text"/>
+                        </li>
                       </ul>
                     </div>
                     <div className="nutbam">
                       <button className='button_huy'> <ImCancelCircle className='icon_button'/>Hủy</button>
-                      <button className='button_luu'> <AiOutlineCheck className='icon_button'/>Lưu</button>
+                      <button className='button_luu' onClick={Dangky}> <AiOutlineCheck className='icon_button'/>Lưu</button>
                     </div>
               </div>
               
@@ -104,4 +149,4 @@ function thuctap() {
     )
 }
 
-export default thuctap;
+export default DangKyThucTap;

@@ -15,6 +15,26 @@ import '../../css/company.css';
 
 function CanboHD() {
   const [canbohds, setCanBoHD] = useState([]);
+  const [congtys, setCongTy] = useState([]);
+
+  const url = window.location.search;
+  const urlParams = new URLSearchParams(url);
+  const taikhoan = urlParams.get("taikhoan");
+  useEffect(() => {
+    axios.get('http://localhost:3001/company/danhsachcongty') 
+      .then((response) => setCongTy(response.data))
+      .catch((error) => {
+        console.error('Lỗi react:', error);
+      });
+  }, []);
+  var MaCongTy = {};
+  congtys.map(ct => {
+    if (ct.email == taikhoan){
+      MaCongTy = {
+        macongty: ct.macongty,
+    };
+    };
+  });
   
   useEffect(() => {
     axios.get('http://localhost:3001/company/canbohuongdan') // Điều chỉnh URL tương ứng với tuyến đường API
@@ -23,15 +43,28 @@ function CanboHD() {
         console.error('Lỗi react:', error);
       });
   }, []);
+  var DanhSachCanBo = [];
+  canbohds.map(cbhd => {
+    if (MaCongTy.macongty === cbhd.macongty)
+    {
+      DanhSachCanBo.push({
+        tencanbo: cbhd.tencanbo,
+        chucvu: cbhd.chucvu,
+        vitri: cbhd.vitri,
+        email: cbhd.email,
+        sodienthoai: cbhd.sodienthoai
+      })
+    }
+  })
     return (
         <div className='container'>
            <div className='Navbar'>
             <ul id='navbar' className='company'>
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/company/tintuc"><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/company/dangkythuctap"><a href=""><li id='thuctap'><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
-              <Link to="/company/danhsachdangky"><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
-              <Link to="/company/canbohuongdan"><a href=""><li id='thongtin' className='click'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
+              <Link to={`/company/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/company/dangkythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap'><FiUsers className='icon'/>Đăng ký thực tập</li></a></Link>
+              <Link to={`/company/danhsachdangky/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Danh sách đăng ký</li></a></Link>
+              <Link to={`/company/canbohuongdan/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' className='click'><PiStudentDuotone className='icon'/>Cán bộ hướng dẫn</li></a></Link>
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuatcongty'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
@@ -44,7 +77,6 @@ function CanboHD() {
                       <input type="text" placeholder='từ khóa' /> 
                       <button className='button_search'> <AiOutlineSearch className='icon_button'/>Tìm kiếm</button>
                       <table>
-                        <thead>
                           <tr className='tieude_table'>
                             <th id='stt'>STT</th>
                             <th id='tensinhvien'>Tên cán bộ</th>
@@ -53,9 +85,7 @@ function CanboHD() {
                             <th id='emailsinhvien'>Email</th>
                             <th id='sdt'>Số điện thoại</th>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {canbohds.map((canbohd, index) => {
+                          {DanhSachCanBo.map((canbohd, index) => {
                               return <tr className='info'>
                               <th id='stt'>{index + 1}</th>
                               <th id='tensinhvien'>{canbohd.tencanbo}</th>
@@ -67,7 +97,6 @@ function CanboHD() {
                           })
                           }
                           
-                        </tbody>
                       </table>
                 </div>
             </div>

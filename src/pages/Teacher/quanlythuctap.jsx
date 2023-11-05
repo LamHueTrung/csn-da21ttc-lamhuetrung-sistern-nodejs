@@ -12,17 +12,20 @@ import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
 
-function sinhvien() {
+function QuanLyThucTap() {
+  const url = window.location.search;
+  const urlParams = new URLSearchParams(url);
+  const taikhoan = urlParams.get("taikhoan"); 
     return (
         <div className='container'>
            <div className='Navbar'>
             <ul id='navbar'>
-              <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/teacher/tintuc"><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/teacher/quanlythuctap"><a href=""><li id='thuctap' className='click' ><FiUsers className='icon'/>Thực tập</li></a></Link>
-              <Link to="/teacher/congty"><a href=""><li id='thongtin'  ><TbHomeEco className='icon'/>Công ty</li></a></Link>
-              <Link to="/teacher/sinhvien"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
-              <Link to="/teacher/giaovien"><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Giáo viên</li></a></Link>
+            <Link href=""><li className='thongbao '><GrNotification className='icon'/></li></Link>
+              <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/teacher/congty/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'  ><TbHomeEco className='icon'/>Công ty</li></a></Link>
+              <Link to={`/teacher/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/teacher/giaovien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Giáo viên</li></a></Link>
             </ul>
             <Link to="/"><a id='dangxuat' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
@@ -66,4 +69,4 @@ function sinhvien() {
     )
 }
 
-export default sinhvien;
+export default QuanLyThucTap;
