@@ -6,7 +6,7 @@
   <pre>
     FONT-END <br>
     ## MÔ TẢ: sửa dụng React.js để thiết kế giáo diện, axios để lấy dữ liệu từ monggoDB bằng Node.js và Express
-    -ĐĂNG NHẬP/ ĐĂNG KÝ <br>
+    - ĐĂNG NHẬP/ ĐĂNG KÝ <br>
     - QUYỀN SINH VIÊN <br>
         + TRANG TIN TỨC <br>
         + ĐĂNG KÝ THỰC TẬP: thông tin sinh viên, lựa chọn công ty, thông tin đăng ký <br>
