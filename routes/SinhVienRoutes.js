@@ -6,7 +6,9 @@ const ThuctapController = require('../controllers/ThucTapController');
 
 router.get('/danhsachsinhvien', SinhvienController.layDanhSachSinhVien);
 router.get('/donthuctap', ThuctapController.layDanhSachThuctap);
-router.post('/dangkythuctap', ThuctapController.DangKyThucTap);
 router.get('/tintuc', TintucController.layThongBao);
+
+router.post('/dangkythuctap', ThuctapController.DangKyThucTap);
+router.post('/themthongtin', SinhvienController.themThongTinSinhVien);
 
 module.exports = router;

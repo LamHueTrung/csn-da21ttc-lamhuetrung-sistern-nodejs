@@ -6,6 +6,8 @@ const sinhVienSchema = new mongoose.Schema({
     diachi: String,
     vitri: String,
     email: String,
+    ngaybatdau: String,
+    ngayketthuc: String
 });
 
 const SinhVien = mongoose.model('tblCongty', sinhVienSchema);

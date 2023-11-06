@@ -21,8 +21,6 @@ app.use('/student',SinhVienRoutes);
 app.use('/company', CongTyRoutes);
 app.use('/teacher', GiaoVienRoutes);
 
-//[POST]
-
 
 app.listen(port, () => {
   console.log('API server is running on port 3001');

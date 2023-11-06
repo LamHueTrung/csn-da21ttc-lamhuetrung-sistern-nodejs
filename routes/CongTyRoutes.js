@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const SinhVienController = require('../controllers/CongTyController');
+const CongTyController = require('../controllers/CongTyController');
 const TintucController = require('../controllers/TinTucController');
+const TaikhoanRoutes = require('../controllers/TaiKhoanController');
+const ThuctapController = require('../controllers/ThucTapController');
 
 router.get('/tintuc', TintucController.layThongBao);
-router.get('/danhsachcongty', SinhVienController.layDanhSachCongty);
-router.get('/canbohuongdan', SinhVienController.layDanhSachCanboHD);
+router.get('/danhsachcongty', CongTyController.layDanhSachCongty);
+router.get('/canbohuongdan', CongTyController.layDanhSachCanboHD);
+router.get('/dangnhaptaikhoan', TaikhoanRoutes.layDanhSachTaikhoan);
+router.get('/donthuctap', ThuctapController.layDanhSachThuctap);
+
+router.post('/themcanbo', CongTyController.themCanBo);
+router.post('/dangkythongtin', CongTyController.Dangkythongtin);
+
 
 
 module.exports = router;

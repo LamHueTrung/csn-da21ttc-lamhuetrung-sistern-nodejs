@@ -3,17 +3,16 @@ const mongoose = require('mongoose');
 const ThucTapSchema = new mongoose.Schema({
     trangthaidon: String,
     mathuctap: String,
-    loai: String,
-    mabaocao: String,
-    magiaovien: String,
     masinhvien: String,
+    loai: String,
+    magiaovien: String,
     macongty: String,
     macanbohuongdan: String,
-    noidungthuctap: String,
     ngaybatdau: String,
     ngayketthuc: String,
     sobuoi: String,
-    sotuan: String
+    sotuan: String,
+    noidungthuctap: String,
 });
 
 const ThucTap = mongoose.model('tblThucTap', ThucTapSchema);
