@@ -31,11 +31,13 @@ function Sinhvien() {
            <div className='Navbar'>
             <ul id='navbar'>
               <Link href=""><li className='thongbao '><GrNotification className='icon'/></li></Link>
-              <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Thực tập</li></a></Link>
-              <Link to={`/teacher/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' className='click'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'  ><TbHomeEco className='icon'/>Công ty</li></a></Link>
+              <Link to={`/admin/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' className='click'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/admin/giaovien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Giáo viên</li></a></Link>
             </ul>
-            <Link to="/"><a id='dangxuatgiaovien' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
+            <Link to="/"><a id='dangxuat' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Danh sách sinh viên</span></div>

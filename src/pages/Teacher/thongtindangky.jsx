@@ -20,11 +20,9 @@ function thongtindangky() {
               <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
               <Link to="/teacher/tintuc"><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
               <Link to="/teacher/quanlythuctap"><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Thực tập</li></a></Link>
-              <Link to="/teacher/congty"><a href=""><li id='thongtin'  ><TbHomeEco className='icon'/>Công ty</li></a></Link>
               <Link to="/teacher/sinhvien"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
-              <Link to="/teacher/giaovien"><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Giáo viên</li></a></Link>
             </ul>
-            <Link to="/"><a id='dangxuat' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
+            <Link to="/"><a id='dangxuatgiaovien' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Đơn đăng ký thực tập</span></div>

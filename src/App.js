@@ -16,69 +16,67 @@ import TintucCT from '../src/pages/Company/tintuc';
 import Dangkythuctap from '../src/pages/Company/dangkythuctap';
 import Danhsachdangky from '../src/pages/Company/danhsachdangky';
 import Danhsachcanbo from '../src/pages/Company/canbohuongdan';
+import TintucAD from '../src/pages/Admin/tintuc';
+import Thongtindangky from '../src/pages/Admin/thongtindangky';
+import Quanlythuctap from '../src/pages/Admin/quanlythuctap';
+import Sinhvien from '../src/pages/Admin/sinhvien';
+import Giaovien from '../src/pages/Admin/giaovien';
+import Congty from '../src/pages/Admin/congty';
 import TintucGV from '../src/pages/Teacher/tintuc';
-import Thongtindangky from '../src/pages/Teacher/thongtindangky';
-import Quanlythuctap from '../src/pages/Teacher/quanlythuctap';
-import Sinhvien from '../src/pages/Teacher/sinhvien';
-import Giaovien from '../src/pages/Teacher/giaovien';
-import Congty from '../src/pages/Teacher/congty';
+import SinhvienDangKyGV from '../src/pages/Teacher/sinhvien';
+import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
+import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
+
 
 
 const router = createBrowserRouter([
   {
-    path: "/student/tintuc/:slug",
-    element: <Tintuc />,
+    path: "/admin/quanlythuctap/:slug",
+    element: <Quanlythuctap />,
   },
   {
-    path: "/student/dondangky/:slug",
-    element: <DonThuctap />,
+    path: "/admin/congty/:slug",
+    element: <Congty />,
   },
   {
-    path: "/student/thuctap/:slug",
-    element: <Thuctap />,
+    path: "/admin/quanlythuctap/thongtindangky/:slug",
+    element: <Thongtindangky />,
   },
   {
-    path: "/teacher",
+    path: "/admin/sinhvien/:slug",
+    element: <Sinhvien />,
+  },
+  {
+    path: "/admin/giaovien/:slug",
+    element: <Giaovien />,
+  },
+  {
+    path: "/admin/tintuc/:slug",
+    element: <TintucAD />,
+  },
+  {
+    path: "/admin",
     element:<Login />,
-    
-  },
-  {
-    path: "/teacher/xuly/",
-    element:<XulyLogin />,
-    
   },
   {
     path: "/teacher/quanlythuctap/:slug",
-    element: <Quanlythuctap />,
+    element: <DonThucTapGV />,
+  },
+  {
+    path: "/teacher/quanlythuctap/thongtindangky",
+    element: <ThongTinDangKyGV />,
+  },
+  {
+    path: "/teacher/sinhvien/:slug",
+    element: <SinhvienDangKyGV />,
   },
   {
     path: "/teacher/tintuc/:slug",
     element: <TintucGV />,
   },
   {
-    path: "/teacher/quanlythuctap/thongtindangky/:slug",
-    element: <Thongtindangky />,
-  },
-  {
-    path: "/teacher/sinhvien/:slug",
-    element: <Sinhvien />,
-  },
-  {
-    path: "/teacher/giaovien/:slug",
-    element: <Giaovien />,
-  },
-  {
-    path: "/teacher/congty/:slug",
-    element: <Congty />,
-  },
-  {
-    path: "/company",
+    path: "/teacher",
     element:<Login />,
-    
-  },
-  {
-    path: "/company/xuly/",
-    element:<XulyLogin />,
     
   },
   {
@@ -97,12 +95,30 @@ const router = createBrowserRouter([
     path: "/company/canbohuongdan/:slug",
     element: <Danhsachcanbo />,
   },
+  
+  {
+    path: "/company",
+    element:<Login />,
+    
+  },
+  {
+    path: "/student/tintuc/:slug",
+    element: <Tintuc />,
+  },
+  {
+    path: "/student/dondangky/:slug",
+    element: <DonThuctap />,
+  },
+  {
+    path: "/student/thuctap/:slug",
+    element: <Thuctap />,
+  },
   {
     path: "/student/tintuc/:slug",
     element: <Tintuc />
   },
   {
-    path: "/student/xuly/",
+    path: "/xuly/",
     element:<XulyLogin />,
     
   },

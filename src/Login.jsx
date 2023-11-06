@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import './css/login.css';
 
@@ -9,7 +9,8 @@ function Login() {
   const navigate = useNavigate();
   const url = window.location.search;
   const urlParams = new URLSearchParams(url);
-
+  const loaiTK = urlParams.get("loaitaikhoan");
+  
   const handleLogin = (event) => {
     const tendangnhap = document.getElementById('tendangnhap');
     const matkhau = document.getElementById('matkhau');
@@ -20,18 +21,7 @@ function Login() {
     } else if (matkhau.value == "") {
         alert("Không bỏ trống mật khẩu");
         matkhau.focus();
-    } else {
-        if (urlParams.get("loaitaikhoan") == 'sinhvien') {
-           navigate(`/student/xuly/?xuly=dangnhap&taikhoan=${tendangnhap.value}&matkhau=${matkhau.value}&loaitaikhoan=sinhvien`);
-        }
-         if (urlParams.get("loaitaikhoan") == 'giaovien') {
-           navigate(`/teacher/xuly/?xuly=dangnhap&taikhoan=${tendangnhap.value}&matkhau=${matkhau.value}&loaitaikhoan=giaovien`);
-        }
-         if (urlParams.get("loaitaikhoan") == 'congty') {
-           navigate(`/company/xuly/?xuly=dangnhap&taikhoan=${tendangnhap.value}&matkhau=${matkhau.value}&loaitaikhoan=congty`);
-        }
-    }
-
+    } 
   };
   const handleSignup = (event) => {
     const matkhau = document.getElementById('matkhauDK');
@@ -42,23 +32,18 @@ function Login() {
     }else if (matkhau.value == "") {
         alert("Không bỏ trống mật khẩu");
         matkhau.focus();
-    } else {
-        if (urlParams.get("loaitaikhoan") == 'sinhvien') {
-            navigate(`/student/xuly/?xuly=dangky&loaitaikhoan=sinhvien&taikhoan=${emails}&matkhau=${password}`);
-        } 
-        else if (urlParams.get("loaitaikhoan") == 'giaovien') {
-            navigate(`/teacher/xuly/?xuly=dangky&loaitaikhoan=giaovien&taikhoan=${emails}&matkhau=${password}`);
-         } else if (urlParams.get("loaitaikhoan") == 'congty') {
-            navigate(`/company/xuly/?xuly=dangky&loaitaikhoan=congty&taikhoan=${emails}&matkhau=${password}`);
- 
-         }
-    }        
+    }      
   };
   function Dangky() {
     const Login = document.querySelector('.login');
     const signUp = document.querySelector('.signUp');
-    Login.classList.add('close');
-    signUp.classList.remove('close');
+    if (urlParams.get("loaitaikhoan") == "admin") {
+        alert("Không thể đăng ký tài khoản quản trị"); 
+        
+    } else {
+        Login.classList.add('close');
+        signUp.classList.remove('close');
+    }
         
   }
   return (
@@ -86,7 +71,8 @@ function Login() {
             </div>
             <a onClick={Dangky}>Đăng ký tài khoản?</a>
             <a href='/'>Lựa chọn tài khoản?</a>
-            <button onClick={handleLogin}>Đăng Nhập</button>
+            <Link to={`/xuly/?xuly=dangnhap&taikhoan=${emails}&matkhau=${password}&loaitaikhoan=${loaiTK}`}><button onClick={handleLogin}>Đăng Nhập</button></Link>
+            
         </form>
         </div>
 
@@ -121,7 +107,8 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 </div>
-                <button onClick={handleSignup}>Đăng Ký</button>
+                <Link to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}><button onClick={handleSignup}>Đăng Ký</button></Link>
+                
             </form>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function XuLyLogin() {
@@ -7,7 +7,7 @@ function XuLyLogin() {
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const navigate = useNavigate();
- 
+
     useEffect(() => {
         axios.get('http://localhost:3001/taikhoan/dangnhaptaikhoan') 
           .then((response) => setTaiKhoans(response.data))
@@ -47,10 +47,13 @@ function XuLyLogin() {
                     if(loaitaikhoanDN == 'sinhvien')
                     {
                         src = "student";
-                    } else if(loaitaikhoanDN == 'giaovien')
+                    } else if(loaitaikhoanDN == 'admin')
+                    {
+                        src = "admin";
+                    }  else if(loaitaikhoanDN == 'giaovien')
                     {
                         src = "teacher";
-                    } else if(loaitaikhoanDN == 'congty') 
+                    }else if(loaitaikhoanDN == 'congty') 
                     {
                         src = "company";
                     }
@@ -69,25 +72,23 @@ function XuLyLogin() {
                     }
                     alert(`Tài khoản của bạn là tài khoản ${kieutaikhoan} `);
                     navigate(`/`);
-        
                 }
             } else {
-                if (loaitaikhoanDN == urlParams.get("loaitaikhoan")) {
-                    if(loaitaikhoanDN == 'sinhvien')
-                        {
-                            src = "student";
-                        } else if(loaitaikhoanDN == 'giaovien')
-                        {
-                            src = "teacher";
-                        } else if(loaitaikhoanDN == 'congty') 
-                        {
-                            src = "company";
-                        }
-                        navigate(`/${src}/`);
-                        alert(`Tài khoản hoặc mật khẩu nhập không chính xác`);
+                if(urlParams.get("loaitaikhoan") == 'sinhvien')
+                {
+                    src = "student";
+                } else if(urlParams.get("loaitaikhoan") == 'giaovien')
+                {
+                    src = "teacher";
+                } else if(urlParams.get("loaitaikhoan") == 'congty') 
+                {
+                    src = "company";
                 }
+                navigate(`/${src}/?loaitaikhoan=sinhvien`);
+                // alert("Tài khoản hoặc mật khẩu không chính xác");
             };
-    } else 
+    }
+if(urlParams.get("xuly") == "dangky") 
     {
         var taiKhoanDaLuu = taiKhoan;
         var loaitaikhoanDK = urlParams.get("loaitaikhoan");
@@ -98,17 +99,18 @@ function XuLyLogin() {
             };
             if(urlParams.get("xuly") == "dangky")
             {
-                console.log(taiKhoanDaLuu != dataToAdd.taikhoan)
-                if (taiKhoanDaLuu == dataToAdd.taikhoan)
+                if (taiKhoanDaLuu = dataToAdd.taikhoan)
                 {
                     axios.post('http://localhost:3001/taikhoan/dangkytaikhoan', dataToAdd)
                     .then(response => {
+                        alert("Đăng ký thành công");
+                        navigate(`/${src}/?loaitaikhoan=${loaitaikhoanDK}`);
+
                         console.log('Dữ liệu đã được thêm vào MongoDB:', response.data);
                     })
                     .catch(error => {
                         console.error('Lỗi khi thêm dữ liệu:', error);
                     });
-                    alert("Đăng ký thành công");
                 }
                 if(loaitaikhoanDK == 'sinhvien')
                 {
@@ -120,7 +122,6 @@ function XuLyLogin() {
                 {
                     src = "company";
                 }
-                navigate(`/${src}/?loaitaikhoan=${loaitaikhoanDK}`);
         }       
     }
             

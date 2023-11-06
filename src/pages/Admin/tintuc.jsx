@@ -6,6 +6,7 @@ import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiUsers } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
 import { PiStudentDuotone } from 'react-icons/pi';
+import { TbHomeEco } from 'react-icons/tb';
 import { AiOutlineHome } from 'react-icons/ai';
 import '../../css/teacher.css';
 import '../../css/base.css';
@@ -27,11 +28,13 @@ function Tintuc() {
           <div className='Navbar'>
             <ul id='navbar'>
             <Link href=""><li className='thongbao '><GrNotification className='icon'/></li></Link>
-              <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Thực tập</li></a></Link>
-              <Link to={`/teacher/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' className='click'><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'  ><TbHomeEco className='icon'/>Công ty</li></a></Link>
+              <Link to={`/admin/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/admin/giaovien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Giáo viên</li></a></Link>
             </ul>
-            <Link to="/"><a id='dangxuatgiaovien' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
+            <Link to="/"><a id='dangxuat' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Tin tức</span></div>
@@ -41,7 +44,21 @@ function Tintuc() {
                     <Link>
                     {TinTucs.map((tintuc) => {
                           return<li>
-                                <h2>THÔNG BÁO: {tintuc.thongbaogiaovien}</h2>
+                                <h2>THÔNG BÁO GIÁO VIÊN: {tintuc.thongbaogiaovien}</h2>
+                                <span> ({tintuc.thoigian}) </span>
+                              </li>
+                      })
+                    }
+                    {TinTucs.map((tintuc) => {
+                          return<li>
+                                <h2>THÔNG BÁO SINH VIÊN: {tintuc.thongbaosinhvien}</h2>
+                                <span> ({tintuc.thoigian}) </span>
+                              </li>
+                      })
+                    }
+                    {TinTucs.map((tintuc) => {
+                          return<li>
+                                <h2>THÔNG BÁO CÔNG TY: {tintuc.thongbaocongty}</h2>
                                 <span> ({tintuc.thoigian}) </span>
                               </li>
                       })

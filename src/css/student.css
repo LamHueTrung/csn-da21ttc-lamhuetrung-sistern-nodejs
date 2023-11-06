@@ -227,15 +227,13 @@
     margin-right: 6px;
 }
 /* Danh sách đăng ký công ty */
+
 .danhsachcongty, .danhsachcanbo {
-    background: rgb(247, 250, 253);
-    width: 91%;
-    height: 90%;
-    margin-left: 5%;
-    margin-top: 3%;
-    position: absolute;
-    border: 1px solid #72707033;
-    z-index: 10000;
+    height: 300px !important;
+    width: 100% !important;
+    display: block !important;
+    margin-top: 60px !important; 
+    padding-left: 0 !important;
     
 }
 .danhsachcongty input, .danhsachcanbo input {
@@ -259,7 +257,7 @@
 }
 .danhsachcongty table, .danhsachcanbo table {
     width: 96%;
-    height: 450px;
+    height: 300px;
     margin: 0 2% 20px;
     overflow: auto;
     border: 1px solid #3333;
@@ -299,7 +297,7 @@
     width: 320px;
 }
 #sdt {
-    width: 170px;
+    width: 235px;
 }
 .danhsachcanbo #vitri {
     width: 260px;

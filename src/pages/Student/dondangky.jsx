@@ -22,7 +22,6 @@ function Thuctap() {
   const url = window.location.search;
   const urlParams = new URLSearchParams(url);
   const taikhoan = urlParams.get("taikhoan");
-  const navigate = useNavigate();
  
   useEffect(() => {
     axios.get('http://localhost:3001/student/danhsachsinhvien') 
@@ -42,13 +41,14 @@ function Thuctap() {
   }, []);
   var ThongTinCanBoHD = {};
     canbohds.map(cbhd => {
-        if(cbhd.tencanbo == document.querySelector(".tennguoiphutrach").value) {
+        if(cbhd.tencanbo == document.querySelector(".tennguoiphutrach").textContent) {
           ThongTinCanBoHD = {
             tencanbo: cbhd.tencanbo,
             macanbo: cbhd.macanbo
           };
         }
     });
+    
     var TTCBHD = [];
     canbohds.map(cbhd => {
       congtys.map(ct => {
@@ -72,7 +72,7 @@ function Thuctap() {
   }, []);
     var ThongTinCongTy = {};
     congtys.map(ct => {
-        if(ct.tencongty == document.querySelector(".info_tencongty").value) {
+        if(ct.tencongty == document.querySelector(".info_tencongty").textContent) {
           ThongTinCongTy = {
             tencongty: ct.tencongty,
             macongty: ct.macongty,
@@ -128,6 +128,7 @@ function Thuctap() {
       noidungthuctap: document.getElementById("noidungthuctap").value
     }
     console.log(dataToAdd)
+    console.log(dataToAdd)
       axios.post('http://localhost:3001/student/dangkythuctap', dataToAdd)
       .then(response => {
         alert('Đăng ký thực tập thành công, chờ xét duyệt');
@@ -138,22 +139,7 @@ function Thuctap() {
         console.error('Lỗi khi thêm dữ liệu:', error);
       });
   }
-  function open() {
-    const danhsachdangky = document.querySelector('.danhsachcongty');
-    danhsachdangky.classList.remove('close');
-  }
-  function close() {
-    const danhsachdangky = document.querySelector('.danhsachcongty');
-    danhsachdangky.classList.add('close');
-  }
-  function open_canbo() {
-    const danhsachcanbo = document.querySelector('.danhsachcanbo');
-    danhsachcanbo.classList.remove('close');
-  }
-  function close_canbo() {
-    const danhsachcanbo = document.querySelector('.danhsachcanbo');
-    danhsachcanbo.classList.add('close');
-  }
+
   function chonCongty() {
     const inputChecked = document.getElementById('choncongty');
     const TTinput  = inputChecked.value.split(',');
@@ -163,7 +149,8 @@ function Thuctap() {
     const email = document.querySelector('.info_email');
     const ngaybatdau = document.getElementById("ngaybatdau");
     const ngayketthuc = document.getElementById('ngayketthuc');
-    const danhsachdangky = document.querySelector('.danhsachcongty');
+    const tennguoiphutrach = document.querySelector('.tennguoiphutrach');
+    const email_nguoiphutrach = document.querySelector('.email_nguoiphutrach');
     
 
     if(inputChecked.checked)
@@ -185,33 +172,27 @@ function Thuctap() {
             };
           }
       });
-      tencongty.value = congTyDuocChon.tencongty;
-      diachi.value = congTyDuocChon.diachi;
-      vitri.value = congTyDuocChon.vitri;
-      email.value = congTyDuocChon.email;
+      var ThongTinCanBo = {};
+      canbohds.map(cb => {
+        if(cb.macongty == ThoiGianThucTap.macongty)
+        {
+          ThongTinCanBo = {
+            tenCB: cb.tencanbo,
+            emailCB: cb.email
+          }
+        }
+      })
+      tencongty.textContent = congTyDuocChon.tencongty;
+      diachi.textContent = congTyDuocChon.diachi;
+      vitri.textContent = congTyDuocChon.vitri;
+      email.textContent = congTyDuocChon.email;
       ngaybatdau.value = ThoiGianThucTap.ngaybatdau;
       ngayketthuc.value = ThoiGianThucTap.ngayketthuc;
-      danhsachdangky.classList.add('close');
+      tennguoiphutrach.textContent = ThongTinCanBo.tenCB;
+      email_nguoiphutrach.textContent = ThongTinCanBo.emailCB;
     }
   }
-  function chonCanBo() {
-    const inputChecked = document.getElementById('choncanbo');
-    const TTinput  = inputChecked.value.split(',');
-    const nguoiphutrach = document.querySelector('.tennguoiphutrach');
-    const email_nguoiphutrach = document.querySelector('.email_nguoiphutrach');
-    const danhsachdangky = document.querySelector('.danhsachcanbo');
 
-    if(inputChecked.checked)
-    {
-      const NguoiPhuTrach = {
-        nguoiphutrach: TTinput[0],
-        email_nguoiphutrach: TTinput[1],
-      }
-      nguoiphutrach.value = NguoiPhuTrach.nguoiphutrach;
-      email_nguoiphutrach.value = NguoiPhuTrach.email_nguoiphutrach;
-      danhsachdangky.classList.add('close');
-    }
-  }
 
     return (
         <div className='container'>
@@ -228,66 +209,6 @@ function Thuctap() {
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Đăng ký thực tập</span></div>
               <div id='dondangky' className="content">
-                    <div className="danhsachcongty close">
-                        <input type="text" placeholder='Công ty' /> 
-                        <button className='button_search'> <AiOutlineSearch className='icon_button'/>Tìm kiếm</button>
-                        <table>
-                            <tr className='tieude_table'>
-                              <th id='stt'>STT</th>
-                              <th id='checked'></th>
-                              <th id='tencongty'>Tên công ty</th>
-                              <th id='diachi'>Địa chỉ</th>
-                              <th id='sdt'>Email</th>
-                              <th id='email'>Vị trí thực tập</th>
-                            </tr>
-                          <tbody>
-                            {congtys.map((congty, index) => {
-                              return <tr className='info'>
-                              <th id='stt'>{index + 1}</th>
-                              <th id='checked'><input id='choncongty' value ={[congty.tencongty,congty.diachi,congty.email,congty.vitri]} type="radio"/></th>
-                              <th id='tencongty'>{congty.tencongty}</th>
-                              <th id='diachi'>{congty.diachi}</th>
-                              <th id='sdt'>{congty.email}</th>
-                              <th id='email'>{congty.vitri}</th>
-                            </tr>
-                          })
-                          }
-                          </tbody>
-                        </table>
-                        <div className="nutbam">
-                        <button className='button_huy' onClick={close}> <ImCancelCircle className='icon_button'/>Đóng</button>
-                        <button className='button_luu' onClick={chonCongty} > <AiOutlineCheck className='icon_button'/>Xác nhận</button>
-                      </div>
-                      </div>
-                      <div className="danhsachcanbo close">
-                        <input type="text" placeholder='Công ty' /> 
-                        <button className='button_search'> <AiOutlineSearch className='icon_button'/>Tìm kiếm</button>
-                        <table>
-                          <tr className='tieude_table'>
-                            <th id='checked'></th>
-                            <th id='tencongty'>Tên cán bộ</th>
-                            <th id='vitri'>vị trí hướng dẫn</th>
-                            <th id='chucvu'>Tên công ty</th>
-                            <th id='sdt'>số điện thoại</th>
-                            <th id='email'>Email</th>
-                          </tr>
-                          {TTCBHD.map((canbohd) => {
-                              return <tr className='info'>
-                              <th id='checked'><input id='choncanbo' type="radio" value ={[canbohd.tencanbo,canbohd.email]}/></th>
-                              <th id='tencongty'>{canbohd.tencanbo}</th>
-                              <th id='vitri'>{canbohd.vitri}</th>
-                              <th id='chucvu'>{canbohd.tencongty}</th>
-                              <th id='sdt'>{canbohd.sodienthoai}</th>
-                              <th id='email'>{canbohd.email}</th>
-                            </tr>
-                          })
-                          }
-                        </table>
-                        <div className="nutbam">
-                        <button className='button_huy' onClick={close_canbo}> <ImCancelCircle className='icon_button'/>Đóng</button>
-                        <button className='button_luu'onClick={chonCanBo}> <AiOutlineCheck className='icon_button'/>Xác nhận</button>
-                      </div>
-                      </div>
                     <div className="thongtincanhan ">
                       <h1 className="lable_chitiet">Thông tin sinh viên</h1>
                       <ul className='thongtintaikhoan email_dangky'>
@@ -314,31 +235,61 @@ function Thuctap() {
                           </li>
                       </ul>  
                     </div>
-                    <div className="luachoncongty">
-                      <h1 className="lable_chitiet">Lựa chọn công ty</h1>
-                      <ul className='thongtindondangky'>
+                    <div className="thongtincanhan">
+                    <h1 className="lable_chitiet">Lựa chọn công ty</h1>
+                      <ul className='thongtintaikhoan danhsachcongty'>
+                          <table>
+                            <tr className='tieude_table'>
+                              <th id='stt'>STT</th>
+                              <th id='checked'></th>
+                              <th id='tencongty'>Tên công ty</th>
+                              <th id='diachi'>Địa chỉ</th>
+                              <th id='sdt'>Email</th>
+                              <th id='email'>Vị trí thực tập</th>
+                            </tr>
+                          <tbody>
+                            {congtys.map((congty, index) => {
+                              return <tr className='info'>
+                              <th id='stt'>{index + 1}</th>
+                              <th id='checked'><input id='choncongty' value ={[congty.tencongty,congty.diachi,congty.email,congty.vitri]} type="radio" onChange={chonCongty}/></th>
+                              <th id='tencongty'>{congty.tencongty}</th>
+                              <th id='diachi'>{congty.diachi}</th>
+                              <th id='sdt'>{congty.email}</th>
+                              <th id='email'>{congty.vitri}</th>
+                            </tr>
+                          })
+                          }
+                          </tbody>
+                        </table>
+                      </ul>
+                    <ul className='thongtintaikhoan'>
                           <li>
-                              <input onClick={open} id='tencongty' className='info_tencongty' type="text" placeholder='Tên công ty' /> 
+                              <span className='lable'>Tên công ty</span>
+                              <span className='info info_tencongty'></span>
                           </li>
                           <li>
-                              <input type="mail"  className='info_email' placeholder='Email công ty'/>
+                              <span className='lable'>Email công ty</span>
+                              <span className='info info_vitri'></span>
                           </li>
                           <li>
-                              <input type="text" className='info_vitri' placeholder='Vị trí thực tập'/>
+                              <span className='lable'>Vị trí thực tập</span>
+                              <span className='info info_email'></span>
                           </li>
                       </ul>
-                      <ul className='thongtindondangky fullsize' ><li>
-                          <input className='fullsize_input info_diachi' id='diachi' type="text" placeholder='Địa chỉ công ty'/>
-                        </li></ul>
-                      <ul className='thongtindondangky nguoiphutrach'>
+                      <ul className='thongtintaikhoan'>
                           <li>
-                              <input onClick={open_canbo} type="text" className='tennguoiphutrach' placeholder='Người phụ trách (tại công ty)' /> 
+                              <span className='lable'>Địa chỉ</span>
+                              <span className='info info_diachi'></span>
+                          </li>                      
+                          <li>
+                              <span className='lable'>Người phụ trách</span>
+                              <span className='info tennguoiphutrach'></span>
                           </li>
                           <li>
-                            <input type="text" className='email_nguoiphutrach' placeholder='Điện thoại/Email người phụ trách' /> 
+                              <span className='lable'>Email người phụ trách</span>
+                              <span className='info email_nguoiphutrach'></span>
                           </li>
                       </ul>
-                      {/* <button className='button_chinhsua'> <AiOutlineCheck className='icon_button'/>Đăng ký thêm mới công ty</button> */}
                     </div>
                     <div className="thongtincongty">
                       <h1 className="lable_chitiet">Thông tin đăng ký</h1>

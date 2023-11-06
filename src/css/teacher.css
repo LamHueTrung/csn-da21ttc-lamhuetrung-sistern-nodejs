@@ -1,6 +1,9 @@
 .dangxuat {
     margin-top: 175px !important;
 }
+#dangxuatgiaovien {
+    margin-top: 335px !important;
+}
 /* Quản lý thực tập */
 .nutbam button {
     width: 150px;
@@ -77,7 +80,7 @@
 }
 .danhsachdondangky #trangthai {
     width: 278px;
-    border: 0;
+    border: 1px solid #b3b3b3;
 }
 .danhsachdondangky .nutbam button {
     float: right;
