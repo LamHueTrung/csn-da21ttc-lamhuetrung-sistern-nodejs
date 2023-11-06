@@ -1,10 +1,10 @@
 
 # HỆ THỐNG QUẢN LÝ SINH VIÊN THỰC TẬP CỦA BỘ MÔN CÔNG NGHỆ THÔNG TIN <br>
-### Nhánh FONT-END lưu code giao diện.
+### Nhánh FRONT-END lưu code giao diện.
 ### Nhánh BACK-END lưu code để lấy dữ liệu và thực hiện các tính năng.
 ### Nhánh DOC lưu các tài liệu liên quan đến đồ án cơ sở ngành.
   <pre>
-    FONT-END <br>
+    FRONT-END <br>
     ## MÔ TẢ: sửa dụng React.js để thiết kế giáo diện, axios để lấy dữ liệu từ monggoDB bằng Node.js và Express
     - ĐĂNG NHẬP/ ĐĂNG KÝ <br>
     - QUYỀN SINH VIÊN <br>
