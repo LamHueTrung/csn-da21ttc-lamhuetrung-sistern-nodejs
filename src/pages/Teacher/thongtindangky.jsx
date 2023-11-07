@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
@@ -6,131 +7,321 @@ import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
-import { TbHomeEco } from 'react-icons/tb';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { FiUsers } from 'react-icons/fi';
+import { format } from 'date-fns';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import '../../css/teacher.css';
 import '../../css/base.css';
-function thongtindangky() {
+function ThongTinDangKyGV() {
+    const [thuctaps, setthuctap] = useState([]);
+    const [canbohds, setCanBoHD] = useState([]);
+    const [congtys, setCongTy] = useState([]);
+    const [Giaoviens, setGiaoviens] = useState([]);
+    const [sinhViens, setSinhViens] = useState([]);  
+    const url = window.location.search;
+    const urlParams = new URLSearchParams(url);
+    const madon = urlParams.get("mathuctap");     
+    const taikhoan = urlParams.get("taikhoan");  
+    const _IdDonThucTap = urlParams.get("id");  
+    var ThongTinGiaoVien = {};
+    var ThongTinCanBoHD = {};
+    var ThongTinSinhVien = {};
+    var ThongTinCongTy = {};
+    var tblThucTap = {};
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/company/danhsachcongty') // Điều chỉnh URL tương ứng với tuyến đường API
+      .then((response) => setCongTy(response.data))
+      .catch((error) => {
+        console.error('Lỗi react:', error);
+      });
+  }, []);
+  useEffect(() => {
+    axios.get('http://localhost:3001/student/donthuctap') 
+      .then((response) => setthuctap(response.data))
+      .catch((error) => {
+        console.error('Lỗi react:', error);
+      });
+  }, []);
+    useEffect(() => {
+      axios.get('http://localhost:3001/company/canbohuongdan') 
+        .then((response) => setCanBoHD(response.data))
+        .catch((error) => {
+          console.error('Lỗi react:', error);
+        });
+    }, []);
+    useEffect(() => {
+      axios.get('http://localhost:3001/teacher/danhsachgiaovien') 
+        .then((response) => setGiaoviens(response.data))
+        .catch((error) => {
+          console.error('Lỗi react:', error);
+      });
+      }, []);    
+      useEffect(() => {
+        axios.get('http://localhost:3001/student/danhsachsinhvien') 
+          .then((response) => setSinhViens(response.data))
+          .catch((error) => {
+            console.error('Lỗi react:', error);
+          });
+      }, [])
+            
+  const mathuctap = thuctaps.map(tttt => {
+    if(tttt.mathuctap == madon)
+    {
+        sinhViens.map(sv => {
+            if(sv.masinhvien == tttt.masinhvien) {
+              ThongTinSinhVien = {
+                hoten: sv.hoten,
+                email: sv.email,
+                sdt: sv.sodienthoai,
+                lop: sv.lop,
+                masinhvien: sv.masinhvien,
+                ngaysinh: sv.ngaysinh
+              };
+            };
+          });
+          Giaoviens.map(gv => {
+            if (gv.magiaovien == tttt.magiaovien){
+              ThongTinGiaoVien = {
+                tengiaovien: gv.tengiaovien,
+                email: gv.email,
+                chucvu: gv.chucvu
+              }
+            };
+          });
+          canbohds.map(cbhd => {
+            if (cbhd.macanbo == tttt.macanbohuongdan){
+              ThongTinCanBoHD = {
+                tencanbo: cbhd.tencanbo,
+                email: cbhd.email,
+                vitri: cbhd.vitri
+            };
+            };
+          });
+          congtys.map(ct => {
+            if (ct.macongty == tttt.macongty){
+              ThongTinCongTy = {
+                tencongty: ct.tencongty,
+                email: ct.email,
+                diachi: ct.diachi
+              };
+            };
+          }); 
+          tblThucTap = {
+            trangthaidon: tttt.trangthaidon,
+            tensinhvien: ThongTinSinhVien.hoten,
+            emailsinhvien: ThongTinSinhVien.email,
+            sodienthoaisinhvien: ThongTinSinhVien.sdt,
+            lopsinhvien: ThongTinSinhVien.lop,
+            masinhvien: ThongTinSinhVien.masinhvien,
+            ngaysinhsinhvien: ThongTinSinhVien.ngaysinh,
+            tengiaovien: ThongTinGiaoVien.tengiaovien,
+            emailgiaovien: ThongTinGiaoVien.email,
+            chucvugiaovien: ThongTinGiaoVien.chucvu,
+            tencanbo: ThongTinCanBoHD.tencanbo,
+            emailcanbo: ThongTinCanBoHD.email,
+            tencongty: ThongTinCongTy.tencongty,
+            emailcongty: ThongTinCongTy.email,
+            diachicongty: ThongTinCongTy.diachi,
+            vitrihuongdan: ThongTinCanBoHD.vitri,
+            hocphanthuctap: tttt.loai,
+            ngaybatdau: tttt.ngaybatdau,
+            ngayketthuc: tttt.ngayketthuc,
+            sobuoi: tttt.sobuoi,
+            sotuan: tttt.sotuan,
+            noidung: tttt.noidungthuctap
+          }
+          
+        }
+    });
+    function DuyetDon() {
+        const updatedData = {
+            trangthaidon: "Giáo viên đã duyệt",
+          }
+        console.log(updatedData)
+        axios.put(`http://localhost:3001/teacher/duyetdonthuctap/${_IdDonThucTap}`, updatedData)
+        .then(response => {
+          console.log('Dữ liệu sau khi cập nhật:', response.data);
+          alert("Duyệt đơn thành công");
+        })
+        .catch(error => {
+            alert("Duyệt đơn thất bại");
+          console.error('Lỗi cập nhật dữ liệu:', error);
+        });
+        var DateNow = new Date();
+        var ThongBao = {
+          thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+          thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} vừa được giáo viên duyệt`,
+        }
+        axios.post('http://localhost:3001/teacher/themthongbao', ThongBao)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.error('Lỗi khi thêm dữ liệu:', error);
+          });
+
+    }
+    function TuChoiDon() {
+      const updatedData = {
+          trangthaidon: "Từ chối đơn",
+          
+        }
+      console.log(updatedData)
+      axios.put(`http://localhost:3001/teacher/duyetdonthuctap/${_IdDonThucTap}`, updatedData)
+      .then(response => {
+        console.log('Dữ liệu sau khi cập nhật:', response.data);
+        alert("Đã từ chối đơn thực tập");
+      })
+      .catch(error => {
+          alert("Duyệt đơn thất bại");
+        console.error('Lỗi cập nhật dữ liệu:', error);
+      });
+      var DateNow = new Date();
+        var ThongBao = {
+          thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+          thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã bị giáo viên từ chối`,
+        }
+        axios.post('http://localhost:3001/teacher/themthongbao', ThongBao)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.error('Lỗi khi thêm dữ liệu:', error);
+          });
+  }
     return (
         <div className='container'>
            <div className='Navbar'>
-            <ul id='navbar'>
-              <a href=""><li className='thongbao '><GrNotification className='icon'/></li></a>
-              <Link to="/teacher/tintuc"><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
-              <Link to="/teacher/quanlythuctap"><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Thực tập</li></a></Link>
-              <Link to="/teacher/sinhvien"><a href=""><li id='thongtin'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+            <ul id='navbar' className='company'>
+              <Link href=""><li className='thongbao '><GrNotification className='icon'/></li></Link>
+              <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
+              <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' className='click'><FiUsers className='icon'/>Thực tập</li></a></Link>
+              <Link to={`/teacher/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' ><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/teacher/thongtin/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'  ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link>
             </ul>
-            <Link to="/"><a id='dangxuatgiaovien' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
+            <Link to="/"><a id='dangxuat' href="" className='dangxuatcongty'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Đơn đăng ký thực tập</span></div>
               <div className="content">
-                    <div className="thongtincanhan">
+              <div className="thongtincanhan">
                         <ul className='thongtintaikhoan'>
                             <li>
                                 <span className='lable'>Trạng thái đơn</span>
-                                <span className='info'>Chờ duyệt</span>
+                                <span className='info'>{tblThucTap.trangthaidon}</span>
                             </li>
                         </ul>
                     </div>
                     <div className="thongtincanhan">
-                      <h1 className="lable_chitiet">Thực tập</h1>
+                      <h1 className="lable_chitiet">Thông tin sinh viên thực tập</h1>
                       <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Họ tên</span>
-                              <span className='info'>Lâm Huệ Trung</span>
+                              <span className='info'>{tblThucTap.tensinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Mã sinh viên</span>
-                              <span className='info'>110121255</span>
+                              <span className='info'>{tblThucTap.masinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Ngày sinh</span>
-                              <span className='info'>08/01/2003</span>
+                              <span className='info'>{tblThucTap.ngaysinhsinhvien}</span>
                           </li>
                       </ul>
+                      
                       <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Số điện thoại</span>
-                              <span className='info'>0763849007</span>
+                              <span className='info'>{tblThucTap.sodienthoaisinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Email</span>
-                              <span className='info'>lamhuetrung@gmail.com</span>
+                              <span className='info'>{tblThucTap.emailsinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Lớp</span>
-                              <span className='info'>DA21TTC</span>
+                              <span className='info'>{tblThucTap.lopsinhvien}</span>
                           </li>
                       </ul>
                     </div>
                     <div className="thongtincanhan">
-                      <h1 className="lable_chitiet">1. Lựa chọn công ty</h1>
+                      <h1 className="lable_chitiet">Thông tin giáo viên hướng dẫn</h1>
                       <ul className='thongtintaikhoan'>
                           <li>
-                              <span className='lable'>Công ty</span>
-                              <span className='info'>VTA</span>
+                              <span className='lable'>Họ tên</span>
+                              <span className='info'>{tblThucTap.tengiaovien}</span>
                           </li>
                           <li>
-                              <span className='lable'>Email công ty</span>
-                              <span className='info'>example@gmail.com</span>
+                              <span className='lable'>Chức vụ</span>
+                              <span className='info'>{tblThucTap.chucvugiaovien}</span>
                           </li>
                           <li>
-                              <span className='lable'>Số điên thoại</span>
-                              <span className='info'>0123456789</span>
+                              <span className='lable'>Email</span>
+                              <span className='info'>{tblThucTap.emailgiaovien}</span>
+                          </li>
+                      </ul>
+                    </div>
+                    <div className="thongtincanhan">
+                      <h1 className="lable_chitiet">Thông tin công ty đăng ký thực tập</h1>
+                      <ul className='thongtintaikhoan'>
+                          <li>
+                              <span className='lable'>Tên công ty</span>
+                              <span className='info'>{tblThucTap.tencongty}</span>
+                          </li>
+                          <li>
+                              <span className='lable'>Email </span>
+                              <span className='info'>{tblThucTap.emailcongty}</span>
+                          </li>
+                          <li>
+                              <span className='lable'>Đia chỉ</span>
+                              <span className='info'>{tblThucTap.diachicongty}</span>
                           </li>
                       </ul>
                       <ul className='thongtintaikhoan'>
-                          <li>
-                              <span className='lable'>Địa chỉ</span>
-                              <span className='info'>TP.HCM</span>
-                          </li>
                           <li>
                               <span className='lable'>Người phụ trách</span>
-                              <span className='info'>Nguyễn Văn A</span>
+                              <span className='info'>{tblThucTap.tencanbo}</span>
                           </li>
                           <li>
-                              <span className='lable'>Email người phụ trách</span>
-                              <span className='info'>example@gmail.com</span>
+                              <span className='lable'>Vị trí hướng dẫn</span>
+                              <span className='info'>{tblThucTap.vitrihuongdan}</span>
+                          </li>
+                          <li>
+                              <span className='lable'>Email</span>
+                              <span className='info'>{tblThucTap.emailcanbo}</span>
                           </li>
                       </ul>
-                    </div>
+                        </div>
                     <div className="thongtincanhan">
-                      <h1 className="lable_chitiet">2. Thông tin đăng ký</h1>
+                      <h1 className="lable_chitiet">Thông tin đăng ký thực tập</h1>
                       <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Học phần thực tập</span>
-                              <span className='info'>Đồ án cơ sở ngành</span>
+                              <span className='info'>{tblThucTap.hocphanthuctap}</span>
                           </li>
                           <li>
                               <span className='lable'>Ngày bắt đầu</span>
-                              <span className='info'>23/10/2023</span>
+                              <span className='info'>{tblThucTap.ngaybatdau}</span>
                           </li>
                           <li>
                               <span className='lable'>Ngày kết thúc</span>
-                              <span className='info'>23/12/2023</span>
+                              <span className='info'>{tblThucTap.ngayketthuc}</span>
                           </li>
                       </ul>
                       <ul className='thongtintaikhoan'>
-                          <li>
-                              <span className='lable'>Giáo viên</span>
-                              <span className='info'>Nguyễn Bảo Ân</span>
-                          </li>
                           <li>
                               <span className='lable'>Số buổi/tuần</span>
-                              <span className='info'>8</span>
+                              <span className='info'>{tblThucTap.sobuoi}</span>
                           </li>
                           <li>
-                              <span className='lable'>Số giờ/buổi</span>
-                              <span className='info'>8</span>
+                              <span className='lable'>Số tuần</span>
+                              <span className='info'>{tblThucTap.sotuan}</span>
                           </li>
-                      </ul>
-                      <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Nội dung thực tập</span>
-                              <span className='info'>Javascript</span>
+                              <span className='info'>{tblThucTap.noidung}</span>
                           </li>
                       </ul>
                     </div>
@@ -141,12 +332,11 @@ function thongtindangky() {
                       </li></ul>
                     </div> */}
                     <div className="nutbam">
-                        <Link to="/teacher/quanlythuctap">
+                        <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}>
                             <button className='button_huy'> <ImCancelCircle className='icon_button'/>Đóng</button>
-                            <button className='button_huy'> <ImCancelCircle className='icon_button'/>Từ chối</button>
-                            <button className='button_luu'> <AiOutlineCheck className='icon_button'/>Đồng ý</button>
+                            <button className='button_huy' onClick={TuChoiDon}> <ImCancelCircle className='icon_button'/>Từ chối</button>
+                            <button className='button_luu' onClick={DuyetDon}> <AiOutlineCheck className='icon_button'/>Đồng ý</button>
                         </Link>
-                        
                     </div>
 
                     
@@ -157,4 +347,4 @@ function thongtindangky() {
     )
 }
 
-export default thongtindangky;
+export default ThongTinDangKyGV;

@@ -26,7 +26,7 @@ import TintucGV from '../src/pages/Teacher/tintuc';
 import SinhvienDangKyGV from '../src/pages/Teacher/sinhvien';
 import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
 import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
-
+import ThongTinGV from '../src/pages/Teacher/dangkythongtin';
 
 
 const router = createBrowserRouter([
@@ -63,12 +63,16 @@ const router = createBrowserRouter([
     element: <DonThucTapGV />,
   },
   {
-    path: "/teacher/quanlythuctap/thongtindangky",
+    path: "/teacher/quanlythuctap/thongtindangky/:slug",
     element: <ThongTinDangKyGV />,
   },
   {
     path: "/teacher/sinhvien/:slug",
     element: <SinhvienDangKyGV />,
+  },
+  {
+    path: "/teacher/thongtin/:slug",
+    element: <ThongTinGV />,
   },
   {
     path: "/teacher/tintuc/:slug",

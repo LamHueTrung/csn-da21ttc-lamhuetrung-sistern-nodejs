@@ -43,6 +43,7 @@ function Tintuc() {
                   <ul className="items">
                     <Link>
                     {TinTucs.map((tintuc) => {
+                      if(tintuc.thongbaogiaovien != null)
                           return<li>
                                 <h2>THÔNG BÁO GIÁO VIÊN: {tintuc.thongbaogiaovien}</h2>
                                 <span> ({tintuc.thoigian}) </span>
@@ -50,6 +51,7 @@ function Tintuc() {
                       })
                     }
                     {TinTucs.map((tintuc) => {
+                      if(tintuc.thongbaosinhvien != null)
                           return<li>
                                 <h2>THÔNG BÁO SINH VIÊN: {tintuc.thongbaosinhvien}</h2>
                                 <span> ({tintuc.thoigian}) </span>
@@ -57,6 +59,7 @@ function Tintuc() {
                       })
                     }
                     {TinTucs.map((tintuc) => {
+                      if(tintuc.thongbaocongty != null)
                           return<li>
                                 <h2>THÔNG BÁO CÔNG TY: {tintuc.thongbaocongty}</h2>
                                 <span> ({tintuc.thoigian}) </span>

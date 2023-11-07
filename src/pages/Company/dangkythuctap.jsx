@@ -9,6 +9,7 @@ import { FiUsers } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { AiOutlineHome } from 'react-icons/ai';
+import { format } from 'date-fns';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/company.css';
@@ -51,6 +52,18 @@ function DangKyThucTap() {
       .catch(error => {
         console.error('Lỗi khi thêm dữ liệu:', error);
       });
+      var DateNow = new Date();
+      var ThongBao = {
+        thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+        thongbaosinhvien: `Công ty ${ThongTinDangKy.tencongty} vừa đăng ký chương trình thực tập`,
+      }
+      axios.post('http://localhost:3001/company/themthongbao', ThongBao)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error('Lỗi khi thêm dữ liệu:', error);
+        });
     var ThongTinCanBo ={};
     ThongTinCanBo = {
       macanbo: document.getElementById('macanbo').textContent,
@@ -105,10 +118,10 @@ function DangKyThucTap() {
                             <input id='vitri'  placeholder='Vị trí thực tập' type="text"/>
                           </li>
                             <li>
-                              <input id='ngaybatdau' placeholder='Ngày kết thúc' type="text" />
+                              <input id='ngaybatdau' placeholder='Ngày bắt đầu' type="text" />
                             </li>
                             <li>
-                              <input id='ngayketthuc'  placeholder='Ngày bắt đầu' type="text"/>
+                              <input id='ngayketthuc'  placeholder='Ngày kết thúc' type="text"/>
                             </li>
                       </ul>
                     </div>

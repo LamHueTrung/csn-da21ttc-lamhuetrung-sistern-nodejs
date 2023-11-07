@@ -9,6 +9,7 @@ import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
+import { format } from 'date-fns';
 import { AiOutlineHome } from 'react-icons/ai';
 import '../../css/student.css';
 import '../../css/company.css';
@@ -19,10 +20,15 @@ function Thuctap() {
   const [congtys, setCongTy] = useState([]);
   const [Giaoviens, setGiaoviens] = useState([]);
   const [sinhViens, setSinhViens] = useState([]);
+  const [selectedCongty, setSelectedCongty] = useState(null);
+  const [selectedGiaovien, setSelectedGiaovien] = useState('');
   const url = window.location.search;
   const urlParams = new URLSearchParams(url);
   const taikhoan = urlParams.get("taikhoan");
- 
+
+  const handleGiaovienChange = (event) => {
+    setSelectedGiaovien(event.target.value);
+  };
   useEffect(() => {
     axios.get('http://localhost:3001/student/danhsachsinhvien') 
       .then((response) => setSinhViens(response.data))
@@ -90,7 +96,7 @@ function Thuctap() {
   }, []);
   var ThongTinGiaoVien = {};
     Giaoviens.map(gv => {
-        if(gv.tengiaovien == document.getElementById("thongtingiaovien").value) {
+        if(gv.tengiaovien == selectedGiaovien) {
           ThongTinGiaoVien = {
             tengiaovien: gv.tengiaovien,
             magiaovien: gv.magiaovien
@@ -127,8 +133,6 @@ function Thuctap() {
       sotuan: document.getElementById("sotuan").value, 
       noidungthuctap: document.getElementById("noidungthuctap").value
     }
-    console.log(dataToAdd)
-    console.log(dataToAdd)
       axios.post('http://localhost:3001/student/dangkythuctap', dataToAdd)
       .then(response => {
         alert('Đăng ký thực tập thành công, chờ xét duyệt');
@@ -138,11 +142,22 @@ function Thuctap() {
         console.log(dataToAdd)
         console.error('Lỗi khi thêm dữ liệu:', error);
       });
+      
+      var DateNow = new Date();
+      var ThongBao = {
+        thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+        thongbaocongty: `${ThongTinSinhVien.hoten} vừa đăng ký thực tập tại ${ThongTinCongTy.tencongty}`,
+        thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa đăng ký giáo viên ${ThongTinGiaoVien.tengiaovien} hướng dẫn thực tập `,
+      }
+      axios.post('http://localhost:3001/student/themthongbao', ThongBao)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error('Lỗi khi thêm dữ liệu:', error);
+        });
   }
-
-  function chonCongty() {
-    const inputChecked = document.getElementById('choncongty');
-    const TTinput  = inputChecked.value.split(',');
+  const handleCongtyChange = (event, congty) => {
     const tencongty = document.querySelector('.info_tencongty');
     const diachi = document.querySelector('.info_diachi');
     const vitri = document.querySelector('.info_vitri');
@@ -151,19 +166,11 @@ function Thuctap() {
     const ngayketthuc = document.getElementById('ngayketthuc');
     const tennguoiphutrach = document.querySelector('.tennguoiphutrach');
     const email_nguoiphutrach = document.querySelector('.email_nguoiphutrach');
-    
-
-    if(inputChecked.checked)
-    {
-      const congTyDuocChon = {
-        tencongty: TTinput[0],
-        diachi: TTinput[1],
-        vitri: TTinput[2],
-        email: TTinput[3],
-      }
-        var ThoiGianThucTap = {};
+    if (event.target.checked) {
+      setSelectedCongty(congty);
+      var ThoiGianThucTap = {};
         congtys.map(ct => {
-          if(ct.tencongty ==congTyDuocChon.tencongty) {
+          if(ct.tencongty ==congty.tencongty) {
             ThoiGianThucTap = {
               tencongty: ct.tencongty,
               macongty: ct.macongty,
@@ -182,18 +189,18 @@ function Thuctap() {
           }
         }
       })
-      tencongty.textContent = congTyDuocChon.tencongty;
-      diachi.textContent = congTyDuocChon.diachi;
-      vitri.textContent = congTyDuocChon.vitri;
-      email.textContent = congTyDuocChon.email;
+      tencongty.textContent = congty.tencongty;
+      diachi.textContent = congty.diachi;
+      vitri.textContent = congty.vitri;
+      email.textContent = congty.email;
       ngaybatdau.value = ThoiGianThucTap.ngaybatdau;
       ngayketthuc.value = ThoiGianThucTap.ngayketthuc;
       tennguoiphutrach.textContent = ThongTinCanBo.tenCB;
       email_nguoiphutrach.textContent = ThongTinCanBo.emailCB;
+    } else {
+      setSelectedCongty(null);
     }
-  }
-
-
+  };
     return (
         <div className='container'>
           <div className='Navbar navbarSinhVien'>
@@ -251,7 +258,7 @@ function Thuctap() {
                             {congtys.map((congty, index) => {
                               return <tr className='info'>
                               <th id='stt'>{index + 1}</th>
-                              <th id='checked'><input id='choncongty' value ={[congty.tencongty,congty.diachi,congty.email,congty.vitri]} type="radio" onChange={chonCongty}/></th>
+                              <th id='checked'><input id='choncongty'checked={congty === selectedCongty} type="radio" onChange={(event) => handleCongtyChange(event, congty)}/></th>
                               <th id='tencongty'>{congty.tencongty}</th>
                               <th id='diachi'>{congty.diachi}</th>
                               <th id='sdt'>{congty.email}</th>
@@ -311,7 +318,7 @@ function Thuctap() {
                       </ul>
                       <ul className='thongtindondangky'>
                           <li>
-                            <select name="" id="thongtingiaovien">
+                            <select name="" id="thongtingiaovien" onChange={handleGiaovienChange}> 
                               <option value="">--Chọn giáo viên--</option>
                               {Giaoviens.map((giaovien,) => {
                                 return <option value={giaovien.tengiaovien}>{giaovien.tengiaovien}</option>

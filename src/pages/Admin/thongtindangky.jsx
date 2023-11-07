@@ -10,6 +10,8 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { TbHomeEco } from 'react-icons/tb';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { FiUsers } from 'react-icons/fi';
+import { format } from 'date-fns';
+
 import '../../css/teacher.css';
 import '../../css/base.css';
 function ThongTinDangKy() {
@@ -75,7 +77,8 @@ function ThongTinDangKy() {
                 email: sv.email,
                 sdt: sv.sodienthoai,
                 lop: sv.lop,
-                masinhvien: sv.masinhvien
+                masinhvien: sv.masinhvien,
+                ngaysinh: sv.ngaysinh
               };
             };
           });
@@ -113,6 +116,7 @@ function ThongTinDangKy() {
             sodienthoaisinhvien: ThongTinSinhVien.sdt,
             lopsinhvien: ThongTinSinhVien.lop,
             masinhvien: ThongTinSinhVien.masinhvien,
+            ngaysinhsinhvien: ThongTinSinhVien.ngaysinh,
             tengiaovien: ThongTinGiaoVien.tengiaovien,
             emailgiaovien: ThongTinGiaoVien.email,
             chucvugiaovien: ThongTinGiaoVien.chucvu,
@@ -147,6 +151,18 @@ function ThongTinDangKy() {
             alert("Duyệt đơn thất bại");
           console.error('Lỗi cập nhật dữ liệu:', error);
         });
+        var DateNow = new Date();
+        var ThongBao = {
+          thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+          thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã được người quản trị phê duyệt`,
+        }
+        axios.post('http://localhost:3001/teacher/themthongbao', ThongBao)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.error('Lỗi khi thêm dữ liệu:', error);
+          });  
 
     }
     function TuChoiDon() {
@@ -164,7 +180,18 @@ function ThongTinDangKy() {
           alert("Duyệt đơn thất bại");
         console.error('Lỗi cập nhật dữ liệu:', error);
       });
-      
+      var DateNow = new Date();
+      var ThongBao = {
+        thoigian: format(DateNow, "HH:mm:ss - dd/MM/yyyy"),
+        thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã bị người quản trị từ chối`,
+      }
+      axios.post('http://localhost:3001/teacher/themthongbao', ThongBao)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error('Lỗi khi thêm dữ liệu:', error);
+        });  
   }
     return (
         <div className='container'>
@@ -195,30 +222,30 @@ function ThongTinDangKy() {
                       <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Họ tên</span>
-                              <span className='info'>Lâm Huệ Trung</span>
+                              <span className='info'>{tblThucTap.tensinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Mã sinh viên</span>
-                              <span className='info'>110121255</span>
+                              <span className='info'>{tblThucTap.masinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Ngày sinh</span>
-                              <span className='info'>08/01/2003</span>
+                              <span className='info'>{tblThucTap.ngaysinhsinhvien}</span>
                           </li>
                       </ul>
                       
                       <ul className='thongtintaikhoan'>
                           <li>
                               <span className='lable'>Số điện thoại</span>
-                              <span className='info'>0763849007</span>
+                              <span className='info'>{tblThucTap.sodienthoaisinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Email</span>
-                              <span className='info'>lamhuetrung@gmail.com</span>
+                              <span className='info'>{tblThucTap.emailsinhvien}</span>
                           </li>
                           <li>
                               <span className='lable'>Lớp</span>
-                              <span className='info'>DA21TTC</span>
+                              <span className='info'>{tblThucTap.lopsinhvien}</span>
                           </li>
                       </ul>
                     </div>

@@ -22,6 +22,7 @@ function Tintuc() {
         console.error('Lỗi react:', error);
       });
   }, []);
+ 
     return (
       <div className='container'>
           <div className='Navbar'>
@@ -41,10 +42,12 @@ function Tintuc() {
                   <ul className="items">
                     <Link>
                     {TinTucs.map((tintuc) => {
+                        if(tintuc.thongbaocongty != null) {
                           return<li>
                                 <h2>THÔNG BÁO: {tintuc.thongbaocongty}</h2>
                                 <span> ({tintuc.thoigian}) </span>
                               </li>
+                        }
                       })
                     }
                     </Link>

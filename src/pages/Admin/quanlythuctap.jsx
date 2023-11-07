@@ -129,7 +129,7 @@ function QuanLyThucTap() {
                         </tr>
                           {
                             tblThucTap.map((dtt, index) => {
-                               return <Link to={`/admin/quanlythuctap/thongtindangky/duyetdonthuctap?mathuctap=${dtt.mathuctap}&id=${dtt._id}`}>
+                               return <Link to={`/admin/quanlythuctap/thongtindangky/duyetdonthuctap?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}>
                                <tr className='info'>
                                   <th id='stt'>{index + 1}</th>
                                   <th id='trangthai'>{dtt.tensinhvien}</th>

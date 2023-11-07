@@ -64,7 +64,10 @@ a {
     size: 20px;
     cursor: pointer;
     text-align: center;
-    margin-bottom: 10px;
+}
+.text-login {
+     margin-bottom: 10px; 
+
 }
 a:hover {
     color: rgba(8, 8, 110, 0.689);

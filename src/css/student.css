@@ -152,8 +152,8 @@
     width: 100%;
     width: 350px;
 }
-.fullsize_input {
-    width: 94% !important;
+.baocaotiendo .nopbai li input, .baocaotongket .nopbai li input {
+    width: 530px !important;
     float: left;
     margin-left: 15px;
 }

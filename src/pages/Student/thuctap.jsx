@@ -130,6 +130,12 @@ function Thuctap() {
       };
       };
     }); 
+    if(ThongTinThucTap.trangthaidon == "Đã duyệt") {
+      const baocaotiendo = document.querySelector(".baocaotiendo");
+      const baocaotongket = document.querySelector(".baocaotongket");
+      baocaotongket.classList.remove("close");
+      baocaotiendo.classList.remove("close");
+    };
     return (
         <div className='container'>
           <div className='Navbar navbarSinhVien'>
@@ -231,7 +237,7 @@ function Thuctap() {
                           </li>
                       </ul>
                     </div>
-                    <div className="thongtincanhan">
+                    <div className="thongtincanhan baocaotiendo close">
                       <h1 className="lable_chitiet">Báo cáo tuần</h1>
                       <select className='tuanthuctap' name="" id="">
                           <option value="">Tuần 1</option>
@@ -256,7 +262,7 @@ function Thuctap() {
                           <button className='button_chinhsua'>Nộp bài</button>
                         </ul>
                     </div>
-                    <div className="thongtincanhan">
+                    <div className="thongtincanhan baocaotongket close">
                       <h1 className="lable_chitiet">Báo cáo tổng kết</h1>
                         <ul className='thongtintaikhoan nopbai' >
                           <li>

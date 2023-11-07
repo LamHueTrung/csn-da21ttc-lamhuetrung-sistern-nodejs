@@ -41,10 +41,12 @@ function Tintuc() {
                   <ul className="items">
                     <Link>
                     {TinTucs.map((tintuc) => {
+                      if(tintuc.thongbaosinhvien != null) {
                           return<li>
                                 <h2>THÔNG BÁO: {tintuc.thongbaosinhvien}</h2>
                                 <span> ({tintuc.thoigian}) </span>
                               </li>
+                      }
                       })
                     }
                     </Link>

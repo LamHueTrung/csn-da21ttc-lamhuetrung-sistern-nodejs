@@ -69,8 +69,8 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
             />
             </div>
-            <a onClick={Dangky}>Đăng ký tài khoản?</a>
-            <a href='/'>Lựa chọn tài khoản?</a>
+            <a className='text-login' onClick={Dangky}>Đăng ký tài khoản?</a>
+            <a className='text-login' href='/'>Lựa chọn tài khoản?</a>
             <Link to={`/xuly/?xuly=dangnhap&taikhoan=${emails}&matkhau=${password}&loaitaikhoan=${loaiTK}`}><button onClick={handleLogin}>Đăng Nhập</button></Link>
             
         </form>

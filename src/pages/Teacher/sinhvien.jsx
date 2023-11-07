@@ -6,9 +6,9 @@ import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
 import { PiStudentDuotone } from 'react-icons/pi';
-import { TbHomeEco } from 'react-icons/tb';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
@@ -29,13 +29,14 @@ function Sinhvien() {
     return (
         <div className='container'>
            <div className='Navbar'>
-            <ul id='navbar'>
+            <ul id='navbar' className='company'>
               <Link href=""><li className='thongbao '><GrNotification className='icon'/></li></Link>
               <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}><a ><li id='tintuc' ><HiOutlineNewspaper className='icon'/>Tin tức</li></a></Link>
               <Link to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thuctap' ><FiUsers className='icon'/>Thực tập</li></a></Link>
               <Link to={`/teacher/sinhvien/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin' className='click'><PiStudentDuotone className='icon'/>Sinh viên</li></a></Link>
+              <Link to={`/teacher/thongtin/taikhoan?taikhoan=${taikhoan}`}><a href=""><li id='thongtin'  ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link>
             </ul>
-            <Link to="/"><a id='dangxuatgiaovien' href="" className='dangxuat'><FiLogOut className='icon'/>Đăng xuất</a></Link>
+            <Link to="/"><a id='dangxuat' href="" className='dangxuatcongty'><FiLogOut className='icon'/>Đăng xuất</a></Link>
           </div>
           <div className='data'>
               <div className="header"><AiOutlineHome className='icon' /><span id='route'>/Danh sách sinh viên</span></div>
