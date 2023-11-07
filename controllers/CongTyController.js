@@ -1,6 +1,5 @@
 const Congty = require('../models/CongTy');
 const CanboHD = require('../models/CanBoHuongDan');
-
 class CongtyController {
   static layDanhSachCongty(req, res) {
       Congty.find()

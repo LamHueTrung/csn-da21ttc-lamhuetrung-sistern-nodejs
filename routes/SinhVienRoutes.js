@@ -10,5 +10,6 @@ router.get('/tintuc', TintucController.layThongBao);
 
 router.post('/dangkythuctap', ThuctapController.DangKyThucTap);
 router.post('/themthongtin', SinhvienController.themThongTinSinhVien);
+router.post('/themthongbao', TintucController.themThongBao);
 
 module.exports = router;

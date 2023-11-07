@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const format = require('date-fns/format');
 
 const TinTucSchema = new mongoose.Schema({
     thoigian: String,
