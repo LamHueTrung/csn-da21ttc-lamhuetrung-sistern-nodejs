@@ -7,7 +7,7 @@ const CanboHDSchema = new mongoose.Schema({
     chucvu: String,
     vitri: String,
     email: String,
-    sodienthoai: String
+    sodienthoai: String,
 });
 
 const CanboHD = mongoose.model('tblCanbohuongdan', CanboHDSchema);

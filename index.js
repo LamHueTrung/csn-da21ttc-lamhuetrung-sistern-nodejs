@@ -15,13 +15,12 @@ app.use(express.json());
 // kết nối db
 db.connect();
 
-//[GET]
+//routes
 app.use('/taikhoan', TaikhoanRoutes);
-app.use('/student',SinhVienRoutes); 
+app.use('/student', SinhVienRoutes);
 app.use('/company', CongTyRoutes);
 app.use('/teacher', GiaoVienRoutes);
 
-
 app.listen(port, () => {
-  console.log('API server is running on port 3001');
+    console.log('API server is running on port 3001');
 });
