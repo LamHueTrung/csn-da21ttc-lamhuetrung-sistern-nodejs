@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 async function connect() {
     try {
         mongoose
-            .connect("mongodb://127.0.0.1:27017/sisntern")
+            .connect('mongodb+srv://lamhuetrung:Lht080103@sistern.ajxyvai.mongodb.net/sistern?retryWrites=true&w=majority')
             .then(() => console.log('Connected!'));
     } catch (error) {
         console.log(error);
