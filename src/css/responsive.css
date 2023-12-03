@@ -1,0 +1,307 @@
+@media screen and (min-width: 1240px) {
+    .App {
+        height: 1024px;
+    }
+    .container {
+        height: 98%;
+    }
+    .data {
+        height: 98%;
+    }
+    .content {
+        height: 96%;
+    }
+    .danhsachdondangky table {
+        height: 95%;
+    }
+    /* ADIM */
+    .danhsachdondangky #trangthai {
+        min-width: 170px;
+    }
+    #admin_diachicongty {
+        min-width: 430px;
+    }
+    #vitri {
+        width: 581px;
+    }
+    #ngaytaodon {
+        min-width: 290px;
+    }
+    #emailsinhvien {
+        min-width: 350px;
+    }
+    .dangxuat {
+        margin-top: 415px !important;
+    }
+    #masinhvien {
+        min-width: 125px;
+    }
+    #tensinhvien {
+        min-width: 200px;
+    }
+}
+@media screen and (max-width: 1239px) {
+    .Navbar {
+        width: 10%;
+    }
+    .data {
+        margin-left: 10%;
+    }
+    .items {
+        width: 95%;
+    }
+    .items li h2 {
+        width: 95%;
+    }
+    .items li {
+        height: 100px;
+    }
+    .danhsachdondangky #trangthai {
+        min-width: 75px;
+        border: none;
+        border-right: 1px solid #3333;
+        height: 53px;
+    }
+    .danhsachdondangky {
+        border: none;
+    }
+    .danhsachdondangky table .info {
+        height: 55px;
+    }
+    .danhsachdondangky table tr {
+        height: 57px;
+    }
+    #masinhvien {
+        min-width: 100px;
+    }
+    #tensinhvien,
+    #emailsinhvien {
+        min-width: 150px;
+        width: 235px;
+    }
+    #ngaytaodon {
+        min-width: 100px;
+    }
+    .dangxuatcongty {
+        margin-top: auto;
+    }
+    .thongtincongty .thongtindangkythuctap li input {
+        width: 260px !important;
+    }
+}
+@media screen  and (max-width: 1024px) {
+    .Navbar {
+        width: 14%;
+    }
+    .data {
+        margin-left: 14%;
+        width: 83%;
+    }
+    .danhsachdondangky {
+        margin-top: 7%;
+    }
+    .danhsachdondangky table tr {
+        height: 60px;
+    }
+    #masinhvien {
+        min-width: 100px;
+        height: 55px;
+    }
+    #tensinhvien {
+        min-width: 200px;
+    }
+    #emailsinhvien {
+        min-width: 255px;
+    }
+    #ngaytaodon {
+        min-width: 170px;
+    }
+    .danhsachdondangky #trangthai {
+        min-width: 150px;
+        border: none;
+        height: 56px;
+    }
+    .items li {
+        height: 110px;
+        margin-left: 16px;
+        /* text-align: left; */
+    }
+    .items li h2 {
+        text-align: left;
+        width: 95%;
+    }
+    .dangxuatcongty {
+        margin-top: 255px;
+    }
+    .thongtincongty .thongtindangkythuctap {
+        display: block;
+        margin-left: 15%;
+        height: auto;
+        width: 75%;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    .content h1 {
+        display: block;
+        width: 90%;
+    }
+    .company {
+        height: 50% !important;
+    }
+    .luachoncongty button,
+    .thongtincongty button {
+        margin-left: 30%;
+    }
+}
+
+@media screen  and (max-width: 768px) {
+    html {
+        padding: 0;
+        height: 765px;
+    }
+    .data {
+        width: 100%;
+        margin-left: 0%;
+    }
+    .home_index,
+    .home {
+        margin-top: 30%;
+    }
+    .chonloaitaikhoan {
+        font-size: 115px;
+    }
+    .loaitaikhoan button,
+    .login button,
+    .signUp button {
+        font-size: 30px;
+        width: 350px;
+    }
+    .signUp,
+    .login {
+        height: auto;
+        font-size: 30px;
+        width: 500px;
+        padding-bottom: 20px;
+    }
+    .login input,
+    .signUp input {
+        width: 400px;
+        height: 60px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+        font-size: 30px;
+    }
+    .openMenu {
+        display: block !important;
+    }
+    .dangxuatcongty,
+    .dangxuatsinhvien {
+        text-align: -webkit-center;
+        font-size: 30px;
+    }
+    .mobile-navbar {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        height: 60px;
+        display: block;
+        position: absolute;
+        z-index: 1000;
+    }
+    .mobile-navbar .icon {
+        font-size: 60px;
+        padding: 0;
+        margin: 0;
+        margin-left: 30px;
+    }
+    .header .icon {
+        display: none;
+    }
+    .header {
+        margin-left: 30%;
+        width: 70%;
+    }
+    .Navbar {
+        width: 100%;
+        z-index: 1000;
+        background: #fff;
+        display: none;
+    }
+    .content {
+        height: 765px;
+    }
+    .Navbar .company li {
+        text-align: -webkit-center;
+    }
+    .thongbao .icon {
+        font-size: 50px;
+    }
+    #navbar li .icon,
+    .dangxuat .icon {
+        margin: auto;
+    }
+    #navbar li {
+        font-size: 30px;
+        height: 100px;
+    }
+    .dangxuat,
+    .dangxuatsinhvien {
+        margin-top: 40px !important;
+        font-size: 30px;
+    }
+    .items li {
+        margin-left: 13px;
+        height: auto;
+        padding-bottom: 7px;
+    }
+    .items li h2 {
+        width: 95%;
+        text-align: left;
+    }
+    .danhsachdondangky input {
+        margin-top: 15%;
+        margin-bottom: 2px;
+        width: 90%;
+        font-size: 27px;
+    }
+    .danhsachdondangky {
+        margin-left: 1%;
+    }
+    .danhsachdondangky table tr {
+        height: 60px;
+    }
+    #stt {
+        font-size: 20px;
+    }
+    #macongty,
+    .danhsachdondangky #trangthai {
+        min-width: 200px;
+        height: 57px;
+        font-size: 20px;
+    }
+    #admin_tencongty,
+    #admin_emailcongty,
+    #masinhvien,
+    #tensinhvien,
+    #ngaytaodon {
+        min-width: 250px;
+        height: 57px;
+        font-size: 20px;
+    }
+    .danhsachdondangky #trangthai {
+        border: none;
+    }
+    #admin_diachicongty {
+        height: 57px;
+        font-size: 20px;
+        min-width: 400px;
+    }
+    #vitri,
+    .info #emailsinhvien,
+    #emailsinhvien {
+        min-width: 350px;
+        height: 57px;
+        font-size: 20px;
+    }
+}

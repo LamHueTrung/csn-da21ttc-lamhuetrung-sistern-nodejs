@@ -1,5 +1,4 @@
 .home {
-    
     display: flex;
     margin: auto;
     margin-top: 10%;
@@ -12,8 +11,7 @@
     display: none !important;
 }
 
-.message
-{
+.message {
     margin-bottom: 5px;
     float: left;
     width: 250px;
@@ -45,12 +43,13 @@
     height: 300px;
 }
 
-.login h2, .signUp h2 {
+.login h2,
+.signUp h2 {
     color: rgb(8, 8, 110);
 }
-  
+
 input {
-    width:350px;
+    width: 350px;
     height: 40px;
     border-radius: 10px;
     margin-bottom: 10px;
@@ -66,8 +65,7 @@ a {
     text-align: center;
 }
 .text-login {
-     margin-bottom: 10px; 
-
+    margin-bottom: 10px;
 }
 a:hover {
     color: rgba(8, 8, 110, 0.689);
@@ -82,7 +80,6 @@ button {
 }
 button:hover {
     background-color: rgba(8, 8, 110, 0.689);
-
 }
 /* Hom index */
 .home_index {

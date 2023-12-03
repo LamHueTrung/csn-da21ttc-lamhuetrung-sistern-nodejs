@@ -1,5 +1,8 @@
 .close {
-    display: none ;
+    display: none;
+}
+.mobile-navbar {
+    display: none;
 }
 .dangxuat {
     margin-top: 175px !important;
@@ -62,7 +65,7 @@
 }
 #stt {
     padding: 10px;
-    width: 50px;
+    min-width: 50px;
 }
 #masinhvien {
     width: 125px;
@@ -77,6 +80,7 @@
 }
 #tencongty {
     width: 320px;
+    min-width: 200px;
 }
 #ngaytaodon {
     width: 170px;
@@ -101,11 +105,83 @@
 /* Công ty */
 #diachicongty {
     width: 500px;
-
 }
 #vitri {
     width: 400px;
 }
 #soluong {
     width: 100px;
+}
+#macongty {
+    min-width: 100px;
+    height: 35px;
+}
+#admin_tencongty {
+    min-width: 200px;
+}
+#admin_emailcongty {
+    min-width: 200px;
+}
+#admin_diachicongty {
+    min-width: 330px;
+}
+@media screen and (max-width: 767px) {
+    .thongtincanhan .thongtintaikhoan,
+    .thongtincanhan .thongtintaikhoan li,
+    .thongtinsinhvien li {
+        height: auto;
+        display: block;
+        text-align: center;
+        width: 92% !important;
+        padding-left: 3%;
+    }
+    .thongtintaikhoan li .lable,
+    .thongtinsinhvien li .lable,
+    .email_dangky .lable {
+        font-size: 30px;
+    }
+    .thongtintaikhoan li .info,
+    .thongtinsinhvien li .info,
+    .email_dangky .info {
+        font-size: 25px;
+        width: 90%;
+    }
+    .content h1 {
+        font-size: 27px;
+        width: 100%;
+        margin-left: 0;
+    }
+    .button_luu,
+    .button_huy,
+    .danhsachdondangky .button_search {
+        width: 200px !important;
+        font-size: 27px;
+        margin-left: 3%;
+        margin-bottom: 3%;
+        float: none;
+    }
+    .danhsachdondangky .button_search {
+        font-size: 27px;
+        padding: 5px;
+        height: 40px;
+    }
+    .icon_button {
+        font-size: 25px;
+    }
+    .thongtincongty .thongtindangkythuctap {
+        display: block;
+        height: auto;
+    }
+    .thongtincongty .thongtindangkythuctap li {
+        margin-bottom: 15px;
+    }
+    .thongtincongty .thongtindangkythuctap li input {
+        width: 100% !important;
+        font-size: 27px;
+    }
+    .nutbam {
+        width: 97%;
+        height: auto;
+        display: block;
+    }
 }

@@ -1,5 +1,5 @@
 .dangxuatcongty {
-    margin-top: 375px;
+    /* margin-top: 535px; */
     color: black;
     text-decoration: none;
     border-top: 1px solid #6060602b;
@@ -11,7 +11,7 @@
     justify-content: space-evenly;
 }
 .company {
-    height: 35% !important;
+    height: auto;
 }
 #soluong {
     width: 120px !important;
@@ -54,4 +54,16 @@
 }
 .thong_tin_email {
     width: 350px;
+}
+#tencanbo {
+    min-width: 185px;
+}
+#chucvucanbo {
+    min-width: 270px;
+}
+#vitrihuongdan {
+    min-width: 320px;
+}
+#emailcanbo {
+    min-width: 215px;
 }

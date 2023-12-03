@@ -6,7 +6,6 @@
 }
 .ngancach {
     border-bottom: 1px solid #6060602b;
-
 }
 .Navbar {
     position: absolute;
@@ -34,7 +33,6 @@
 }
 .Navbar ul li:hover {
     background: rgba(80, 166, 237, 0.503);
-
 }
 .click {
     background: rgba(80, 166, 237, 0.503);
@@ -48,14 +46,12 @@
     text-decoration: none;
     margin-top: 325px;
     border-top: 1px solid #6060602b;
-
 }
 .data {
     margin-left: 7%;
     width: 90%;
     height: 760px;
     position: relative;
-
 }
 .header {
     width: 100%;
@@ -122,7 +118,6 @@ a {
 }
 table {
     border: 2px solid #333333 !important;
-
 }
 .tieude_table {
     height: 40px;

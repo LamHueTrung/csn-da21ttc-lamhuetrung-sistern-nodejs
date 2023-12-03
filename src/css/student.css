@@ -10,7 +10,7 @@
     align-items: center;
     height: 85px !important;
 }
-.thongtindondangky{
+.thongtindondangky {
     list-style: none;
     width: 95%;
     height: 50px;
@@ -43,7 +43,8 @@
 .thongtincanhan .thongtintaikhoan li input {
     width: 350px !important;
 }
- .thongtinsinhvien, .doimatkhau {
+.thongtinsinhvien,
+.doimatkhau {
     list-style: none;
     width: 95%;
     height: 50px;
@@ -51,19 +52,22 @@
     justify-content: center;
     margin-left: 140px;
 }
-.thongtintaikhoan li, .thongtinsinhvien li {
+.thongtintaikhoan li,
+.thongtinsinhvien li {
     display: block;
     height: 50px;
     width: 400px;
 }
-.thongtintaikhoan li .lable, .thongtinsinhvien li .lable {
+.thongtintaikhoan li .lable,
+.thongtinsinhvien li .lable {
     display: block;
     text-align: left;
     margin-bottom: 5px;
     color: #0a2689;
     font-size: 16px;
 }
-.thongtintaikhoan li .info, .thongtinsinhvien li .info {
+.thongtintaikhoan li .info,
+.thongtinsinhvien li .info {
     display: block;
     text-align: left;
     margin-bottom: 5px;
@@ -118,10 +122,12 @@
     border: 1px solid #33333370;
     border-radius: 5px;
     width: 100%;
-    width: 350px;
 }
 /* Trang sinh viên: thực tập */
-.thongtincanhan, .luachoncongty, .thongtincongty, .dinhkem {
+.thongtincanhan,
+.luachoncongty,
+.thongtincongty,
+.dinhkem {
     margin: 15px;
     border: 1px solid #00000069;
     border-radius: 30px;
@@ -131,12 +137,16 @@
     height: 55%;
 }
 .thongtincongty {
-    height: 80%;
+    height: auto;
 }
-.luachoncongty ul, .thongtincongty ul, .dinhkem ul {
+.luachoncongty ul,
+.thongtincongty ul,
+.dinhkem ul {
     justify-content: space-between;
 }
-.luachoncongty li input, .thongtincongty li input, .dinhkem li input {
+.luachoncongty li input,
+.thongtincongty li input,
+.dinhkem li input {
     height: 30px;
     border: 1px solid #33333370;
     border-radius: 5px;
@@ -152,7 +162,8 @@
     width: 100%;
     width: 350px;
 }
-.baocaotiendo .nopbai li input, .baocaotongket .nopbai li input {
+.baocaotiendo .nopbai li input,
+.baocaotongket .nopbai li input {
     width: 530px !important;
     float: left;
     margin-left: 15px;
@@ -167,17 +178,20 @@
 .nguoiphutrach input {
     margin-right: 15px;
 }
-.luachoncongty button, .thongtincongty button {
+.luachoncongty button,
+.thongtincongty button {
     width: 20%;
     float: left;
     margin-left: 50px;
 }
-.luachoncongty button:hover, .thongtincongty button:hover{
+.luachoncongty button:hover,
+.thongtincongty button:hover {
     background-color: #07108c;
     color: #ffff;
 }
 .description {
     width: 100%;
+    min-width: 60%;
     height: 200px !important;
     text-decoration: auto;
     text-align: start;
@@ -228,21 +242,23 @@
 }
 /* Danh sách đăng ký công ty */
 
-.danhsachcongty, .danhsachcanbo {
+.danhsachcongty,
+.danhsachcanbo {
     height: 300px !important;
     width: 100% !important;
     display: block !important;
-    margin-top: 60px !important; 
+    margin-top: 60px !important;
     padding-left: 0 !important;
-    
 }
-.danhsachcongty input, .danhsachcanbo input {
+.danhsachcongty input,
+.danhsachcanbo input {
     margin: 15px;
     float: left;
     height: 20px;
 }
 
-.danhsachcongty .button_search, .danhsachcanbo .button_search {
+.danhsachcongty .button_search,
+.danhsachcanbo .button_search {
     float: left;
     margin-top: 15px;
     height: 35px;
@@ -252,10 +268,12 @@
     background: #3d95e3;
     margin-bottom: 15px;
 }
-.danhsachcongty .button_search:hover, .danhsachcanbo .button_search:hover {
+.danhsachcongty .button_search:hover,
+.danhsachcanbo .button_search:hover {
     background: #3177b5;
 }
-.danhsachcongty table, .danhsachcanbo table {
+.danhsachcongty table,
+.danhsachcanbo table {
     width: 96%;
     height: 300px;
     margin: 0 2% 20px;
@@ -264,18 +282,21 @@
     background: white;
     display: block;
 }
-.danhsachcongty table tr, .danhsachcanbo table tr {
+.danhsachcongty table tr,
+.danhsachcanbo table tr {
     height: 40px;
     border: 1px solid #3333;
     width: 100%;
     display: block;
 }
-.danhsachcongty table .info, .danhsachcanbo table .info {
+.danhsachcongty table .info,
+.danhsachcanbo table .info {
     color: #333333d5;
     font-size: 15px;
     font-weight: 100;
 }
-.danhsachcongty table th, .danhsachcanbo table th {
+.danhsachcongty table th,
+.danhsachcanbo table th {
     border-right: 1px solid #3333;
 }
 #stt {
@@ -283,7 +304,7 @@
     width: 50px;
 }
 #checked {
-    width: 50px;
+    min-width: 50px;
 }
 #checked input {
     width: 30px;
@@ -319,13 +340,53 @@
     width: 278px;
     border: 0;
 }
-.danhsachcongty .nutbam button, .danhsachcanbo .nutbam button {
+.danhsachcongty .nutbam button,
+.danhsachcanbo .nutbam button {
     float: right;
 }
-.danhsachcongty .nutbam .button_luu, .danhsachcanbo .nutbam .button_luu {
+.danhsachcongty .nutbam .button_luu,
+.danhsachcanbo .nutbam .button_luu {
     width: 150px;
 }
 .close {
     display: none;
 }
-
+.thongtindondangky .fullsize {
+    height: auto;
+}
+@media screen and (max-width: 767px) {
+    .danhsachcongty table tr,
+    .danhsachcanbo table tr {
+        height: 60px;
+    }
+    .thongtindondangky {
+        display: block;
+        height: auto;
+    }
+    .thongtindondangky li {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .thongtincongty li select {
+        width: 95%;
+    }
+    .luachoncongty li input,
+    .thongtincongty li input,
+    .dinhkem li input {
+        margin: 0;
+        padding: 0px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        width: 95%;
+    }
+    .luachoncongty ul,
+    .thongtincongty ul,
+    .dinhkem ul {
+        padding: 0;
+        width: 90%;
+        margin-left: 5%;
+    }
+    .thongtincanhan .thongtintaikhoan li input {
+        width: 100% !important;
+    }
+}

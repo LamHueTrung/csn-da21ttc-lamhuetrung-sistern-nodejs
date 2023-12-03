@@ -1,9 +1,9 @@
 import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter, 
-  Route
-} from "react-router-dom";
+    createBrowserRouter,
+    RouterProvider,
+    BrowserRouter,
+    Route,
+} from 'react-router-dom';
 import React from 'react';
 import './App.css';
 import Login from '../src/Login';
@@ -28,120 +28,115 @@ import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
 import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
 import ThongTinGV from '../src/pages/Teacher/dangkythongtin';
 
-
 const router = createBrowserRouter([
-  {
-    path: "/admin/quanlythuctap/:slug",
-    element: <Quanlythuctap />,
-  },
-  {
-    path: "/admin/congty/:slug",
-    element: <Congty />,
-  },
-  {
-    path: "/admin/quanlythuctap/thongtindangky/:slug",
-    element: <Thongtindangky />,
-  },
-  {
-    path: "/admin/sinhvien/:slug",
-    element: <Sinhvien />,
-  },
-  {
-    path: "/admin/giaovien/:slug",
-    element: <Giaovien />,
-  },
-  {
-    path: "/admin/tintuc/:slug",
-    element: <TintucAD />,
-  },
-  {
-    path: "/admin",
-    element:<Login />,
-  },
-  {
-    path: "/teacher/quanlythuctap/:slug",
-    element: <DonThucTapGV />,
-  },
-  {
-    path: "/teacher/quanlythuctap/thongtindangky/:slug",
-    element: <ThongTinDangKyGV />,
-  },
-  {
-    path: "/teacher/sinhvien/:slug",
-    element: <SinhvienDangKyGV />,
-  },
-  {
-    path: "/teacher/thongtin/:slug",
-    element: <ThongTinGV />,
-  },
-  {
-    path: "/teacher/tintuc/:slug",
-    element: <TintucGV />,
-  },
-  {
-    path: "/teacher",
-    element:<Login />,
-    
-  },
-  {
-    path: "/company/tintuc/:slug",
-    element: <TintucCT />,
-  },
-  {
-    path: "/company/dangkythuctap/:slug",
-    element: <Dangkythuctap />,
-  },
-  {
-    path: "/company/danhsachdangky/:slug",
-    element: <Danhsachdangky />,
-  },
-  {
-    path: "/company/canbohuongdan/:slug",
-    element: <Danhsachcanbo />,
-  },
-  
-  {
-    path: "/company",
-    element:<Login />,
-    
-  },
-  {
-    path: "/student/tintuc/:slug",
-    element: <Tintuc />,
-  },
-  {
-    path: "/student/dondangky/:slug",
-    element: <DonThuctap />,
-  },
-  {
-    path: "/student/thuctap/:slug",
-    element: <Thuctap />,
-  },
-  {
-    path: "/student/tintuc/:slug",
-    element: <Tintuc />
-  },
-  {
-    path: "/xuly/",
-    element:<XulyLogin />,
-    
-  },
-  {
-    path: "/student",
-    element:<Login />,
-    
-  },
-  {
-    path: "/",
-    element: <Index />
-  },
+    {
+        path: '/admin/quanlythuctap/:slug',
+        element: <Quanlythuctap />,
+    },
+    {
+        path: '/admin/congty/:slug',
+        element: <Congty />,
+    },
+    {
+        path: '/admin/quanlythuctap/thongtindangky/:slug',
+        element: <Thongtindangky />,
+    },
+    {
+        path: '/admin/sinhvien/:slug',
+        element: <Sinhvien />,
+    },
+    {
+        path: '/admin/giaovien/:slug',
+        element: <Giaovien />,
+    },
+    {
+        path: '/admin/tintuc/:slug',
+        element: <TintucAD />,
+    },
+    {
+        path: '/admin',
+        element: <Login />,
+    },
+    {
+        path: '/teacher/quanlythuctap/:slug',
+        element: <DonThucTapGV />,
+    },
+    {
+        path: '/teacher/quanlythuctap/thongtindangky/:slug',
+        element: <ThongTinDangKyGV />,
+    },
+    {
+        path: '/teacher/sinhvien/:slug',
+        element: <SinhvienDangKyGV />,
+    },
+    {
+        path: '/teacher/thongtin/:slug',
+        element: <ThongTinGV />,
+    },
+    {
+        path: '/teacher/tintuc/:slug',
+        element: <TintucGV />,
+    },
+    {
+        path: '/teacher',
+        element: <Login />,
+    },
+    {
+        path: '/company/tintuc/:slug',
+        element: <TintucCT />,
+    },
+    {
+        path: '/company/dangkythuctap/:slug',
+        element: <Dangkythuctap />,
+    },
+    {
+        path: '/company/danhsachdangky/:slug',
+        element: <Danhsachdangky />,
+    },
+    {
+        path: '/company/canbohuongdan/:slug',
+        element: <Danhsachcanbo />,
+    },
+
+    {
+        path: '/company',
+        element: <Login />,
+    },
+    {
+        path: '/student/tintuc/:slug',
+        element: <Tintuc />,
+    },
+    {
+        path: '/student/dondangky/:slug',
+        element: <DonThuctap />,
+    },
+    {
+        path: '/student/thuctap/:slug',
+        element: <Thuctap />,
+    },
+    {
+        path: '/student/tintuc/:slug',
+        element: <Tintuc />,
+    },
+    {
+        path: '/xuly/',
+        element: <XulyLogin />,
+    },
+    {
+        path: '/student',
+        element: <Login />,
+    },
+    {
+        path: '/',
+        element: <Index />,
+    },
 ]);
 function App() {
-  return (
-    <div className="App">
-        <RouterProvider router={router} />
-    </div>
-  );
+    return (
+        <div className="App">
+            <RouterProvider router={router} />
+        </div>
+    );
 }
 
 export default App;
