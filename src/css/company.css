@@ -20,12 +20,12 @@
 .thongtincongty .thongtindangkythuctap {
     list-style: none;
     width: 95%;
-    height: 50px;
+    height: auto;
     display: inline-flex;
     justify-content: space-evenly;
 }
 .thongtincongty .thongtindangkythuctap li {
-    width: 350px !important;
+    width: 350px ;
 }
 .thongtincongty .thongtindangkythuctap li input {
     width: 350px !important;
@@ -52,6 +52,9 @@
     font-size: 18px;
     font-style: italic;
 }
+.thongtinan {
+    display: none;
+}
 .thong_tin_email {
     width: 350px;
 }
@@ -66,4 +69,65 @@
 }
 #emailcanbo {
     min-width: 215px;
+}
+.motacongty {
+    display: block;
+    height: auto;
+    list-style: none;
+    width: 95%;
+}
+.motacongty li .lable {
+    width: 100%;
+    display: block;
+    float: left;
+    text-align: left;
+    font-size: 18px;
+    padding-left: 5%;
+    margin-bottom: 7px;
+    color: #0612b8;
+}
+.motacongty li .info {
+    display: block;
+    text-align: left;
+    font-size: 18px;
+    padding-left: 5%;
+    margin-bottom: 7px;
+    text-align: left;
+    border: none;
+    height: auto;
+    background: none;
+}
+/*Update V.1 */
+.thongtincongty  .thongtindangkythuctap .vitrithuctap {
+    width: 91%;
+    float: left;
+    text-align: justify;
+}
+.vitrithuctap #vitrithuctap{
+    float: left;
+}
+.thongtincongty .them {
+    width: 4%;
+    margin-left: 1%;
+    padding: 5px;
+}
+.icon_them {
+    font-size: 25px;
+
+}
+@media screen and (max-width: 767px) {
+    .company {
+        height: auto !important;
+    }
+    .thongtindangkythuctap #vitri, #vitrihuongdan {
+        width: 80% !important;
+        font-size: 20px;
+        min-width: 100px !important;
+    }
+    .thongtincongty .thongtindangkythuctap .thong_tin_email {
+        margin-left: 3%;
+    }
+    .thongtincongty .thongtindangkythuctap li {
+        margin-left: -8%;
+    }
 }

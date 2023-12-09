@@ -33,6 +33,7 @@ function ThongTinDangKyGV() {
     var ThongTinCongTy = {};
     var tblThucTap = {};
 
+
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -281,7 +282,7 @@ function ThongTinDangKyGV() {
                         <ul className="thongtintaikhoan">
                             <li>
                                 <span className="lable">Trạng thái đơn</span>
-                                <span className="info">
+                                <span className="info trangthaidonthuctap">
                                     {tblThucTap.trangthaidon}
                                 </span>
                             </li>

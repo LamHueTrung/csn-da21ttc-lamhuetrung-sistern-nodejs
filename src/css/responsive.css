@@ -10,6 +10,10 @@
     }
     .content {
         height: 96%;
+        width: 100%;
+    }
+    .thongtincanhan, .luachoncongty, .thongtincongty, .dinhkem {
+        margin: 15px 5px;
     }
     .danhsachdondangky table {
         height: 95%;
@@ -22,7 +26,7 @@
         min-width: 430px;
     }
     #vitri {
-        width: 581px;
+        min-width: 250px;
     }
     #ngaytaodon {
         min-width: 290px;
@@ -89,7 +93,7 @@
         width: 260px !important;
     }
 }
-@media screen  and (max-width: 1024px) {
+@media screen and (min-width: 769px) and (max-width: 1024px) {
     .Navbar {
         width: 14%;
     }
@@ -143,7 +147,8 @@
     }
     .content h1 {
         display: block;
-        width: 90%;
+        width: 100%;
+        font-size: 25px;
     }
     .company {
         height: 50% !important;
@@ -159,22 +164,39 @@
         padding: 0;
         height: 765px;
     }
+    body {
+        margin: 0;
+    }
+    .box {
+        display: block;
+    }
+    .gioithieu {
+        display: none;
+    }
     .data {
         width: 100%;
         margin-left: 0%;
     }
-    .home_index,
+    .home_index {
+        float: none;
+        margin-left: 0px;
+        width: 100%;
+        height: auto;
+        margin-top: 0;
+        padding-top: 30%;
+        background: none;
+    }
     .home {
         margin-top: 30%;
     }
     .chonloaitaikhoan {
-        font-size: 115px;
+        font-size: 75px;
     }
     .loaitaikhoan button,
     .login button,
     .signUp button {
-        font-size: 30px;
-        width: 350px;
+        font-size: 25px;
+        width: 300px;
     }
     .signUp,
     .login {
@@ -213,14 +235,14 @@
         font-size: 60px;
         padding: 0;
         margin: 0;
-        margin-left: 30px;
+        margin-left: 10px;
     }
     .header .icon {
         display: none;
     }
     .header {
-        margin-left: 30%;
-        width: 70%;
+        margin-left: 20%;
+        width: 80%;
     }
     .Navbar {
         width: 100%;
@@ -256,8 +278,12 @@
         padding-bottom: 7px;
     }
     .items li h2 {
-        width: 95%;
+        width: 90%;
         text-align: left;
+        font-size: 17px;
+    }
+    .thongtincongty .thongtindangkythuctap {
+        margin-left: 10% !important;
     }
     .danhsachdondangky input {
         margin-top: 15%;

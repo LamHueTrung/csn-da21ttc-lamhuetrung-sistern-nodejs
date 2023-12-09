@@ -12,8 +12,8 @@ import { CiSettings } from 'react-icons/ci';
 import port from '../../port';
 import '../../css/student.css';
 import '../../css/base.css';
-import '../../css/teacher.css';
 import '../../css/company.css';
+import '../../css/teacher.css';
 
 function CanboHD() {
     const [canbohds, setCanBoHD] = useState([]);
@@ -148,7 +148,7 @@ function CanboHD() {
                                         <th id="stt">STT</th>
                                         <th id="tencanbo">Tên cán bộ</th>
                                         <th id="chucvucanbo">Chức vụ </th>
-                                        <th id="vitrihuongdan">
+                                        <th id="ngaytaodon">
                                             Vị trí hướng dẫn
                                         </th>
                                         <th id="emailcanbo">Email</th>
@@ -166,7 +166,7 @@ function CanboHD() {
                                                 <th id="chucvucanbo">
                                                     {canbohd.chucvu}
                                                 </th>
-                                                <th id="vitrihuongdan">
+                                                <th id="ngaytaodon">
                                                     {canbohd.vitri}
                                                 </th>
                                                 <th id="emailcanbo">

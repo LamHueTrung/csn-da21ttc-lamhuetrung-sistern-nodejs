@@ -10,64 +10,59 @@ import { PiStudentDuotone } from 'react-icons/pi';
 import { AiOutlineHome } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import port from '../../port';
+import '../../css/company.css';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
-import '../../css/company.css';
 
 function DanhSachDangKy() {
     const [thuctaps, setthuctap] = useState([]);
+    const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
+    const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
 
-    // lấy macongty từ tài khoản trên :slug
+    var ThongTinGiaoVien = {};
+    var ThongTinCanBoHD = '';
+    var ThongTinSinhVien = '';
+    var ThongTinCongTy = '';
+    var tblThucTap = [];
+
     useEffect(() => {
         axios
-            .get(`${port}/company/danhsachcongty`)
+            .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
             .then((response) => setCongTy(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    var MaCongTy = {};
-    congtys.map((ct) => {
-        if (ct.email == taikhoan) {
-            MaCongTy = {
-                macongty: ct.macongty,
-            };
-        }
-    });
-    //lấy thông tin đơn thực tập từ macongty trong taikhoan
-    // var ThongTinThucTap = {};
     useEffect(() => {
         axios
-            .get(`${port}/company/donthuctap`)
+            .get(`${port}/student/donthuctap`)
             .then((response) => setthuctap(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    var tblThucTap = [];
-    const mathuctap = thuctaps.map((tttt) => {
-        if (tttt.macongty == MaCongTy.macongty) {
-            tblThucTap.push({
-                masinhvien: tttt.masinhvien,
-                loai: tttt.loai,
+    useEffect(() => {
+        axios
+            .get(`${port}/company/canbohuongdan`)
+            .then((response) => setCanBoHD(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
             });
-        }
-    });
-
-    //lấy danh sách sinh viên đăng ký thực tập tại công ty đang đăng nhập
-    var MSSV = [];
-    tblThucTap.map((mssv) => {
-        MSSV.push({
-            mssv: mssv.masinhvien,
-            loai: mssv.loai,
-        });
-    });
+    }, []);
+    useEffect(() => {
+        axios
+            .get(`${port}/teacher/danhsachgiaovien`)
+            .then((response) => setGiaoviens(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
     useEffect(() => {
         axios
             .get(`${port}/student/danhsachsinhvien`)
@@ -76,20 +71,52 @@ function DanhSachDangKy() {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    var DanhSachSVCuaCongTy = [];
-    MSSV.filter((sv) => {
-        sinhViens.map((ttsv) => {
-            if (sv.mssv == ttsv.masinhvien) {
-                DanhSachSVCuaCongTy.push({
-                    masinhvien: ttsv.masinhvien,
-                    hoten: ttsv.hoten,
-                    email: ttsv.email,
-                    sodienthoai: ttsv.sodienthoai,
-                    loai: sv.loai,
-                });
+    var MaCongTy = '';
+    congtys.map((ct) => {
+        if (ct.email == taikhoan) {
+            MaCongTy = ct.macongty;
+        }
+    });
+    const mathuctap = thuctaps.map((tttt) => {
+        sinhViens.map((sv) => {
+            if (sv.masinhvien == tttt.masinhvien) {
+                ThongTinSinhVien = sv.hoten;
             }
         });
+        Giaoviens.map((gv) => {
+            if (gv.magiaovien == tttt.magiaovien) {
+                ThongTinGiaoVien = {
+                    tengiaovien: gv.tengiaovien,
+                    email: gv.email,
+                };
+            }
+        });
+        congtys.map((ct) => {
+            if (ct.macongty == tttt.macongty) {
+                ThongTinCongTy = {
+                    tencongty: ct.tencongty,
+                    email: ct.email,
+                };
+            }
+        });
+        canbohds.map((cbhd) => {
+            if (cbhd.macanbo == tttt.macanbohuongdan) {
+                ThongTinCanBoHD = cbhd.tencanbo;
+            }
+        });
+        tblThucTap.push({
+            _id: tttt._id,
+            mathuctap: tttt.mathuctap,
+            tensinhvien: ThongTinSinhVien,
+            tengiaovien: ThongTinGiaoVien.tengiaovien,
+            tencanbo: ThongTinCanBoHD,
+            noidungthuctap: tttt.noidungthuctap,
+            emailcongty: ThongTinCongTy.email,
+            tencongty: ThongTinCongTy.tencongty,
+            trangthaidon: tttt.trangthaidon,
+        });
     });
+
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -98,6 +125,7 @@ function DanhSachDangKy() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    console.log(`${ThongTinCongTy.tencongty} đã duyệt`)
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -163,11 +191,9 @@ function DanhSachDangKy() {
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">
-                            Danh sách đăng ký thực tập
-                        </h1>
+                        <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="từ khóa" />
+                            <input type="text" placeholder="Công ty" />
                             <button className="button_search">
                                 {' '}
                                 <AiOutlineSearch className="icon_button" />
@@ -177,33 +203,49 @@ function DanhSachDangKy() {
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
-                                        <th id="masinhvien">Mã sinh viên</th>
-                                        <th id="tensinhvien">Tên sinh viên</th>
-                                        <th id="emailsinhvien">Email</th>
-                                        <th id="ngaytaodon">Số điện thoại</th>
-                                        <th id="vitri">Thể loại</th>
+                                        <th id="masinhvien">Tên sinh viên</th>
+                                        <th id="tensinhvien">
+                                            Giáo viên hướng dẫn
+                                        </th>
+                                        <th id="emailsinhvien">
+                                            Vị trí  thực tập
+                                        </th>
+                                        <th id="ngaytaodon">Người phụ trách</th>
+                                        <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {DanhSachSVCuaCongTy.map((ttsv, index) => {
-                                        return (
-                                            <tr className="info">
-                                                <th id="stt">{index + 1}</th>
-                                                <th id="masinhvien">
-                                                    {ttsv.masinhvien}
-                                                </th>
-                                                <th id="tensinhvien">
-                                                    {ttsv.hoten}
-                                                </th>
-                                                <th id="emailsinhvien">
-                                                    {ttsv.email}
-                                                </th>
-                                                <th id="ngaytaodon">
-                                                    {ttsv.sodienthoai}
-                                                </th>
-                                                <th id="vitri">{ttsv.loai}</th>
-                                            </tr>
-                                        );
+                                    {tblThucTap.map((dtt, index) => {
+                                        if (
+                                            taikhoan == dtt.emailcongty &&
+                                            dtt.emailcongty != null
+                                          && dtt.trangthaidon == 'Giáo viên đã duyệt' || dtt.trangthaidon == `${ThongTinCongTy.tencongty} đã duyệt`)
+                                            return (
+                                                <Link
+                                                    to={`/company/quanlythuctap/thongtindangky/duyetdonthuctap?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}
+                                                >
+                                                    <tr className="info">
+                                                        <th id="stt">
+                                                            {index + 1}
+                                                        </th>
+                                                        <th id="masinhvien">
+                                                            {dtt.tensinhvien}
+                                                        </th>
+                                                        <th id="tensinhvien">
+                                                            {dtt.tengiaovien}
+                                                        </th>
+                                                        <th id="emailsinhvien">
+                                                            {dtt.noidungthuctap}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                            {dtt.tencanbo}
+                                                        </th>
+                                                        <th id="trangthai">
+                                                            {dtt.trangthaidon}
+                                                        </th>
+                                                    </tr>
+                                                </Link>
+                                            );
                                     })}
                                 </tbody>
                             </table>

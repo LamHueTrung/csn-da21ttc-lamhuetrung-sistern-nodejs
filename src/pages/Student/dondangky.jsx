@@ -145,14 +145,15 @@ function Thuctap() {
             sotuan: document.getElementById('sotuan').value,
             noidungthuctap: document.getElementById('noidungthuctap').value,
         };
+        
         axios
             .post(`${port}/student/dangkythuctap`, dataToAdd)
             .then((response) => {
                 alert('Đăng ký thực tập thành công, chờ xét duyệt');
-                console.log(dataToAdd);
+                console.log(response);
             })
             .catch((error) => {
-                console.log(dataToAdd);
+                console.log(error);
                 console.error('Lỗi khi thêm dữ liệu:', error);
             });
 
@@ -179,6 +180,10 @@ function Thuctap() {
         const ngaybatdau = document.getElementById('ngaybatdau');
         const ngayketthuc = document.getElementById('ngayketthuc');
         const tennguoiphutrach = document.querySelector('.tennguoiphutrach');
+        const luong = document.querySelector('.info_luong');
+        const motacongviec = document.querySelector('.info_motacongviec');
+        const yeucaucongviec = document.querySelector('.info_yeucaucongviec');
+        
         const email_nguoiphutrach = document.querySelector(
             '.email_nguoiphutrach',
         );
@@ -192,6 +197,8 @@ function Thuctap() {
                         macongty: ct.macongty,
                         ngaybatdau: ct.ngaybatdau,
                         ngayketthuc: ct.ngayketthuc,
+                        motacongviec: ct.motacongviec,
+                        yeucaucongviec: ct.yeucaucongviec
                     };
                 }
             });
@@ -206,12 +213,14 @@ function Thuctap() {
             });
             tencongty.textContent = congty.tencongty;
             diachi.textContent = congty.diachi;
-            vitri.textContent = congty.vitri;
-            email.textContent = congty.email;
+            vitri.textContent = congty.vitrithuctap;
+            luong.textContent = congty.luong;
             ngaybatdau.value = ThoiGianThucTap.ngaybatdau;
             ngayketthuc.value = ThoiGianThucTap.ngayketthuc;
             tennguoiphutrach.textContent = ThongTinCanBo.tenCB;
             email_nguoiphutrach.textContent = ThongTinCanBo.emailCB;
+            motacongviec.textContent = ThoiGianThucTap.motacongviec;
+            yeucaucongviec.textContent = ThoiGianThucTap.yeucaucongviec;
         } else {
             setSelectedCongty(null);
         }
@@ -337,6 +346,9 @@ function Thuctap() {
                                         <th id="admin_diachicongty">Địa chỉ</th>
                                         <th id="emailsinhvien">Email</th>
                                         <th id="vitri">Vị trí thực tập</th>
+                                        <th id="vitri">Lương</th>
+                                        <th id="vitri">Cấp bậc</th>
+                                        <th id="vitri">Hết hạn nộp</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -370,7 +382,16 @@ function Thuctap() {
                                                     {congty.email}
                                                 </th>
                                                 <th id="vitri">
-                                                    {congty.vitri}
+                                                    {congty.vitrithuctap}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.luong}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.capbac}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.hethannop}
                                                 </th>
                                             </tr>
                                         );
@@ -384,12 +405,12 @@ function Thuctap() {
                                 <span className="info info_tencongty"></span>
                             </li>
                             <li>
-                                <span className="lable">Email công ty</span>
+                                <span className="lable">Vị trí thực tập</span>
                                 <span className="info info_vitri"></span>
                             </li>
                             <li>
-                                <span className="lable">Vị trí thực tập</span>
-                                <span className="info info_email"></span>
+                                <span className="lable">Lương</span>
+                                <span className="info info_luong"></span>
                             </li>
                         </ul>
                         <ul className="thongtintaikhoan">
@@ -406,6 +427,26 @@ function Thuctap() {
                                     Email người phụ trách
                                 </span>
                                 <span className="info email_nguoiphutrach"></span>
+                            </li>
+                        </ul>
+                        <ul className="motacongty fullsize">
+                            <li>
+                                <span className="lable">Mô tả công việc</span>
+                                <textarea disabled
+                                    id="motacongviec"
+                                    className="fullsize_input description info info_motacongviec"
+                                    type="textbox"
+                                />
+                            </li>
+                        </ul>
+                        <ul className="motacongty fullsize">
+                            <li>
+                                <span className="lable">Yêu cầu công việc</span>
+                                <textarea disabled
+                                    id="yeucaucongviec"
+                                    className="fullsize_input description info info_yeucaucongviec"
+                                    type="textbox"
+                                />
                             </li>
                         </ul>
                     </div>
@@ -479,7 +520,7 @@ function Thuctap() {
                         </ul>
                         <ul className="thongtindondangky fullsize">
                             <li>
-                                <input
+                                <textarea
                                     id="noidungthuctap"
                                     className="fullsize_input description"
                                     type="text"
@@ -490,7 +531,6 @@ function Thuctap() {
                     </div>
                     <div className="nutbam">
                         <button className="button_huy">
-                            {' '}
                             <ImCancelCircle className="icon_button" />
                             Hủy
                         </button>
@@ -498,7 +538,6 @@ function Thuctap() {
                             className="button_luu"
                             onClick={dang_ky_thuc_tap}
                         >
-                            {' '}
                             <AiOutlineCheck className="icon_button" />
                             Lưu
                         </button>

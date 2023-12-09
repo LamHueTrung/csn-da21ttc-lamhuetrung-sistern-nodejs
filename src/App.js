@@ -6,9 +6,9 @@ import {
 } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import Login from '../src/Login';
-import Index from '../src/home';
-import XulyLogin from '../src/xulylogin';
+import Login from '../src/pages/Login';
+import Index from '../src/pages/home';
+import XulyLogin from '../src/pages/xulylogin';
 import Tintuc from '../src/pages/Student/tintuc';
 import Thuctap from '../src/pages/Student/thuctap';
 import DonThuctap from '../src/pages/Student/dondangky';
@@ -26,6 +26,7 @@ import TintucGV from '../src/pages/Teacher/tintuc';
 import SinhvienDangKyGV from '../src/pages/Teacher/sinhvien';
 import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
 import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
+import ThongTinDangKyCT from '../src/pages/Company/thongtindangky';
 import ThongTinGV from '../src/pages/Teacher/dangkythongtin';
 
 const router = createBrowserRouter([
@@ -97,7 +98,10 @@ const router = createBrowserRouter([
         path: '/company/canbohuongdan/:slug',
         element: <Danhsachcanbo />,
     },
-
+    {
+        path: '/company/quanlythuctap/thongtindangky/:slug',
+        element: <ThongTinDangKyCT />,
+    },
     {
         path: '/company',
         element: <Login />,

@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
+import { format } from 'date-fns';
 import port from '../../port';
 import '../../css/student.css';
 import '../../css/base.css';
-
 function Thuctap() {
     const [thuctaps, setthuctap] = useState([]);
     const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
     const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
+    const [BaoCaos, setBaoCaos] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
@@ -26,6 +28,14 @@ function Thuctap() {
         axios
             .get(`${port}/student/danhsachsinhvien`)
             .then((response) => setSinhViens(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get(`${port}/student/thongtinbaocao`)
+            .then((response) => setBaoCaos(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
             });
@@ -41,7 +51,7 @@ function Thuctap() {
             };
         }
     });
-
+    
     //lấy thông tin đơn thực tập từ masinhvien trong taikhoan
     var ThongTinThucTap = {};
     var tblThucTap = {};
@@ -52,10 +62,12 @@ function Thuctap() {
                 macongty: tttt.macongty,
                 macanbo: tttt.macanbohuongdan,
                 magiaovien: tttt.magiaovien,
+                sotuan: tttt.sotuan,
             };
         }
     });
-    console.log(tblThucTap);
+    
+    // console.log(ArrSoTuan)
     useEffect(() => {
         axios
             .get(`${port}/student/donthuctap`)
@@ -72,6 +84,7 @@ function Thuctap() {
                 sobuoi: tt.sobuoi,
                 sotuan: tt.sotuan,
                 trangthaidon: tt.trangthaidon,
+                noidungthuctap: tt.noidungthuctap
             };
         }
     });
@@ -118,6 +131,8 @@ function Thuctap() {
 
     //lấy thong tin cong ty từ macongty trong tblThuctap
     var ThongTinCongTy = {};
+    var ArrSoTuan = [];
+    var hannop = '';
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -132,14 +147,19 @@ function Thuctap() {
                 tencongty: ct.tencongty,
                 email: ct.email,
                 vitri: ct.vitri,
+                ngaybatdau: ct.ngaybatdau,
+                luong: ct.luong
             };
+            hannop = ThongTinCongTy.ngaybatdau.split("/");
         }
     });
+    
     if (ThongTinThucTap.trangthaidon == 'Đã duyệt') {
         const baocaotiendo = document.querySelector('.baocaotiendo');
         const baocaotongket = document.querySelector('.baocaotongket');
         baocaotongket.classList.remove('close');
         baocaotiendo.classList.remove('close');
+        
     }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
@@ -149,6 +169,107 @@ function Thuctap() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    var ngay = parseInt(hannop[0]);
+    var thang = parseInt(hannop[1]);
+    var nam = parseInt(hannop[2]);
+    for(let i = 1; i <= tblThucTap.sotuan; i++) {
+        ngay = ngay + 7;
+        ArrSoTuan.push({
+            tuan: i,
+            hannop: ngay +"/"+thang+"/"+nam
+        });
+        
+        switch(thang) {
+            case 1, 3, 5, 7, 8, 10, 12:
+                if(ngay > 31) {
+                    thang = thang + 1;
+                    ngay = 1;
+                }
+            case 2:
+                if(nam%4==0) {
+                    if(nam %100 == 0 && nam%400 == 0) {
+                        if(ngay > 29) {
+                            thang = thang + 1;
+                            ngay = 1;
+                        }
+                    }
+                } 
+            default:
+                if(ngay > 30) {
+                    thang = thang + 1;
+                    ngay = 1;
+                }
+        }
+        if(thang > 12) {
+            nam = nam + 1;
+            thang = 1;
+        }
+    }
+    var defaulHanNop = ArrSoTuan[0];
+    var hannop  = document.querySelector('.hannop');
+    var tuanthuctap;
+    const handleChangeFile = (event) => {
+        const file = event.target.files[0];
+        if (file.type !== "application/pdf") {
+        alert("Chỉ được upload file PDF!");
+        return;
+        }
+        setSelectedFile(file);
+      };
+    
+      const handleUploadFile = async () => {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("name", `${tblThucTap.mathuctap}.pdf`);
+        try {
+          const response = await axios.post(`${port}/api/upload`, formData);
+          console.log("Upload thành công:", formData);
+        } catch (error) {
+          console.error("Upload thất bại:", error);
+        }
+        var DateNow = new Date();
+        const dataToAdd = {
+            mathuctap: tblThucTap.mathuctap,
+            filename: selectedFile.name,
+            tuan: document.querySelector('.tuanthuctap').value,
+            hannop: document.querySelector('.hannop').textContent,
+            ngaynop: format(DateNow, 'dd/MM/yyyy'),
+            trangthai: "Đã nộp"
+        };
+        axios
+            .post(`${port}/student/baocao`, dataToAdd)
+            .then((response) => {
+                alert('Nộp báo cáo thành công');
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+                console.error('Lỗi khi thêm dữ liệu:', error);
+            });
+
+        var ThongBao = {
+            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+            thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa nộp báo cáo thực tập tuần ${dataToAdd.tuan}`,
+        };
+        axios
+            .post(`${port}/student/themthongbao`, ThongBao)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu:', error);
+            });
+    }
+      
+    var TrangthaiBaoCao = [];
+    BaoCaos.map((bc) => {
+        if (bc.mathuctap == tblThucTap.mathuctap) {
+            TrangthaiBaoCao.push({
+                trangthai: bc.trangthai,
+                tuan: bc.tuan
+            });
+        }
+    });
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -292,10 +413,21 @@ function Thuctap() {
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Nội dung thực tập</span>
+                                <span className="lable">Lương</span>
                                 <span className="info">
-                                    {ThongTinCongTy.vitri}
+                                    {ThongTinCongTy.luong}
                                 </span>
+                            </li>
+                        </ul>
+                        <ul className="motacongty fullsize">
+                            <li>
+                                <span className="lable">Nội dung thực tập</span>
+                                <textarea disabled
+                                    id="yeucaucongviec"
+                                    className="fullsize_input description info "
+                                    type="textbox"
+                                    value={ThongTinThucTap.noidungthuctap}
+                                />
                             </li>
                         </ul>
                         <ul className="thongtintaikhoan">
@@ -327,31 +459,48 @@ function Thuctap() {
                     </div>
                     <div className="thongtincanhan baocaotiendo close">
                         <h1 className="lable_chitiet">Báo cáo tuần</h1>
-                        <select className="tuanthuctap" name="" id="">
-                            <option value="">Tuần 1</option>
-                            <option value="">Tuần 2</option>
-                            <option value="">Tuần 3</option>
-                            <option value="">Tuần 4</option>
+                        
+                        <select className="tuanthuctap" name="" id="tuanthuctap" onChange={(event)=> {
+                            tuanthuctap = document.getElementById('tuanthuctap').value;
+                            var hannop  = document.querySelector('.hannop');
+                            hannop.innerHTML = ArrSoTuan[tuanthuctap-1].hannop;
+                            var trangthaibaocao = document.querySelector('.trangthaibaocao');
+                            var temp = 'Chưa nộp';
+                            TrangthaiBaoCao.map(ttbc => {
+                                if (ttbc.tuan == document.querySelector('.tuanthuctap').value) {
+                                        temp = ttbc.trangthai;
+                                } 
+                            })
+                            trangthaibaocao.innerHTML = temp;
+                        }}>
+                        {
+                            ArrSoTuan.map((tuan) => {
+                                document.querySelector('.hannop').innerHTML = defaulHanNop.hannop;
+                                return <option value={tuan.tuan}>Tuần {tuan.tuan}</option>
+                            })
+                        }
                         </select>
                         <ul className="thongtintaikhoan thongtinthuctap">
                             <li>
                                 <span className="lable">Tình trạng nộp: </span>
-                                <span className="info">Chưa nộp</span>
+                                <span className="info trangthaibaocao"></span>
                             </li>
                             <li>
                                 <span className="lable">Hạn nộp: </span>
-                                <span className="info">01/11/2023</span>
+                                <span className="info hannop"></span>
                             </li>
                         </ul>
                         <ul className="thongtintaikhoan nopbai">
                             <li>
                                 <input
+                                    id='fileBaoCao'
                                     className="fullsize_input"
-                                    type="file"
                                     placeholder="Nội dung thực tập"
+                                    type="file" 
+                                    onChange={handleChangeFile}
                                 />
                             </li>
-                            <button className="button_chinhsua">Nộp bài</button>
+                            <button onClick={handleUploadFile} className="button_chinhsua">Nộp bài</button>
                         </ul>
                     </div>
                     <div className="thongtincanhan baocaotongket close">
@@ -359,6 +508,7 @@ function Thuctap() {
                         <ul className="thongtintaikhoan nopbai">
                             <li>
                                 <input
+                                id='baocaotongket'
                                     className="fullsize_input"
                                     type="file"
                                     placeholder="Nội dung thực tập"

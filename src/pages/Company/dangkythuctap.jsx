@@ -12,9 +12,9 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { format } from 'date-fns';
 import port from '../../port';
+import '../../css/company.css';
 import '../../css/student.css';
 import '../../css/base.css';
-import '../../css/company.css';
 function DangKyThucTap() {
     const [TaiKhoans, setTaiKhoans] = useState([]);
     const url = window.location.search;
@@ -44,9 +44,14 @@ function DangKyThucTap() {
             tencongty: document.getElementById('tencongty').value,
             macongty: macongty,
             diachi: document.getElementById('diachi').value,
-            vitri: document.getElementById('vitri').value,
+            vitrithuctap: document.getElementById('vitri').value,
             ngaybatdau: document.getElementById('ngaybatdau').value,
             ngayketthuc: document.getElementById('ngayketthuc').value,
+            luong: document.getElementById('luong').value,
+            capbac: document.getElementById('capbat').value,
+            hethannop: document.getElementById('hethannop').value,
+            motacongviec: document.getElementById('motacongviec').value,
+            yeucaucongviec: document.getElementById('yeucaucongviec').value,
         };
         axios
             .post(`${port}/company/dangkythongtin`, ThongTinDangKy)
@@ -205,6 +210,49 @@ function DangKyThucTap() {
                                     id="ngayketthuc"
                                     placeholder="Ngày kết thúc"
                                     type="text"
+                                />
+                            </li>
+                        </ul>
+                        <ul className="thongtindangkythuctap">
+                            <li>
+                                <input
+                                    id="luong"
+                                    placeholder="Lương"
+                                    type="text"
+                                />
+                            </li>
+                            <li>
+                                <input
+                                    id="capbat"
+                                    placeholder="Cấp bậc"
+                                    type="text"
+                                />
+                            </li>
+                            <li>
+                                <input
+                                    id="hethannop"
+                                    placeholder="Hết hạn nộp"
+                                    type="text"
+                                />
+                            </li>
+                        </ul>
+                        <ul className="thongtindondangky fullsize">
+                            <li>
+                                <textarea
+                                    id="motacongviec"
+                                    className="fullsize_input description"
+                                    type="textbox"
+                                    placeholder="Mô tả công việc (chi tiết công việc, địa chỉ thực tập, Phúc lợi...)"
+                                />
+                            </li>
+                        </ul>
+                        <ul className="thongtindondangky fullsize">
+                            <li>
+                                <textarea
+                                    id="yeucaucongviec"
+                                    className="fullsize_input description"
+                                    type="textbox"
+                                    placeholder="Yêu cầu công việc (Lợi thế...)"
                                 />
                             </li>
                         </ul>

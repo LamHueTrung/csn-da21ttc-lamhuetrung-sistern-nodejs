@@ -33,12 +33,13 @@
 .thongtincanhan .thongtintaikhoan {
     list-style: none;
     width: 95%;
-    height: 50px;
+    height: auto;
     display: inline-flex;
     justify-content: space-evenly;
 }
 .thongtincanhan .thongtintaikhoan li {
     width: 350px !important;
+    height: auto;
 }
 .thongtincanhan .thongtintaikhoan li input {
     width: 350px !important;
@@ -124,6 +125,9 @@
     width: 100%;
 }
 /* Trang sinh viên: thực tập */
+#yeucaucongviec {
+    min-height: 50px !important;
+}
 .thongtincanhan,
 .luachoncongty,
 .thongtincongty,
@@ -170,7 +174,7 @@
 }
 .fullsize {
     display: block;
-    width: 100%;
+    width: 95%;
 }
 .nguoiphutrach {
     justify-content: flex-start !important;
@@ -190,12 +194,15 @@
     color: #ffff;
 }
 .description {
-    width: 100%;
+    width: 92%;
     min-width: 60%;
-    height: 200px !important;
+    min-height: 100px;
+    height: auto;
     text-decoration: auto;
     text-align: start;
     margin-bottom: 25px;
+    margin-left: 40px;
+    font-size: 18px;
 }
 .dinhkem ul li {
     display: flex;
@@ -321,7 +328,7 @@
     width: 235px;
 }
 .danhsachcanbo #vitri {
-    width: 260px;
+    min-width: 150px;
     height: 38px;
 }
 .danhsachcanbo .info #vitri {
@@ -351,8 +358,14 @@
 .close {
     display: none;
 }
-.thongtindondangky .fullsize {
+.fullsize {
     height: auto;
+}
+.thongtinthuctap .lable {
+    min-width: 115px;
+}
+.thongtinthuctap .info {
+    min-width: 100px;
 }
 @media screen and (max-width: 767px) {
     .danhsachcongty table tr,
@@ -388,5 +401,31 @@
     }
     .thongtincanhan .thongtintaikhoan li input {
         width: 100% !important;
+        height: auto;
+    }
+    .tuanthuctap {
+        margin-top: 0%;
+        margin-left: 5%;
+        width: 90%;
+        display: block;
+    }
+    .baocaotiendo .thongtinthuctap {
+        margin-top: 40%;
+    }
+    .baocaotiendo .thongtinthuctap li {
+        margin-left: 0;
+    }
+    .nopbai {
+        height: 90px !important;
+    }
+    .nopbai input, .baocaotongket .nopbai input {
+        margin-left: 0 !important;
+
+    }
+    .button_chinhsua {
+        margin: auto;
+    }
+    .baocaotongket {
+        height: 180px;
     }
 }

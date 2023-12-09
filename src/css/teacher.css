@@ -59,6 +59,7 @@
     color: #333333d5;
     font-size: 15px;
     font-weight: 100;
+    height: auto;
 }
 .danhsachdondangky table th {
     border-right: 1px solid #3333;
@@ -87,7 +88,7 @@
 }
 .danhsachdondangky #trangthai {
     width: 278px;
-    border: 1px solid #b3b3b3;
+    /* border: 1px solid #b3b3b3; */
 }
 .danhsachdondangky .nutbam button {
     float: right;
@@ -138,12 +139,12 @@
     .thongtintaikhoan li .lable,
     .thongtinsinhvien li .lable,
     .email_dangky .lable {
-        font-size: 30px;
+        font-size: 25px;
     }
     .thongtintaikhoan li .info,
     .thongtinsinhvien li .info,
     .email_dangky .info {
-        font-size: 25px;
+        font-size: 20px;
         width: 90%;
     }
     .content h1 {
@@ -174,10 +175,12 @@
     }
     .thongtincongty .thongtindangkythuctap li {
         margin-bottom: 15px;
+        width: 100% !important;
+
     }
     .thongtincongty .thongtindangkythuctap li input {
         width: 100% !important;
-        font-size: 27px;
+        font-size: 20px;
     }
     .nutbam {
         width: 97%;

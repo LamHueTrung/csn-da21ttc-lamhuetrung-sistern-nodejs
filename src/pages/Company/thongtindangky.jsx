@@ -3,19 +3,21 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
+import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
-import { TbHomeEco } from 'react-icons/tb';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { FiUsers } from 'react-icons/fi';
 import { format } from 'date-fns';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import port from '../../port';
+import '../../css/responsive.css';
 import '../../css/teacher.css';
 import '../../css/base.css';
-import '../../css/responsive.css';
-function ThongTinDangKy() {
+
+function ThongTinDangKyGV() {
     const [thuctaps, setthuctap] = useState([]);
     const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
@@ -137,73 +139,74 @@ function ThongTinDangKy() {
                 sobuoi: tttt.sobuoi,
                 sotuan: tttt.sotuan,
                 noidung: tttt.noidungthuctap,
+                mathuctap: tttt.mathuctap
             };
         }
     });
-    // function DuyetDon() {
-    //     const updatedData = {
-    //         trangthaidon: 'Đã duyệt',
-    //     };
-    //     console.log(updatedData);
-    //     axios
-    //         .put(
-    //             `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
-    //             updatedData,
-    //         )
-    //         .then((response) => {
-    //             console.log('Dữ liệu sau khi cập nhật:', response.data);
-    //             alert('Duyệt đơn thành công');
-    //         })
-    //         .catch((error) => {
-    //             alert('Duyệt đơn thất bại');
-    //             console.error('Lỗi cập nhật dữ liệu:', error);
-    //         });
-    //     var DateNow = new Date();
-    //     var ThongBao = {
-    //         thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-    //         thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã được người quản trị phê duyệt`,
-    //     };
-    //     axios
-    //         .post(`${port}/teacher/themthongbao`, ThongBao)
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Lỗi khi thêm dữ liệu:', error);
-    //         });
-    // }
-    // function TuChoiDon() {
-    //     const updatedData = {
-    //         trangthaidon: 'Từ chối đơn',
-    //     };
-    //     console.log(updatedData);
-    //     axios
-    //         .put(
-    //             `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
-    //             updatedData,
-    //         )
-    //         .then((response) => {
-    //             console.log('Dữ liệu sau khi cập nhật:', response.data);
-    //             alert('Đã từ chối đơn thực tập');
-    //         })
-    //         .catch((error) => {
-    //             alert('Duyệt đơn thất bại');
-    //             console.error('Lỗi cập nhật dữ liệu:', error);
-    //         });
-    //     var DateNow = new Date();
-    //     var ThongBao = {
-    //         thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-    //         thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã bị người quản trị từ chối`,
-    //     };
-    //     axios
-    //         .post(`${port}/teacher/themthongbao`, ThongBao)
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Lỗi khi thêm dữ liệu:', error);
-    //         });
-    // }
+    function DuyetDon() {
+        const updatedData = {
+            trangthaidon: `Đã duyệt`,
+        };
+        console.log(updatedData);
+        axios
+            .put(
+                `${port}/company/duyetdonthuctap/${_IdDonThucTap}`,
+                updatedData,
+            )
+            .then((response) => {
+                console.log('Dữ liệu sau khi cập nhật:', response.data);
+                alert('Duyệt đơn thành công');
+            })
+            .catch((error) => {
+                alert('Duyệt đơn thất bại');
+                console.error('Lỗi cập nhật dữ liệu:', error);
+            });
+        var DateNow = new Date();
+        var ThongBao = {
+            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+            thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} vừa được ${tblThucTap.tencongty} duyệt`,
+        };
+        axios
+            .post(`${port}/company/themthongbao`, ThongBao)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu:', error);
+            });
+    }
+    function TuChoiDon() {
+        const updatedData = {
+            trangthaidon: 'Từ chối đơn',
+        };
+        console.log(updatedData);
+        axios
+            .put(
+                `${port}/company/duyetdonthuctap/${_IdDonThucTap}`,
+                updatedData,
+            )
+            .then((response) => {
+                console.log('Dữ liệu sau khi cập nhật:', response.data);
+                alert('Đã từ chối đơn thực tập');
+            })
+            .catch((error) => {
+                alert('Duyệt đơn thất bại');
+                console.error('Lỗi cập nhật dữ liệu:', error);
+            });
+        var DateNow = new Date();
+        var ThongBao = {
+            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+            thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã bị giáo viên từ chối`,
+        };
+        axios
+            .post(`${port}/company/themthongbao`, ThongBao)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu:', error);
+            });
+    }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -218,13 +221,13 @@ function ThongTinDangKy() {
                 <CiSettings className="icon" />
             </a>
             <div className="Navbar">
-                <ul id="navbar">
+                <ul id="navbar" className="company">
                     <a onClick={closeMenu}>
                         <li className="thongbao ">
                             <AiOutlineHome className="icon" />
                         </li>
                     </a>
-                    <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
+                    <Link to={`/company/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
                             <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
@@ -233,42 +236,38 @@ function ThongTinDangKy() {
                         </a>
                     </Link>
                     <Link
-                        to={`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}
+                        to={`/company/dangkythuctap/taikhoan?taikhoan=${taikhoan}`}
                     >
                         <a href="">
-                            <li id="thuctap" className="click">
+                            <li id="thuctap">
                                 <FiUsers className="icon" />
-                                Thực tập
+                                Đăng ký thực tập
                             </li>
                         </a>
                     </Link>
-                    <Link to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}>
+                    <Link
+                        to={`/company/danhsachdangky/taikhoan?taikhoan=${taikhoan}`}
+                    >
                         <a href="">
-                            <li id="thongtin">
-                                <TbHomeEco className="icon" />
-                                Công ty
+                            <li id="thongtin" className="click">
+                                <PiStudentDuotone className="icon" />
+                                Danh sách đăng ký
                             </li>
                         </a>
                     </Link>
-                    <Link to={`/admin/sinhvien/taikhoan?taikhoan=${taikhoan}`}>
+                    <Link
+                        to={`/company/canbohuongdan/taikhoan?taikhoan=${taikhoan}`}
+                    >
                         <a href="">
                             <li id="thongtin">
                                 <PiStudentDuotone className="icon" />
-                                Sinh viên
-                            </li>
-                        </a>
-                    </Link>
-                    <Link to={`/admin/giaovien/taikhoan?taikhoan=${taikhoan}`}>
-                        <a href="">
-                            <li id="thongtin">
-                                <PiStudentDuotone className="icon" />
-                                Giáo viên
+                                Cán bộ hướng dẫn
                             </li>
                         </a>
                     </Link>
                 </ul>
                 <Link to="/">
-                    <a id="dangxuat" href="" className="dangxuat">
+                    <a id="dangxuat" href="" className="dangxuatcongty">
                         <FiLogOut className="icon" />
                         Đăng xuất
                     </a>
@@ -459,23 +458,24 @@ function ThongTinDangKy() {
                     </div> */}
                     <div className="nutbam">
                         <Link
-                            to={`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}
+                            to={`/company/danhsachdangky/taikhoan?taikhoan=${taikhoan}`}
                         >
+                            <button className="button_luu" onClick={DuyetDon}>
+                                {' '}
+                                <AiOutlineCheck className="icon_button" />
+                                Đồng ý
+                            </button>
+                            <button className="button_huy" onClick={TuChoiDon}>
+                                {' '}
+                                <ImCancelCircle className="icon_button" />
+                                Từ chối
+                            </button>
+
                             <button className="button_huy">
                                 {' '}
                                 <ImCancelCircle className="icon_button" />
                                 Đóng
                             </button>
-                            {/* <button className="button_huy" onClick={TuChoiDon}>
-                                {' '}
-                                <ImCancelCircle className="icon_button" />
-                                Từ chối
-                            </button>
-                            <button className="button_luu" onClick={DuyetDon}>
-                                {' '}
-                                <AiOutlineCheck className="icon_button" />
-                                Đồng ý
-                            </button> */}
                         </Link>
                     </div>
                 </div>
@@ -484,4 +484,4 @@ function ThongTinDangKy() {
     );
 }
 
-export default ThongTinDangKy;
+export default ThongTinDangKyGV;
