@@ -13,6 +13,7 @@ const ThucTapSchema = new mongoose.Schema({
     sobuoi: String,
     sotuan: String,
     noidungthuctap: String,
+    
 });
 
 const ThucTap = mongoose.model('tblThucTap', ThucTapSchema);
