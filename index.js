@@ -19,7 +19,16 @@ app.use(express.json());
 db.connect();
 
 //them file bao cao
-const upload = multer({ dest: "uploads/" });
+app.use("/uploads", express.static("uploads"));
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null,  file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 const FileSchema = new mongoose.Schema({
     name: String,
     path: String,
@@ -41,6 +50,14 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
       res.status(500).json({ message: "Upload thất bại!" });
     }
   });
+  app.get("/api/files/",  (req, res) => {
+    FileModel.find()
+      .then((file) => res.json(file))
+      .catch((err) => res.json('Lỗi /student: ' + err));
+  });
+
+
+
 
 //routes
 app.use('/taikhoan', TaikhoanRoutes);
