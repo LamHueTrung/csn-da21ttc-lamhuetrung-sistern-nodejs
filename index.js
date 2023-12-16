@@ -3,6 +3,8 @@ const cors = require('cors');
 const db = require('./config/db/index');
 const mongoose = require("mongoose");
 const multer = require("multer");
+const fs = require('fs');
+const PDFJS = require('pdf-lib');
 
 const SinhVienRoutes = require('./routes/SinhVienRoutes');
 const CongTyRoutes = require('./routes/CongTyRoutes');
@@ -11,6 +13,7 @@ const TaikhoanRoutes = require('./routes/DangKyRoutes');
 
 const app = express();
 const port = 3001;
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
@@ -28,6 +31,7 @@ const storage = multer.diskStorage({
     cb(null,  file.originalname);
   },
 });
+
 const upload = multer({ storage: storage });
 const FileSchema = new mongoose.Schema({
     name: String,
@@ -55,10 +59,31 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
       .then((file) => res.json(file))
       .catch((err) => res.json('Lỗi /student: ' + err));
   });
+  
+  app.get("/api/files/:filename", async (req, res) => {
+    const filename = req.params.filename;
+    try {
+      // Kiểm tra file tồn tại
+      const filePath = path.join(__dirname, "uploads", filename);
+      const fileExists = await fs.promises.access(filePath, fs.constants.F_OK).then(
+        () => true,
+        () => false
+      );
+  
+      if (!fileExists) {
+        return res.status(404).json({ message: "File không tồn tại!" });
+      }
+  
+      // Đọc file PDF
+      const buffer = await fs.promises.readFile(filePath);
 
-
-
-
+      // Trả về 
+      res.send(buffer);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Lỗi lấy file!" + error });
+    }
+  });
 //routes
 app.use('/taikhoan', TaikhoanRoutes);
 app.use('/student', SinhVienRoutes);
