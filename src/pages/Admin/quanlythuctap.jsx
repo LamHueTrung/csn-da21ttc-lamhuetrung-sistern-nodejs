@@ -28,7 +28,7 @@ function QuanLyThucTap() {
     var ThongTinGiaoVien = '';
     var ThongTinCanBoHD = '';
     var ThongTinSinhVien = '';
-    var ThongTinCongTy = '';
+    var ThongTinCongTy = {};
     var tblThucTap = [];
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
@@ -97,7 +97,10 @@ function QuanLyThucTap() {
         });
         congtys.map((ct) => {
             if (ct.macongty == tttt.macongty) {
-                ThongTinCongTy = ct.tencongty;
+                ThongTinCongTy = {
+                    tencongty: ct.tencongty,
+                    vitrithuctap: ct.vitrithuctap
+                };
             }
         });
         tblThucTap.push({
@@ -106,8 +109,9 @@ function QuanLyThucTap() {
             tensinhvien: ThongTinSinhVien,
             tengiaovien: ThongTinGiaoVien,
             tencanbo: ThongTinCanBoHD,
-            tencongty: ThongTinCongTy,
+            tencongty: ThongTinCongTy.tencongty,
             trangthaidon: tttt.trangthaidon,
+            noidungthuctap: ThongTinCongTy.vitrithuctap
         });
     });
     console.log(tblThucTap);
@@ -200,6 +204,7 @@ function QuanLyThucTap() {
                                             Công ty đăng ký
                                         </th>
                                         <th id="ngaytaodon">Người phụ trách</th>
+                                        <th id="ngaytaodon">Nội dung thực tập</th>
                                         <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
@@ -224,6 +229,9 @@ function QuanLyThucTap() {
                                                     </th>
                                                     <th id="ngaytaodon">
                                                         {dtt.tencanbo}
+                                                    </th>
+                                                    <th id="ngaytaodon">
+                                                        {dtt.noidungthuctap}
                                                     </th>
                                                     <th id="trangthai">
                                                         {dtt.trangthaidon}

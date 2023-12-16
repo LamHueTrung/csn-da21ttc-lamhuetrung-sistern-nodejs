@@ -1,6 +1,9 @@
 .close {
     display: none;
 }
+.baocao_mobile {
+    display: none !important;
+}
 .mobile-navbar {
     display: none;
 }
@@ -9,6 +12,11 @@
 }
 #dangxuatgiaovien {
     margin-top: 335px !important;
+}
+.button_taive {
+    float: left;
+    background: green;
+    color: white;
 }
 /* Quản lý thực tập */
 .nutbam button {
@@ -126,7 +134,17 @@
 #admin_diachicongty {
     min-width: 330px;
 }
+
 @media screen and (max-width: 767px) {
+    .button_taive {
+        width: 100%;
+        font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+    .baocao_mobile {
+        display: block !important;
+    }
     .thongtincanhan .thongtintaikhoan,
     .thongtincanhan .thongtintaikhoan li,
     .thongtinsinhvien li {

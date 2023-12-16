@@ -125,6 +125,15 @@ function Congty() {
                                         <th id="vitri">
                                             Vị trí tuyển thực tập
                                         </th>
+                                        <th id="vitri">
+                                            Lương
+                                        </th>
+                                        <th id="vitri">
+                                            Hết hạn nộp
+                                        </th>
+                                        <th id="vitri">
+                                            Cấp bậc
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,7 +153,16 @@ function Congty() {
                                                     {congty.diachi}
                                                 </th>
                                                 <th id="vitri">
-                                                    {congty.vitri}
+                                                    {congty.vitrithuctap}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.luong}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.hethannop}
+                                                </th>
+                                                <th id="vitri">
+                                                    {congty.capbac}
                                                 </th>
                                             </tr>
                                         );

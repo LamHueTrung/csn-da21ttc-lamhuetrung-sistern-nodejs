@@ -28,6 +28,8 @@ import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
 import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
 import ThongTinDangKyCT from '../src/pages/Company/thongtindangky';
 import ThongTinGV from '../src/pages/Teacher/dangkythongtin';
+import XemBaoCao from '../src/pages/Teacher/xembaocao';
+
 
 const router = createBrowserRouter([
     {
@@ -65,6 +67,10 @@ const router = createBrowserRouter([
     {
         path: '/teacher/quanlythuctap/thongtindangky/:slug',
         element: <ThongTinDangKyGV />,
+    },
+    {
+        path: '/teacher/quanlythuctap/xembaocao/:slug',
+        element: <XemBaoCao />,
     },
     {
         path: '/teacher/sinhvien/:slug',

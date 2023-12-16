@@ -423,7 +423,7 @@ function Thuctap() {
                             <li>
                                 <span className="lable">Nội dung thực tập</span>
                                 <textarea disabled
-                                    id="yeucaucongviec"
+                                    id="noidungthuctap"
                                     className="fullsize_input description info "
                                     type="textbox"
                                     value={ThongTinThucTap.noidungthuctap}
@@ -469,6 +469,7 @@ function Thuctap() {
                             TrangthaiBaoCao.map(ttbc => {
                                 if (ttbc.tuan == document.querySelector('.tuanthuctap').value) {
                                         temp = ttbc.trangthai;
+                                        console.log(ttbc.trangthai)
                                 } 
                             })
                             trangthaibaocao.innerHTML = temp;

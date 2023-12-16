@@ -120,6 +120,7 @@ function QuanLyThucTap() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    var urlDuyetDon = "/teacher/quanlythuctap/thongtindangky/duyetdonthuctap";
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -214,9 +215,12 @@ function QuanLyThucTap() {
                                             TenGVCuaTK == dtt.tengiaovien &&
                                             dtt.tengiaovien != null
                                         )
+                                        if(dtt.trangthaidon == "Đã duyệt") {
+                                            urlDuyetDon = "/teacher/quanlythuctap/xembaocao/xembaocao"
+                                        }
                                             return (
                                                 <Link
-                                                    to={`/teacher/quanlythuctap/thongtindangky/duyetdonthuctap?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}
+                                                    to={`${urlDuyetDon}?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}
                                                 >
                                                     <tr className="info">
                                                         <th id="stt">
