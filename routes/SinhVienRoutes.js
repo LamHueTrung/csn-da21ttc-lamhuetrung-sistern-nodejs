@@ -14,4 +14,6 @@ router.post('/themthongtin', SinhvienController.themThongTinSinhVien);
 router.post('/baocao', SinhvienController.BaoCao);
 router.post('/themthongbao', TintucController.themThongBao);
 
+router.put('/capnhattrangthai/:SinhVienID', SinhvienController.TrangThaiSinhVien);
+
 module.exports = router;

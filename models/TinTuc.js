@@ -4,7 +4,7 @@ const TinTucSchema = new mongoose.Schema({
     thoigian: String,
     thongbaosinhvien: String,
     thongbaogiaovien: String,
-    thongbaocongty: String,
+    thongbaoadmin: String,
 });
 
 const TinTuc = mongoose.model('tblTintuc', TinTucSchema);

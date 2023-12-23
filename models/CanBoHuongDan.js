@@ -4,9 +4,7 @@ const CanboHDSchema = new mongoose.Schema({
     macanbo: String,
     macongty: String,
     tencanbo: String,
-    chucvu: String,
-    vitri: String,
-    email: String,
+    sotaikhoan: String,
     sodienthoai: String,
 });
 

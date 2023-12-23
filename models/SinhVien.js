@@ -8,6 +8,7 @@ const sinhVienSchema = new mongoose.Schema({
     masinhvien: String,
     lop: String,
     hoten: String,
+    trangthaisinhvien: String,
 });
 
 const SinhVien = mongoose.model('tblSinhvien', sinhVienSchema);
