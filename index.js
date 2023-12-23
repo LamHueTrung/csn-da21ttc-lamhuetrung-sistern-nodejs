@@ -58,11 +58,6 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
       res.status(500).json({ message: "Upload thất bại!" });
     }
   });
-  // app.get("/api/files/",  (req, res) => {
-  //   FileModel.find()
-  //     .then((file) => res.json(file))
-  //     .catch((err) => res.json('Lỗi /student: ' + err));
-  // });
   
   app.get("/api/files/:filename", async (req, res) => {
     const filename = req.params.filename;
