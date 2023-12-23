@@ -50,9 +50,19 @@ function Giaovien() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc">
+                            <li id="tintuc" >
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
+                            </li>
+                        </a>
+                    </Link>
+                    <Link
+                        to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                    >
+                        <a href="">
+                            <li id="thuctap">
+                                <FiUsers className="icon" />
+                                Đợt thực tập
                             </li>
                         </a>
                     </Link>
@@ -62,7 +72,7 @@ function Giaovien() {
                         <a href="">
                             <li id="thuctap">
                                 <FiUsers className="icon" />
-                                Thực tập
+                                Duyệt đơn
                             </li>
                         </a>
                     </Link>

@@ -6,6 +6,12 @@ import '../css/login.css';
 function Login() {
     const [password, setPassword] = useState('');
     const [emails, setEmail] = useState('');
+    const [tensinhviens, settensinhvien] = useState('');
+    const [masinhviens, setmasinhvien] = useState('');
+    const [sodienthoais, setsodienthoai] = useState('');
+    const [ngaysinhs, setngaysinh] = useState('');
+    const [lops, setlop] = useState('');
+    
     const navigate = useNavigate();
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
@@ -36,9 +42,13 @@ function Login() {
     function Dangky() {
         const Login = document.querySelector('.login');
         const signUp = document.querySelector('.signUp');
+        const signUpSV = document.querySelector('.signUpSV');
         if (urlParams.get('loaitaikhoan') == 'admin') {
             alert('Không thể đăng ký tài khoản quản trị');
-        } else {
+        } else if(urlParams.get('loaitaikhoan') == 'sinhvien') {
+            Login.classList.add('close');
+            signUpSV.classList.remove('close');
+        }else {
             Login.classList.add('close');
             signUp.classList.remove('close');
         }
@@ -112,6 +122,88 @@ function Login() {
                     </div>
                     <Link
                         to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}
+                    >
+                        <button onClick={handleSignup}>Đăng Ký</button>
+                    </Link>
+                </form>
+            </div>
+            <div className="signUpSV close">
+                <h2>Đăng Ký</h2>
+                <form>
+                    <div>
+                        <input
+                            id="emailDk"
+                            placeholder="Email"
+                            type="text"
+                            value={emails}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="tensinhvienlDk"
+                            placeholder="Tên sinh viên"
+                            type="text"
+                            value={tensinhviens}
+                            onChange={(e) => settensinhvien(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="masinhvienlDk"
+                            placeholder="Mã số sinh viên"
+                            type="text"
+                            value={masinhviens}
+                            onChange={(e) => setmasinhvien(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="ngaysinhDk"
+                            placeholder="Ngày sinh"
+                            type="date"
+                            value={ngaysinhs}
+                            onChange={(e) => setngaysinh(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="sodienthoailDk"
+                            placeholder="Số điện thoại"
+                            type="number"
+                            value={sodienthoais}
+                            onChange={(e) => setsodienthoai(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="lopDk"
+                            placeholder="Lớp"
+                            type="text"
+                            value={lops}
+                            onChange={(e) => setlop(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="matkhauDK"
+                            placeholder="Mật khẩu"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="nhaplaimatkhauDK"
+                            placeholder="Nhập lại mật khẩu"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <Link
+                        to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`}
                     >
                         <button onClick={handleSignup}>Đăng Ký</button>
                     </Link>

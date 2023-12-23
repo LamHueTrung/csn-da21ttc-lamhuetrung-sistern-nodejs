@@ -7,23 +7,26 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { TbHomeEco } from 'react-icons/tb';
-import { IoIosAddCircleOutline } from 'react-icons/io';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
 import '../../css/responsive.css';
 import port from '../../port';
-function Congty() {
-    const [congtys, setCongTy] = useState([]);
+
+function QuanLyThucTap() {
+    const [DotThucTaps, setDotThucTaps] = useState([]);
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
+
     useEffect(() => {
         axios
-            .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
-            .then((response) => setCongTy(response.data))
+            .get(`${port}/admin/danhsachdotthuctap`)
+            .then((response) => setDotThucTaps(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
             });
@@ -50,7 +53,7 @@ function Congty() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -60,7 +63,7 @@ function Congty() {
                         to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
                     >
                         <a href="">
-                            <li id="thuctap">
+                            <li id="thuctap" className="click">
                                 <FiUsers className="icon" />
                                 Đợt thực tập
                             </li>
@@ -78,7 +81,7 @@ function Congty() {
                     </Link>
                     <Link to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}>
                         <a href="">
-                            <li id="thongtin" className="click">
+                            <li id="thongtin">
                                 <TbHomeEco className="icon" />
                                 Công ty
                             </li>
@@ -111,61 +114,64 @@ function Congty() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Công ty thực tập</span>
+                    <span id="route">/Quản lý đợt thực tập</span>
                 </div>
                 <div className="content">
-                    <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">Công ty thực tập</h1>
+                <div className="thongtincanhan">
+                        <h1 className="lable_chitiet">Danh sách đợt thực tập</h1>
                         <div className="danhsachdondangky">
-                            <Link to={`/admin/themcongty/taikhoan?taikhoan=${taikhoan}`}>
-                                <button className="button_search">
+                        <Link to={`/admin/quanlydotthuctap/taikhoan?taikhoan=${taikhoan}`}>
+                                <button className="icon_dotthuctap">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
-                                    Thêm công ty
+                                    Thêm đợt mới
+                                </button>
+                            </Link>
+                            <Link to={`/admin/themdotthuctap/taikhoan?taikhoan=${taikhoan}`}>
+                                <button className="icon_dotthuctap">
+                                    {' '}
+                                    <IoIosAddCircleOutline className="icon_button" />
+                                    Thêm dữ liệu đợt
                                 </button>
                             </Link>
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
-                                        <th id="macongty">Mã công ty</th>
-                                        <th id="admin_tencongty">
-                                            Tên công ty
+                                        <th id="stt">STT</th>
+                                        <th id="masinhvien">Tên đợt</th>
+                                        <th id="tensinhvien">
+                                            Ngày bắt đầu
                                         </th>
-                                        <th id="admin_diachicongty">Địa chỉ</th>
-                                        <th id="vitri">
-                                            Số điện thoại
+                                        <th id="emailsinhvien">
+                                            Ngày kết thúc
                                         </th>
-                                        <th id="admin_diachicongty">
-                                            Mô tả
-                                        </th>
-                                        <th id="vitri">
-                                            Mã cán bộ 
-                                        </th>
+                                        <th id="ngaytaodon">Danh sách lớp</th>
+                                        <th id="ngaytaodon">Ghi chú</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {congtys.map((congty) => {
+                                    {DotThucTaps.map((dtt, index) => {
                                         return (
-                                            <tr className="info">
-                                                <th id="macongty">
-                                                    {congty.macongty}
-                                                </th>
-                                                <th id="admin_tencongty">
-                                                    {congty.tencongty}
-                                                </th>
-                                                <th id="admin_diachicongty">
-                                                    {congty.diachi}
-                                                </th>
-                                                <th id="vitri">
-                                                    {congty.sodienthoai}
-                                                </th>
-                                                <th id="admin_diachicongty">
-                                                    {congty.motacongviec}
-                                                </th>
-                                                <th id="vitri">
-                                                    {congty.macanbo}
-                                                </th>
-                                            </tr>
+                                                <tr className="info">
+                                                    <th id="stt">
+                                                        {index + 1}
+                                                    </th>
+                                                    <th id="masinhvien">
+                                                        {dtt.tendotthuctap}
+                                                    </th>
+                                                    <th id="tensinhvien">
+                                                        {dtt.ngaybatdau}
+                                                    </th>
+                                                    <th id="emailsinhvien">
+                                                        {dtt.ngayketthuc}
+                                                    </th>
+                                                    <th id="ngaytaodon">
+                                                        {dtt.danhsachlop}
+                                                    </th>
+                                                    <th id="ngaytaodon">
+                                                        {dtt.ghichu}
+                                                    </th>
+                                                </tr>
                                         );
                                     })}
                                 </tbody>
@@ -178,4 +184,4 @@ function Congty() {
     );
 }
 
-export default Congty;
+export default QuanLyThucTap;

@@ -55,6 +55,19 @@
     width: 400px;
     height: 330px;
 }
+.signUpSV {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.732);
+    width: 400px;
+    height: auto;
+    padding-bottom: 20px;
+}
 .login {
     width: 100%;
     justify-content: center;

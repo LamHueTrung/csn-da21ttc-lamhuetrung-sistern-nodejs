@@ -135,6 +135,33 @@
     min-width: 330px;
 }
 
+/* Chỉnh sửa */
+.thongtincanhan .thongtintaikhoan .themgiaovienhuongdan {
+    width: 85% !important;
+    height: 50px;
+    float: left;
+    display: block;
+}
+.thongtincanhan .thongtintaikhoan .themgiaovienhuongdan select{
+    width: 40%;
+    height: 50px;
+    font-size: 18px;
+    float: left;
+    color: #0b2eac;
+}
+.icon_dotthuctap {
+    float: right;
+    margin: 20px;
+    margin-right: 1%;
+    font-size: 16px;
+    width: 15%;
+}
+.tieuDeDulieu {
+    margin-top: 1%;
+}
+.dsDeDulieu {
+    margin-top: 4%;
+}
 @media screen and (max-width: 767px) {
     .button_taive {
         width: 100%;

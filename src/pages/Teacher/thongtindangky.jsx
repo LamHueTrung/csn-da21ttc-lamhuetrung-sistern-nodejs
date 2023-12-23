@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import { GrNotification } from 'react-icons/gr';
@@ -27,6 +27,8 @@ function ThongTinDangKyGV() {
     const madon = urlParams.get('mathuctap');
     const taikhoan = urlParams.get('taikhoan');
     const _IdDonThucTap = urlParams.get('id');
+    const navigate = useNavigate();
+
     var ThongTinGiaoVien = {};
     var ThongTinCanBoHD = {};
     var ThongTinSinhVien = {};
@@ -102,8 +104,8 @@ function ThongTinDangKyGV() {
                 if (cbhd.macanbo == tttt.macanbohuongdan) {
                     ThongTinCanBoHD = {
                         tencanbo: cbhd.tencanbo,
-                        email: cbhd.email,
-                        vitri: cbhd.vitri,
+                        sodienthoai: cbhd.sodienthoai,
+                        sotaikhoan: cbhd.sotaikhoan,
                     };
                 }
             });
@@ -111,7 +113,7 @@ function ThongTinDangKyGV() {
                 if (ct.macongty == tttt.macongty) {
                     ThongTinCongTy = {
                         tencongty: ct.tencongty,
-                        email: ct.email,
+                        sodienthoai: ct.sodienthoai,
                         diachi: ct.diachi,
                     };
                 }
@@ -124,88 +126,22 @@ function ThongTinDangKyGV() {
                 lopsinhvien: ThongTinSinhVien.lop,
                 masinhvien: ThongTinSinhVien.masinhvien,
                 ngaysinhsinhvien: ThongTinSinhVien.ngaysinh,
-                tengiaovien: ThongTinGiaoVien.tengiaovien,
-                emailgiaovien: ThongTinGiaoVien.email,
-                chucvugiaovien: ThongTinGiaoVien.chucvu,
                 tencanbo: ThongTinCanBoHD.tencanbo,
-                emailcanbo: ThongTinCanBoHD.email,
+                sodienthoaiCB: ThongTinCanBoHD.sodienthoai,
                 tencongty: ThongTinCongTy.tencongty,
-                emailcongty: ThongTinCongTy.email,
+                sodienthoaicongty: ThongTinCongTy.sodienthoai,
                 diachicongty: ThongTinCongTy.diachi,
-                vitrihuongdan: ThongTinCanBoHD.vitri,
+                sotaikhoan: ThongTinCanBoHD.sotaikhoan,
                 hocphanthuctap: tttt.loai,
                 ngaybatdau: tttt.ngaybatdau,
                 ngayketthuc: tttt.ngayketthuc,
-                sobuoi: tttt.sobuoi,
                 sotuan: tttt.sotuan,
                 noidung: tttt.noidungthuctap,
+                mathuctap: tttt.mathuctap,
+                _id: tttt._id
             };
         }
     });
-    function DuyetDon() {
-        const updatedData = {
-            trangthaidon: 'Giáo viên đã duyệt',
-        };
-        console.log(updatedData);
-        axios
-            .put(
-                `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
-                updatedData,
-            )
-            .then((response) => {
-                console.log('Dữ liệu sau khi cập nhật:', response.data);
-                alert('Duyệt đơn thành công');
-            })
-            .catch((error) => {
-                alert('Duyệt đơn thất bại');
-                console.error('Lỗi cập nhật dữ liệu:', error);
-            });
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} vừa được giáo viên duyệt`,
-        };
-        axios
-            .post(`${port}/teacher/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-    }
-    function TuChoiDon() {
-        const updatedData = {
-            trangthaidon: 'Từ chối đơn',
-        };
-        console.log(updatedData);
-        axios
-            .put(
-                `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
-                updatedData,
-            )
-            .then((response) => {
-                console.log('Dữ liệu sau khi cập nhật:', response.data);
-                alert('Đã từ chối đơn thực tập');
-            })
-            .catch((error) => {
-                alert('Duyệt đơn thất bại');
-                console.error('Lỗi cập nhật dữ liệu:', error);
-            });
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaosinhvien: `Đơn thực tập của bạn ${tblThucTap.tensinhvien} đã bị giáo viên từ chối`,
-        };
-        axios
-            .post(`${port}/teacher/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-    }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -214,6 +150,9 @@ function ThongTinDangKyGV() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    if(tblThucTap.trangthaidon == "Đã duyệt") {
+        navigate(`/teacher/quanlythuctap/xembaocao/xembaocao?mathuctap=${tblThucTap.mathuctap}&id=${tblThucTap._id}&taikhoan=${taikhoan}`);
+    } 
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -334,31 +273,7 @@ function ThongTinDangKyGV() {
                             </li>
                         </ul>
                     </div>
-                    <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">
-                            Thông tin giáo viên hướng dẫn
-                        </h1>
-                        <ul className="thongtintaikhoan">
-                            <li>
-                                <span className="lable">Họ tên</span>
-                                <span className="info">
-                                    {tblThucTap.tengiaovien}
-                                </span>
-                            </li>
-                            <li>
-                                <span className="lable">Chức vụ</span>
-                                <span className="info">
-                                    {tblThucTap.chucvugiaovien}
-                                </span>
-                            </li>
-                            <li>
-                                <span className="lable">Email</span>
-                                <span className="info">
-                                    {tblThucTap.emailgiaovien}
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
+                    
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">
                             Thông tin công ty đăng ký thực tập
@@ -371,9 +286,9 @@ function ThongTinDangKyGV() {
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Email </span>
+                                <span className="lable">Số điện thoại</span>
                                 <span className="info">
-                                    {tblThucTap.emailcongty}
+                                    {tblThucTap.sodienthoaicongty}
                                 </span>
                             </li>
                             <li>
@@ -391,15 +306,15 @@ function ThongTinDangKyGV() {
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Vị trí hướng dẫn</span>
+                                <span className="lable">Số điện thoại người phụ trách</span>
                                 <span className="info">
-                                    {tblThucTap.vitrihuongdan}
+                                    {tblThucTap.sodienthoaiCB}
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Email</span>
+                                <span className="lable">Số tài khoản người phụ trách</span>
                                 <span className="info">
-                                    {tblThucTap.emailcanbo}
+                                    {tblThucTap.sotaikhoan}
                                 </span>
                             </li>
                         </ul>
@@ -430,12 +345,6 @@ function ThongTinDangKyGV() {
                         </ul>
                         <ul className="thongtintaikhoan">
                             <li>
-                                <span className="lable">Số buổi/tuần</span>
-                                <span className="info">
-                                    {tblThucTap.sobuoi}
-                                </span>
-                            </li>
-                            <li>
                                 <span className="lable">Số tuần</span>
                                 <span className="info">
                                     {tblThucTap.sotuan}
@@ -449,27 +358,10 @@ function ThongTinDangKyGV() {
                             </li>
                         </ul>
                     </div>
-                    {/* <div className="dinhkem">
-                      <h1 className="lable_chitiet">3.Đính kèm</h1>
-                      <ul className='thongtintaikhoan' ><li>
-                          <input className='fullsize_input' type="file" placeholder='Nội dung thực tập' />
-                      </li></ul>
-                    </div> */}
                     <div className="nutbam">
                         <Link
                             to={`/teacher/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}
                         >
-                            <button className="button_luu" onClick={DuyetDon}>
-                                {' '}
-                                <AiOutlineCheck className="icon_button" />
-                                Đồng ý
-                            </button>
-                            <button className="button_huy" onClick={TuChoiDon}>
-                                {' '}
-                                <ImCancelCircle className="icon_button" />
-                                Từ chối
-                            </button>
-
                             <button className="button_huy">
                                 {' '}
                                 <ImCancelCircle className="icon_button" />

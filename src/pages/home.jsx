@@ -15,10 +15,6 @@ function Home() {
         event.preventDefault();
         navigate('/teacher/?loaitaikhoan=giaovien');
     };
-    const congty = (event) => {
-        event.preventDefault();
-        navigate('/company/?loaitaikhoan=congty');
-    };
     return (
         <div className="box">
             <div className="gioithieu">
@@ -37,8 +33,8 @@ function Home() {
             <div className="home_index">
                 <span className="chonloaitaikhoan">SIS-Intern</span>
                 <div className="loaitaikhoan">
-                    <button onClick={congty} id="congty">
-                        Công ty
+                    <button onClick={admin} id="admin">
+                        Quản trị nội dung
                     </button>
                     <button onClick={giaovien} id="sinhvien">
                         Giáo viên
@@ -46,9 +42,7 @@ function Home() {
                     <button onClick={sinhvien} id="sinhvien">
                         Sinh viên
                     </button>
-                    <button onClick={admin} id="admin">
-                        Quản trị nội dung
-                    </button>
+                    
                 </div>
             </div>
         </div>

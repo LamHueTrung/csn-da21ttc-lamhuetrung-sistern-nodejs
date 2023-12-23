@@ -45,23 +45,21 @@ function XuLyLogin() {
             if (loaitaikhoanDN == urlParams.get('loaitaikhoan')) {
                 if (loaitaikhoanDN == 'sinhvien') {
                     src = 'student';
+                    navigate(`/${src}/tintuc/taikhoan?taikhoan=${taiKhoan}`);
                 } else if (loaitaikhoanDN == 'admin') {
                     src = 'admin';
+                    navigate(`/${src}/tintuc/taikhoan?taikhoan=${taiKhoan}`);
                 } else if (loaitaikhoanDN == 'giaovien') {
                     src = 'teacher';
-                } else if (loaitaikhoanDN == 'congty') {
-                    src = 'company';
+                    navigate(`/${src}/thongtin/taikhoan?taikhoan=${taiKhoan}`);
                 }
-                navigate(`/${src}/tintuc/taikhoan?taikhoan=${taiKhoan}`);
                 alert('Đăng nhập thành công');
             } else {
                 if (loaitaikhoanDN == 'sinhvien') {
                     kieutaikhoan = 'SINH VIÊN';
                 } else if (loaitaikhoanDN == 'giaovien') {
                     kieutaikhoan = 'GIÁO VIÊN';
-                } else if (loaitaikhoanDN == 'congty') {
-                    kieutaikhoan = 'CÔNG TY';
-                }
+                } 
                 alert(`Tài khoản của bạn là tài khoản ${kieutaikhoan} `);
                 navigate(`/`);
             }
@@ -80,6 +78,23 @@ function XuLyLogin() {
     if (urlParams.get('xuly') == 'dangky') {
         var taiKhoanDaLuu = taiKhoan;
         var loaitaikhoanDK = urlParams.get('loaitaikhoan');
+        const tensinhvien = urlParams.get('tensinhvien');
+        const masinhvien = urlParams.get('masinhvien');
+        const ngaysinh = urlParams.get('ngaysinh');
+        const lop = urlParams.get('lop');
+        const sodienthoai = urlParams.get('sodienthoai');
+
+        const dataSV = {
+            hoten: tensinhvien,
+            masinhvien: masinhvien,
+            ngaysinh: ngaysinh,
+            email: urlParams.get('taikhoan'),
+            lop: lop,
+            sodienthoai: sodienthoai,
+            trangthaisinhvien: 'Mới'
+        };
+
+        console.log(dataSV)
         const dataToAdd = {
             taikhoan: urlParams.get('taikhoan'),
             matkhau: urlParams.get('matkhau'),
@@ -103,12 +118,18 @@ function XuLyLogin() {
                             });
                     }
         if (loaitaikhoanDK == 'sinhvien') {
+            axios
+            .post(`${port}/student/themthongtin`, dataSV)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+            });
             src = 'student';
         } else if (loaitaikhoanDK == 'giaovien') {
             src = 'teacher';
-        } else if (loaitaikhoanDK == 'congty') {
-            src = 'company';
-        }
+        } 
         navigate(`/${src}/?loaitaikhoan=${loaitaikhoanDK}`);
     }
 }

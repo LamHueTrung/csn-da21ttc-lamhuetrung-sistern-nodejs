@@ -18,134 +18,236 @@ import '../../css/base.css';
 function Thuctap() {
     const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
+    const [congviecs, setCongViec] = useState([]);
     const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
-    const [selectedCongty, setSelectedCongty] = useState(null);
-    const [selectedGiaovien, setSelectedGiaovien] = useState('');
+    const [Dotthuctaps, setDotthuctaps] = useState([]);
+    const [thongtincongbos, setThongtincongbos] = useState([]);
+    const [selectedTTCB, setSelectedTTCB] = useState(null);
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
 
-    const handleGiaovienChange = (event) => {
-        setSelectedGiaovien(event.target.value);
-    };
     useEffect(() => {
         axios
-            .get(`${port}/student/danhsachsinhvien`)
-            .then((response) => setSinhViens(response.data))
+            .get(`${port}/admin/danhsachdotthuctap`)
+            .then((response) => setDotthuctaps(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
             });
-    }, []);
-    var ThongTinSinhVien = {};
-
-    useEffect(() => {
         axios
-            .get(`${port}/company/canbohuongdan`)
-            .then((response) => setCanBoHD(response.data))
+            .get(`${port}/admin/thongtincongbo`)
+            .then((response) => setThongtincongbos(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
-            });
-    }, []);
-    var ThongTinCanBoHD = {};
-    canbohds.map((cbhd) => {
-        if (
-            cbhd.tencanbo ==
-            document.querySelector('.tennguoiphutrach').textContent
-        ) {
-            ThongTinCanBoHD = {
-                tencanbo: cbhd.tencanbo,
-                macanbo: cbhd.macanbo,
-            };
-        }
-    });
-
-    var TTCBHD = [];
-    canbohds.map((cbhd) => {
-        congtys.map((ct) => {
-            if (ct.macongty == cbhd.macongty) {
-                TTCBHD.push({
-                    tencongty: ct.tencongty,
-                    vitri: cbhd.vitri,
-                    tencanbo: cbhd.tencanbo,
-                    sodienthoai: cbhd.sodienthoai,
-                    email: cbhd.email,
-                });
-            }
-        });
-    });
-
-    useEffect(() => {
+            });   
         axios
             .get(`${port}/company/danhsachcongty`)
             .then((response) => setCongTy(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
-            });
-    }, []);
-    var ThongTinCongTy = {};
-    congtys.map((ct) => {
-        if (
-            ct.tencongty ==
-            document.querySelector('.info_tencongty').textContent
-        ) {
-            ThongTinCongTy = {
-                tencongty: ct.tencongty,
-                macongty: ct.macongty,
-                ngaybatdau: ct.ngaybatdau,
-                ngayketthuc: ct.ngayketthuc,
-            };
-        }
-    });
-    useEffect(() => {
+            }); 
         axios
             .get(`${port}/teacher/danhsachgiaovien`)
             .then((response) => setGiaoviens(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
-            });
+            });   
+        axios
+            .get(`${port}/student/danhsachsinhvien`)
+            .then((response) => setSinhViens(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            }); 
+        axios
+            .get(`${port}/company/canbohuongdan`)
+            .then((response) => setCanBoHD(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });   
     }, []);
-    var ThongTinGiaoVien = {};
-    Giaoviens.map((gv) => {
-        if (gv.tengiaovien == selectedGiaovien) {
-            ThongTinGiaoVien = {
-                tengiaovien: gv.tengiaovien,
-                magiaovien: gv.magiaovien,
+
+    var ThongTinSinhVien = {};
+    sinhViens.map((sv) => {
+        if (
+            sv.email ==
+            taikhoan
+        ) {
+            ThongTinSinhVien = {
+                idsinhvien: sv._id,
+                tensinhvien: sv.hoten,
+                masinhvien: sv.masinhvien,
+                ngaysinh: sv.ngaysinh,
+                lop: sv.lop,
+                sodienthoai: sv.sodienthoai,
             };
         }
     });
+    var LopDotthuctap = [];
+    var AllLopThucTap = [];
+    Dotthuctaps.map(dtt => {
+        AllLopThucTap.push(dtt.danhsachlop.split(","));
+    })
+    LopDotthuctap = [...new Set(AllLopThucTap.flat())];
+    var ThongTinCongBo = [];
+    var ThongTinDotThucTap = {};
+    var ThongTinCongTyThucTap = {};
+    var ThongTinCanBoHuongDan = {};
+    thongtincongbos.map(ttcb => {
+        LopDotthuctap.map(ltt => {
+            if(ltt == ThongTinSinhVien.lop) {
+
+                Dotthuctaps.map(dtt => {
+                    if(dtt._id == ttcb.madotthuctap) {
+                        ThongTinDotThucTap = {
+                            tendotthuctap: dtt.tendotthuctap,
+                            ngaybatdau: dtt.ngaybatdau,
+                            ngayketthuc: dtt.ngayketthuc,
+                            danhsachlop: dtt.danhsachlop,
+                            ghichu: dtt.ghichu
+                        }
+                    }
+                })
+        
+                congtys.map(ct => {
+                    if(ct.macongty == ttcb.macongty) {
+                        ThongTinCongTyThucTap = {
+                            macongty: ct.macongty,
+                            tencongty: ct.tencongty,
+                            diachi: ct.diachi,
+                            macanbo: ct.macanbo,
+                            sodienthoai: ct.sodienthoai,
+                        }
+                    }
+                })
+        
+                canbohds.map(cbhd => {
+                    if(cbhd.macongty == ttcb.macongty) {
+                        ThongTinCanBoHuongDan = {
+                            macanbo: cbhd.macanbo,
+                            tencanbo: cbhd.tencanbo,
+                            sotaikhoan: cbhd.sotaikhoan,
+                            sodienthoai:cbhd.sodienthoai
+                        }
+        
+                    }
+                })
+                
+                ThongTinCongBo.push(
+                    {
+                        tendotthuctap: ThongTinDotThucTap.tendotthuctap,
+                        ngaybatdau: ThongTinDotThucTap.ngaybatdau,
+                        ngayketthuc: ThongTinDotThucTap.ngayketthuc,
+                        danhsachlop: ThongTinDotThucTap.danhsachlop,
+                        ghichu: ThongTinDotThucTap.ghichu,
+                        macongty: ThongTinCongTyThucTap.macongty,   
+                        tencongty: ThongTinCongTyThucTap.tencongty,   
+                        diachi: ThongTinCongTyThucTap.diachi,   
+                        sodienthoaicongty: ThongTinCongTyThucTap.sodienthoai,   
+                        macanbo: ThongTinCanBoHuongDan.macanbo,   
+                        tencanbo: ThongTinCanBoHuongDan.tencanbo,   
+                        sotaikhoan: ThongTinCanBoHuongDan.sotaikhoan,   
+                        sodienthoaicanbo: ThongTinCanBoHuongDan.sodienthoai,   
+                        congviecthuctap: ttcb.congviecthuctap,
+                        motacongviec: ttcb.ghichu
+                    }
+                )
+            }
+        })
+    })
+    console.log( ThongTinCongBo)
+    const LOADING = () => setCongViec(ThongTinCongBo);
+    const handleCongtyChange = (event, ttcb) => {
+        const tencongty = document.querySelector('.info_tencongty');
+        const diachi = document.querySelector('.info_diachi');
+        const sodienthoai = document.querySelector('.info_sodienthoai');
+        const tennguoiphutrach = document.querySelector('.tennguoiphutrach');
+        const sotaikhoan = document.querySelector('.info_sotaikhoan');
+        const motacongviec = document.querySelector('.info_motacongviec');
+        const ghichu = document.querySelector('.info_ghichu');
+        const dotthuctap = document.querySelector('.dotthuctap');
+        const congviecthuctap = document.querySelector('.congviecthuctap');
+        const ngaybatdau = document.querySelector('.ngaybatdau');
+        const ngayketthuc = document.querySelector('.ngayketthuc');
+        const sdtnguoiphutrach = document.querySelector('.sdt_nguoiphutrach');
+        const email_nguoiphutrach = document.querySelector(
+            '.email_nguoiphutrach',
+        );
+        if (event.target.checked) {
+            setSelectedTTCB(ttcb);
+            tencongty.textContent = ttcb.tencongty;
+            diachi.textContent = ttcb.diachi;
+            sodienthoai.textContent = ttcb.sodienthoaicongty;
+            tennguoiphutrach.textContent = ttcb.tencanbo;
+            sdtnguoiphutrach.textContent = ttcb.sodienthoaicanbo;
+            sotaikhoan.textContent = ttcb.sotaikhoan;
+            motacongviec.textContent = ttcb.motacongviec;
+            dotthuctap.textContent = ttcb.tendotthuctap;
+            ngaybatdau.textContent = ttcb.ngaybatdau;
+            ngayketthuc.textContent = ttcb.ngayketthuc;
+            ghichu.textContent = ttcb.ghichu;
+            ghichu.textContent = ttcb.ghichu;
+            congviecthuctap.textContent = ttcb.congviecthuctap;
+        } else {
+            setSelectedTTCB(null);
+        }
+    };
     function dang_ky_thuc_tap() {
-        ThongTinSinhVien = {
-            masinhvien: document.getElementById('info_masinhvien').value,
-            email: document.getElementById('info_email').textContent,
-            hoten: document.getElementById('info_hoten').value,
-            lop: document.getElementById('info_lop').value,
-            ngaysinh: document.getElementById('info_ngaysinh').value,
-            sodienthoai: document.getElementById('info_sodienthoai').value,
-        };
-        axios
-            .post(`${port}/student/themthongtin`, ThongTinSinhVien)
-            .then((response) => {
-                console.log(ThongTinSinhVien);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
+        var tuanbatdau = document.getElementById('ngaybatdau').textContent.split('/');
+        var tuanketthuc = document.getElementById('ngayketthuc').textContent.split('/');
+        var ngaydb = parseInt(tuanbatdau[0]);
+        var thangdb = parseInt(tuanbatdau[1]);
+        var namdb = parseInt(tuanbatdau[2]);
+        var ngaykt = parseInt(tuanketthuc[0]);
+        var thangkt = parseInt(tuanketthuc[1]);
+        var namkt = parseInt(tuanketthuc[2]);
+
+        var tuan = 0;
+        while( thangdb != thangkt) {
+            ngaydb = ngaydb + 7;
+            tuan = tuan + 1;
+            switch(thangdb) {
+                case 1, 3, 5, 7, 8, 10, 12:
+                    if(ngaydb > 31) {
+                        thangdb = thangdb + 1;
+                        ngaydb = 1;
+                    }
+                case 2:
+                    if(namdb%4==0) {
+                        if(namdb %100 == 0 && namdb%400 == 0) {
+                            if(ngaydb > 29) {
+                                thangdb = thangdb + 1;
+                                ngaydb = 1;
+                            }
+                        }
+                    } 
+                default:
+                    if(ngaydb > 30) {
+                        thangdb = thangdb + 1;
+                        ngaydb = 1;
+                    }
+            }
+            if(thangdb > 12) {
+                namdb = namdb + 1;
+                thangdb = 1;
+            }
+        }
         const dataToAdd = {
             trangthaidon: 'Chưa duyệt',
-            mathuctap: ThongTinSinhVien.masinhvien,
+            mathuctap: ThongTinSinhVien.idsinhvien,
+            idsinhvien: ThongTinSinhVien.idsinhvien,
             masinhvien: ThongTinSinhVien.masinhvien,
-            loai: document.getElementById('hocphanthuctap').value,
-            magiaovien: ThongTinGiaoVien.magiaovien,
-            macongty: ThongTinCongTy.macongty,
-            macanbohuongdan: ThongTinCanBoHD.macanbo,
-            ngaybatdau: document.getElementById('ngaybatdau').value,
-            ngayketthuc: document.getElementById('ngayketthuc').value,
-            sobuoi: document.getElementById('sobuoi').value,
-            sotuan: document.getElementById('sotuan').value,
-            noidungthuctap: document.getElementById('noidungthuctap').value,
+            loai: document.getElementById('dotthuctap').textContent,
+            magiaovien: 'chưa gán',
+            macongty: selectedTTCB.macongty,
+            macanbohuongdan: selectedTTCB.macanbo,
+            ngaybatdau: document.getElementById('ngaybatdau').textContent,
+            ngayketthuc: document.getElementById('ngayketthuc').textContent,
+            sotuan: tuan,
+            noidungthuctap: document.getElementById('congviecthuctap').textContent,
         };
-        
+        console.log(dataToAdd)
+
         axios
             .post(`${port}/student/dangkythuctap`, dataToAdd)
             .then((response) => {
@@ -160,8 +262,7 @@ function Thuctap() {
         var DateNow = new Date();
         var ThongBao = {
             thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaocongty: `${ThongTinSinhVien.hoten} vừa đăng ký thực tập tại ${ThongTinCongTy.tencongty}`,
-            thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa đăng ký giáo viên ${ThongTinGiaoVien.tengiaovien} hướng dẫn thực tập `,
+            thongbaoadmin: `${ThongTinSinhVien.tensinhvien} vừa đăng ký thực tập ${dataToAdd.loai}`,
         };
         axios
             .post(`${port}/student/themthongbao`, ThongBao)
@@ -171,60 +272,19 @@ function Thuctap() {
             .catch((error) => {
                 console.error('Lỗi khi thêm dữ liệu:', error);
             });
+        const dataToadd2 = {
+            trangthaisinhvien: 'Đã đăng ký',
+        };
+        axios
+            .put(`${port}/student/capnhattrangthai/${dataToAdd.idsinhvien}`, dataToadd2)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+            });
     }
-    const handleCongtyChange = (event, congty) => {
-        const tencongty = document.querySelector('.info_tencongty');
-        const diachi = document.querySelector('.info_diachi');
-        const vitri = document.querySelector('.info_vitri');
-        const email = document.querySelector('.info_email');
-        const ngaybatdau = document.getElementById('ngaybatdau');
-        const ngayketthuc = document.getElementById('ngayketthuc');
-        const tennguoiphutrach = document.querySelector('.tennguoiphutrach');
-        const luong = document.querySelector('.info_luong');
-        const motacongviec = document.querySelector('.info_motacongviec');
-        const yeucaucongviec = document.querySelector('.info_yeucaucongviec');
-        
-        const email_nguoiphutrach = document.querySelector(
-            '.email_nguoiphutrach',
-        );
-        if (event.target.checked) {
-            setSelectedCongty(congty);
-            var ThoiGianThucTap = {};
-            congtys.map((ct) => {
-                if (ct.tencongty == congty.tencongty) {
-                    ThoiGianThucTap = {
-                        tencongty: ct.tencongty,
-                        macongty: ct.macongty,
-                        ngaybatdau: ct.ngaybatdau,
-                        ngayketthuc: ct.ngayketthuc,
-                        motacongviec: ct.motacongviec,
-                        yeucaucongviec: ct.yeucaucongviec
-                    };
-                }
-            });
-            var ThongTinCanBo = {};
-            canbohds.map((cb) => {
-                if (cb.macongty == ThoiGianThucTap.macongty) {
-                    ThongTinCanBo = {
-                        tenCB: cb.tencanbo,
-                        emailCB: cb.email,
-                    };
-                }
-            });
-            tencongty.textContent = congty.tencongty;
-            diachi.textContent = congty.diachi;
-            vitri.textContent = congty.vitrithuctap;
-            luong.textContent = congty.luong;
-            ngaybatdau.value = ThoiGianThucTap.ngaybatdau;
-            ngayketthuc.value = ThoiGianThucTap.ngayketthuc;
-            tennguoiphutrach.textContent = ThongTinCanBo.tenCB;
-            email_nguoiphutrach.textContent = ThongTinCanBo.emailCB;
-            motacongviec.textContent = ThoiGianThucTap.motacongviec;
-            yeucaucongviec.textContent = ThoiGianThucTap.yeucaucongviec;
-        } else {
-            setSelectedCongty(null);
-        }
-    };
+    
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -233,6 +293,8 @@ function Thuctap() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+
+    
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -300,6 +362,7 @@ function Thuctap() {
                                     id="info_masinhvien"
                                     type="text"
                                     placeholder="Mã sinh viên"
+                                    value={ThongTinSinhVien.masinhvien}
                                 />
                             </li>
                             <li>
@@ -307,6 +370,7 @@ function Thuctap() {
                                     type="text"
                                     id="info_lop"
                                     placeholder="Lớp"
+                                    value={ThongTinSinhVien.lop}
                                 />
                             </li>
                         </ul>
@@ -316,6 +380,7 @@ function Thuctap() {
                                     type="text"
                                     id="info_hoten"
                                     placeholder="Họ tên"
+                                    value={ThongTinSinhVien.tensinhvien}
                                 />
                             </li>
                             <li>
@@ -323,6 +388,7 @@ function Thuctap() {
                                     id="info_ngaysinh"
                                     type="text"
                                     placeholder="Ngày sinh"
+                                    value={ThongTinSinhVien.ngaysinh}
                                 />
                             </li>
                             <li>
@@ -330,68 +396,67 @@ function Thuctap() {
                                     id="info_sodienthoai"
                                     type="text"
                                     placeholder="Số điện thoại"
+                                    value={ThongTinSinhVien.sodienthoai}
                                 />
                             </li>
                         </ul>
                     </div>
                     <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">Lựa chọn công ty</h1>
+                        <h1 className="lable_chitiet">Lựa chọn công việc thực tập</h1>
                         <ul className="thongtintaikhoan danhsachcongty">
+                            <li className='hienthithongtin '>
+                                <button className="button_search" onClick={LOADING}>Hiển thị thông tin</button>
+
+                            </li>
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
                                         <th id="checked"></th>
+                                        <th id="emailsinhvien">Đợt thực tập</th>
+                                        <th id="emailsinhvien">Công việc thực tập</th>
                                         <th id="emailsinhvien">Tên công ty</th>
                                         <th id="admin_diachicongty">Địa chỉ</th>
-                                        <th id="emailsinhvien">Email</th>
-                                        <th id="vitri">Vị trí thực tập</th>
-                                        <th id="vitri">Lương</th>
-                                        <th id="vitri">Cấp bậc</th>
-                                        <th id="vitri">Hết hạn nộp</th>
+                                        <th id="emailsinhvien">Số điện thoại</th>
+                                        <th id="emailsinhvien">Ghi chú</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {congtys.map((congty, index) => {
+                                    { 
+                                    congviecs.map((ttcb, index) => {
                                         return (
                                             <tr className="info">
                                                 <th id="stt">{index + 1}</th>
                                                 <th id="checked">
                                                     <input
                                                         id="choncongty"
-                                                        checked={
-                                                            congty ===
-                                                            selectedCongty
-                                                        }
-                                                        type="radio"
-                                                        onChange={(event) =>
+                                                        checked = {selectedTTCB === ttcb}
+                                                        type="checkbox"
+                                                        onChange= {(event) =>
                                                             handleCongtyChange(
                                                                 event,
-                                                                congty,
+                                                                ttcb,
                                                             )
                                                         }
                                                     />
                                                 </th>
                                                 <th id="emailsinhvien">
-                                                    {congty.tencongty}
-                                                </th>
-                                                <th id="admin_diachicongty">
-                                                    {congty.diachi}
+                                                    {ttcb.tendotthuctap}
                                                 </th>
                                                 <th id="emailsinhvien">
-                                                    {congty.email}
+                                                    {ttcb.congviecthuctap}
                                                 </th>
-                                                <th id="vitri">
-                                                    {congty.vitrithuctap}
+                                                <th id="emailsinhvien">
+                                                    {ttcb.tencongty}
                                                 </th>
-                                                <th id="vitri">
-                                                    {congty.luong}
+                                                <th id="admin_diachicongty">
+                                                    {ttcb.diachi}
                                                 </th>
-                                                <th id="vitri">
-                                                    {congty.capbac}
+                                                <th id="emailsinhvien">
+                                                    {ttcb.sodienthoaicongty}
                                                 </th>
-                                                <th id="vitri">
-                                                    {congty.hethannop}
+                                                <th id="emailsinhvien">
+                                                    {ttcb.motacongviec}
                                                 </th>
                                             </tr>
                                         );
@@ -400,34 +465,53 @@ function Thuctap() {
                             </table>
                         </ul>
                         <ul className="thongtintaikhoan">
-                            <li>
-                                <span className="lable">Tên công ty</span>
-                                <span className="info info_tencongty"></span>
+                            <li className='close'>
+                                <span className="lable">Đợt thực tập</span>
+                                <span className="info dotthuctap" id='dotthuctap'></span>
                             </li>
                             <li>
-                                <span className="lable">Vị trí thực tập</span>
-                                <span className="info info_vitri"></span>
+                                <span className="lable">Công việc thực tập</span>
+                                <span className="info congviecthuctap" id='congviecthuctap'></span>
                             </li>
                             <li>
-                                <span className="lable">Lương</span>
-                                <span className="info info_luong"></span>
+                                <span className="lable">Ngày bắt đầu</span>
+                                <span className="info ngaybatdau" id='ngaybatdau'></span>
+                            </li>
+                            <li>
+                                <span className="lable">Ngày kết thúc</span>
+                                <span className="info ngayketthuc" id='ngayketthuc'></span>
                             </li>
                         </ul>
                         <ul className="thongtintaikhoan">
                             <li>
-                                <span className="lable">Địa chỉ</span>
-                                <span className="info info_diachi"></span>
+                                <span className="lable">Tên công ty</span>
+                                <span className="info info_tencongty" id='tencongty'></span>
                             </li>
                             <li>
+                                <span className="lable">Số điện thoại</span>
+                                <span className="info info_sodienthoai" id='sodienthoaicongty'></span>
+                            </li>
+                            <li>
+                                <span className="lable">Địa chỉ</span>
+                                <span className="info info_diachi" id='diachicongty'></span>
+                            </li>
+                        </ul>
+                        <ul className="thongtintaikhoan">
+                            <li>
                                 <span className="lable">Người phụ trách</span>
-                                <span className="info tennguoiphutrach"></span>
+                                <span className="info tennguoiphutrach" id='nguoiphutrach'></span>
                             </li>
                             <li>
                                 <span className="lable">
-                                    Email người phụ trách
+                                    SDT người phụ trách
                                 </span>
-                                <span className="info email_nguoiphutrach"></span>
+                                <span className="info sdt_nguoiphutrach" id='sdtnguoiphutrach'></span>
                             </li>
+                            <li>
+                                <span className="lable">Số tài khoản</span>
+                                <span className="info info_sotaikhoan" id='stknguoiphutrach'></span>
+                            </li>
+                            
                         </ul>
                         <ul className="motacongty fullsize">
                             <li>
@@ -441,90 +525,11 @@ function Thuctap() {
                         </ul>
                         <ul className="motacongty fullsize">
                             <li>
-                                <span className="lable">Yêu cầu công việc</span>
+                                <span className="lable">Ghi chú</span>
                                 <textarea disabled
-                                    id="yeucaucongviec"
-                                    className="fullsize_input description info info_yeucaucongviec"
+                                    id="ghichu"
+                                    className="fullsize_input description info info_ghichu"
                                     type="textbox"
-                                />
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="thongtincongty">
-                        <h1 className="lable_chitiet">Thông tin đăng ký</h1>
-                        <ul className="thongtindondangky">
-                            <li>
-                                <select name="" id="hocphanthuctap">
-                                    <option value="">
-                                        --Học phần thực tập--
-                                    </option>
-                                    <option value="Đồ án cơ sở ngành">
-                                        Đồ án cơ sở ngành
-                                    </option>
-                                    <option value="Đồ án chuyên ngành">
-                                        Đồ án chuyên ngành
-                                    </option>
-                                    <option value="Đồ án tốt nghiệp">
-                                        Đồ án tốt nghiệp
-                                    </option>
-                                </select>
-                            </li>
-                            <li>
-                                <input
-                                    id="ngaybatdau"
-                                    placeholder="Ngày bắt đầu"
-                                    type="text"
-                                />
-                            </li>
-                            <li>
-                                <input
-                                    id="ngayketthuc"
-                                    placeholder="Ngày kết thúc"
-                                    type="text"
-                                />
-                            </li>
-                        </ul>
-                        <ul className="thongtindondangky">
-                            <li>
-                                <select
-                                    name=""
-                                    id="thongtingiaovien"
-                                    onChange={handleGiaovienChange}
-                                >
-                                    <option value="">--Chọn giáo viên--</option>
-                                    {Giaoviens.map((giaovien) => {
-                                        return (
-                                            <option
-                                                value={giaovien.tengiaovien}
-                                            >
-                                                {giaovien.tengiaovien}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </li>
-                            <li>
-                                <input
-                                    id="sobuoi"
-                                    type="number"
-                                    placeholder="Số buổi/Tuần"
-                                />
-                            </li>
-                            <li>
-                                <input
-                                    id="sotuan"
-                                    type="number"
-                                    placeholder="Số tuần"
-                                />
-                            </li>
-                        </ul>
-                        <ul className="thongtindondangky fullsize">
-                            <li>
-                                <textarea
-                                    id="noidungthuctap"
-                                    className="fullsize_input description"
-                                    type="text"
-                                    placeholder="Nội dung thực tập"
                                 />
                             </li>
                         </ul>

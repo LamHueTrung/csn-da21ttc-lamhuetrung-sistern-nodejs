@@ -50,9 +50,19 @@ function Sinhvien() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc">
+                            <li id="tintuc" >
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
+                            </li>
+                        </a>
+                    </Link>
+                    <Link
+                        to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                    >
+                        <a href="">
+                            <li id="thuctap">
+                                <FiUsers className="icon" />
+                                Đợt thực tập
                             </li>
                         </a>
                     </Link>
@@ -62,7 +72,7 @@ function Sinhvien() {
                         <a href="">
                             <li id="thuctap">
                                 <FiUsers className="icon" />
-                                Thực tập
+                                Duyệt đơn
                             </li>
                         </a>
                     </Link>
@@ -122,6 +132,7 @@ function Sinhvien() {
                                         <th id="emailsinhvien">Email</th>
                                         <th id="ngaytaodon">Số điện thoại</th>
                                         <th id="trangthai">Lớp</th>
+                                        <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -143,6 +154,9 @@ function Sinhvien() {
                                                 </th>
                                                 <th id="trangthai">
                                                     {sinhVien.lop}
+                                                </th>
+                                                <th id="trangthai">
+                                                    {sinhVien.trangthaisinhvien}
                                                 </th>
                                             </tr>
                                         );

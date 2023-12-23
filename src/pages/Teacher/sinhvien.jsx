@@ -18,9 +18,13 @@ import '../../css/teacher.css';
 
 function Sinhvien() {
     const [sinhViens, setSinhViens] = useState([]);
+    const [danhsachs, setDanhsachs] = useState([]);
+    const [thuctaps, setthuctap] = useState([]);
+    const [value, setValue] = useState("");
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
+    
     useEffect(() => {
         axios
             .get(`${port}/student/danhsachsinhvien`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -29,6 +33,69 @@ function Sinhvien() {
                 console.error('Lỗi react:', error);
             });
     }, []);
+    useEffect(() => {
+        axios
+            .get(`${port}/student/danhsachsinhvien`) // Điều chỉnh URL tương ứng với tuyến đường API
+            .then((response) => setDanhsachs(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
+    useEffect(() => {
+        axios
+            .get(`${port}/student/donthuctap`)
+            .then((response) => setthuctap(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
+    var ThongTinSinhVien = {};
+    sinhViens.map((sv) => {
+        if (sv.email == taikhoan) {
+            ThongTinSinhVien = {
+                hoten: sv.hoten,
+                email: sv.email,
+                masinhvien: sv.masinhvien,
+                lop: sv.lop,
+            };
+        }
+    });
+    var danhsachtimkiem = sinhViens;
+    var tukhoa = '';
+    function timkiemsinhvien() {
+        tukhoa = document.getElementById('tukhoa').value;
+        if(tukhoa == '') {
+            setDanhsachs(sinhViens);
+        } else {
+            danhsachtimkiem = [];
+            sinhViens.map((sv) => {
+                if (sv.lop == tukhoa || sv.trangthaisinhvien == tukhoa) {
+                    danhsachtimkiem.push({
+                        hoten: sv.hoten,
+                        email: sv.email,
+                        masinhvien: sv.masinhvien,
+                        lop: sv.lop,
+                        sodienthoai: sv.sodienthoai,
+                        trangthaisinhvien: sv.trangthaisinhvien
+                    });
+                }
+            });
+            setDanhsachs(danhsachtimkiem);
+        }
+    }
+    var tblThucTap = {};
+    const mathuctap = thuctaps.map((tttt) => {
+        if (tttt.masinhvien == ThongTinSinhVien.masinhvien) {
+            tblThucTap = {
+                mathuctap: tttt.mathuctap,
+                macongty: tttt.macongty,
+                macanbo: tttt.macanbohuongdan,
+                masinhvien: tttt.masinhvien,
+                ngaybatdau: tttt.ngaybatdau,
+                loai: tttt.loai
+            };
+        }
+    });
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -104,13 +171,13 @@ function Sinhvien() {
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Thông tin sinh viên</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="từ khóa" />
-                            <button className="button_search">
-                                {' '}
-                                <AiOutlineSearch className="icon_button" />
-                                Tìm kiếm
-                            </button>
-                            <table>
+                            <input type="text" placeholder="Từ khoá" id='tukhoa'/>
+                                <button className="button_search" onClick={timkiemsinhvien}>
+                                    {' '}
+                                    <AiOutlineSearch className="icon_button" />
+                                    Tìm kiếm
+                                </button>
+                            <table className='danhsachall'>
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
@@ -119,10 +186,11 @@ function Sinhvien() {
                                         <th id="emailsinhvien">Email</th>
                                         <th id="ngaytaodon">Số điện thoại</th>
                                         <th id="trangthai">Lớp</th>
+                                        <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sinhViens.map((sinhVien, index) => {
+                                    {danhsachs.map((sinhVien, index) => {
                                         return (
                                             <tr className="info">
                                                 <th id="stt">{index + 1}</th>
@@ -140,6 +208,9 @@ function Sinhvien() {
                                                 </th>
                                                 <th id="trangthai">
                                                     {sinhVien.lop}
+                                                </th>
+                                                <th id="trangthai">
+                                                    {sinhVien.trangthaisinhvien}
                                                 </th>
                                             </tr>
                                         );

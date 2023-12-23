@@ -10,6 +10,7 @@ import { TbHomeEco } from 'react-icons/tb';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
@@ -103,18 +104,79 @@ function QuanLyThucTap() {
                 };
             }
         });
+        var temptengiaovien = '';
+        if (tttt.magiaovien == 'chưa gán') {
+            temptengiaovien = 'chưa gán';
+        } else {
+            temptengiaovien = ThongTinGiaoVien;
+        }
         tblThucTap.push({
             _id: tttt._id,
             mathuctap: tttt.mathuctap,
             tensinhvien: ThongTinSinhVien,
-            tengiaovien: ThongTinGiaoVien,
+            tengiaovien: temptengiaovien,
             tencanbo: ThongTinCanBoHD,
             tencongty: ThongTinCongTy.tencongty,
             trangthaidon: tttt.trangthaidon,
-            noidungthuctap: ThongTinCongTy.vitrithuctap
+            noidungthuctap: tttt.noidungthuctap,
+            dotthuctap: tttt.loai
+            
         });
     });
-    console.log(tblThucTap);
+    // function duyettatca() {
+    //     const updatedData = [];
+    //     tblThucTap.map(ttt => {
+    //         if(ttt.trangthaidon == 'Chưa duyệt') {
+    //             Giaoviens.map(gv => {
+    //                 updatedData.push( {
+    //                     trangthaidon: 'Đã duyệt',
+    //                     magiaovien: gv.magiaovien
+    //                 });
+    //             })
+    //             updatedData.map( data => {
+    //             axios
+    //                 .put(
+    //                     `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
+    //                     data,
+    //                 )
+    //                 .then((response) => {
+    //                     console.log('Dữ liệu sau khi cập nhật:', response.data);
+    //                     alert('Duyệt đơn thành công');
+    //                 })
+    //                 .catch((error) => {
+    //                     alert('Duyệt đơn thất bại');
+    //                     console.error('Lỗi cập nhật dữ liệu:', error);
+    //                 });
+    //                 const dataToadd2 = {
+    //                     trangthaisinhvien: 'Đã được duyệt',
+    //                 };
+    //                 axios
+    //                     .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
+    //                     .then((response) => {
+    //                         console.log(response);
+    //                     })
+    //                     .catch((error) => {
+    //                         console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+    //                     });
+    //             var DateNow = new Date();
+    //             var ThongBao = {
+    //                 thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+    //                 thongbaosinhvien: `Đơn thực tập của bạn đã được người phê duyệt với giao viên hướng dẫn là ${ThongTinGiaoVien.tengiaovien} `,
+    //                 thongbaogiaovien: `Bạn được phân công hướng dẫn sinh viên ${tblThucTap.tensinhvien}`,
+    //             };
+    //             axios
+    //                 .post(`${port}/teacher/themthongbao`, ThongBao)
+    //                 .then((response) => {
+    //                     console.log(response);
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Lỗi khi thêm dữ liệu:', error);
+    //                 });
+    //             })
+                
+    //         }
+    //     })
+    // }
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -129,9 +191,19 @@ function QuanLyThucTap() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc">
+                            <li id="tintuc" >
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
+                            </li>
+                        </a>
+                    </Link>
+                    <Link
+                        to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                    >
+                        <a href="">
+                            <li id="thuctap">
+                                <FiUsers className="icon" />
+                                Đợt thực tập
                             </li>
                         </a>
                     </Link>
@@ -141,7 +213,7 @@ function QuanLyThucTap() {
                         <a href="">
                             <li id="thuctap" className="click">
                                 <FiUsers className="icon" />
-                                Thực tập
+                                Duyệt đơn
                             </li>
                         </a>
                     </Link>
@@ -183,20 +255,20 @@ function QuanLyThucTap() {
                     <span id="route">/Quản lý thực tập</span>
                 </div>
                 <div className="content">
-                    <div className="thongtincanhan">
+                <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="Công ty" />
-                            <button className="button_search">
-                                {' '}
-                                <AiOutlineSearch className="icon_button" />
-                                Tìm kiếm
-                            </button>
+                                <button className="icon_dotthuctap" >
+                                    {' '}
+                                    <IoIosAddCircleOutline className="icon_button" />
+                                    Duyệt toàn bộ
+                                </button>
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
-                                        <th id="masinhvien">Tên sinh viên</th>
+                                        <th id="tensinhvien">Đợt thực tập</th>
+                                        <th id="tensinhvien">Tên sinh viên</th>
                                         <th id="tensinhvien">
                                             Giáo viên hướng dẫn
                                         </th>
@@ -218,7 +290,10 @@ function QuanLyThucTap() {
                                                     <th id="stt">
                                                         {index + 1}
                                                     </th>
-                                                    <th id="masinhvien">
+                                                    <th id="tensinhvien">
+                                                        {dtt.dotthuctap}
+                                                    </th>
+                                                    <th id="tensinhvien">
                                                         {dtt.tensinhvien}
                                                     </th>
                                                     <th id="tensinhvien">

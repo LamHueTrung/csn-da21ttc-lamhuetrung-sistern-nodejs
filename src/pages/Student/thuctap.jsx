@@ -17,12 +17,21 @@ function Thuctap() {
     const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
     const [BaoCaos, setBaoCaos] = useState([]);
+    const [Dotthuctaps, setDotthuctaps] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
 
+    useEffect(() => {
+        axios
+            .get(`${port}/admin/danhsachdotthuctap`)
+            .then((response) => setDotthuctaps(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
     // lấy thông tin sinh viên từ tài khoản trên :slug
     useEffect(() => {
         axios
@@ -44,6 +53,7 @@ function Thuctap() {
     sinhViens.map((sv) => {
         if (sv.email == taikhoan) {
             ThongTinSinhVien = {
+                _id: sv._id,
                 hoten: sv.hoten,
                 email: sv.email,
                 masinhvien: sv.masinhvien,
@@ -63,11 +73,11 @@ function Thuctap() {
                 macanbo: tttt.macanbohuongdan,
                 magiaovien: tttt.magiaovien,
                 sotuan: tttt.sotuan,
+                loai: tttt.loai
             };
         }
     });
     
-    // console.log(ArrSoTuan)
     useEffect(() => {
         axios
             .get(`${port}/student/donthuctap`)
@@ -76,6 +86,7 @@ function Thuctap() {
                 console.error('Lỗi react:', error);
             });
     }, []);
+    var hannop = '';
     thuctaps.map((tt) => {
         if (tt.mathuctap == tblThucTap.mathuctap) {
             ThongTinThucTap = {
@@ -86,6 +97,7 @@ function Thuctap() {
                 trangthaidon: tt.trangthaidon,
                 noidungthuctap: tt.noidungthuctap
             };
+            hannop = ThongTinThucTap.ngaybatdau.split("/");
         }
     });
 
@@ -106,6 +118,12 @@ function Thuctap() {
                 email: gv.email,
                 chucvu: gv.chucvu,
             };
+        } else {
+            ThongTinGiaoVien = {
+                hoten: 'Chưa phân công',
+                email: 'Chưa có',
+                chucvu: 'Chưa có',
+            }
         }
     });
 
@@ -122,9 +140,11 @@ function Thuctap() {
     canbohds.map((cbhd) => {
         if (cbhd.macanbo == tblThucTap.macanbo) {
             ThongTinCanBoHD = {
-                hoten: cbhd.tencanbo,
-                email: cbhd.email,
-                chucvu: cbhd.chucvu,
+                macanbo: cbhd.macanbo,
+                macongty: cbhd.macongty,
+                tencanbo: cbhd.tencanbo,
+                sotaikhoan: cbhd.sotaikhoan,
+                sodienthoai: cbhd.sodienthoai,
             };
         }
     });
@@ -132,7 +152,6 @@ function Thuctap() {
     //lấy thong tin cong ty từ macongty trong tblThuctap
     var ThongTinCongTy = {};
     var ArrSoTuan = [];
-    var hannop = '';
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -145,15 +164,11 @@ function Thuctap() {
         if (ct.macongty == tblThucTap.macongty) {
             ThongTinCongTy = {
                 tencongty: ct.tencongty,
-                email: ct.email,
-                vitri: ct.vitri,
-                ngaybatdau: ct.ngaybatdau,
-                luong: ct.luong
+                sodienthoai: ct.sodienthoai,
+                diachi: ct.diachi
             };
-            hannop = ThongTinCongTy.ngaybatdau.split("/");
         }
     });
-    
     if (ThongTinThucTap.trangthaidon == 'Đã duyệt') {
         const baocaotiendo = document.querySelector('.baocaotiendo');
         const baocaotongket = document.querySelector('.baocaotongket');
@@ -246,7 +261,17 @@ function Thuctap() {
                 console.log(error);
                 console.error('Lỗi khi thêm dữ liệu:', error);
             });
-
+        const dataToadd2 = {
+                trangthaisinhvien: 'Đang thực tập',
+            };
+            axios
+                .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+                });    
         var ThongBao = {
             thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
             thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa nộp báo cáo thực tập tuần ${dataToAdd.tuan}`,
@@ -379,49 +404,50 @@ function Thuctap() {
                         </ul>
                         <ul className="thongtintaikhoan">
                             <li>
-                                <span className="lable">Người phụ trách</span>
-                                <span className="info">
-                                    {ThongTinCanBoHD.hoten}
-                                </span>
-                            </li>
-                            <li>
-                                <span className="lable">
-                                    Email người phụ trách
-                                </span>
-                                <span className="info">
-                                    {ThongTinCanBoHD.email}
-                                </span>
-                            </li>
-                            <li>
-                                <span className="lable">Chức vụ</span>
-                                <span className="info">
-                                    {ThongTinCanBoHD.chucvu}
-                                </span>
-                            </li>
-                        </ul>
-                        <ul className="thongtintaikhoan">
-                            <li>
                                 <span className="lable">Tên công ty</span>
                                 <span className="info">
                                     {ThongTinCongTy.tencongty}
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Email công ty</span>
+                                <span className="lable">Số điện thoại công ty</span>
                                 <span className="info">
-                                    {ThongTinCongTy.email}
+                                    {ThongTinCongTy.sodienthoai}
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Lương</span>
+                                <span className="lable">Địa chỉ</span>
                                 <span className="info">
-                                    {ThongTinCongTy.luong}
+                                    {ThongTinCongTy.diachi}
                                 </span>
                             </li>
                         </ul>
+                        <ul className="thongtintaikhoan">
+                            <li>
+                                <span className="lable">Người phụ trách</span>
+                                <span className="info">
+                                    {ThongTinCanBoHD.tencanbo}
+                                </span>
+                            </li>
+                            <li>
+                                <span className="lable">
+                                    Số điện thoại người phụ trách
+                                </span>
+                                <span className="info">
+                                    {ThongTinCanBoHD.sodienthoai}
+                                </span>
+                            </li>
+                            <li>
+                                <span className="lable">Số tài khoản</span>
+                                <span className="info">
+                                    {ThongTinCanBoHD.sotaikhoan}
+                                </span>
+                            </li>
+                        </ul>
+                        
                         <ul className="motacongty fullsize">
                             <li>
-                                <span className="lable">Nội dung thực tập</span>
+                                <span className="lable">Công việc thực tập</span>
                                 <textarea disabled
                                     id="noidungthuctap"
                                     className="fullsize_input description info "
@@ -432,6 +458,12 @@ function Thuctap() {
                         </ul>
                         <ul className="thongtintaikhoan">
                             <li>
+                                <span className="lable">Đợt thực tập</span>
+                                <span className="info">
+                                    {tblThucTap.loai}
+                                </span>
+                            </li>
+                            <li>
                                 <span className="lable">Ngày bắt đầu</span>
                                 <span className="info">
                                     {ThongTinThucTap.ngaybatdau}
@@ -441,12 +473,6 @@ function Thuctap() {
                                 <span className="lable">Ngày kết thúc</span>
                                 <span className="info">
                                     {ThongTinThucTap.ngayketthuc}
-                                </span>
-                            </li>
-                            <li>
-                                <span className="lable">Số buổi/tuần</span>
-                                <span className="info">
-                                    {ThongTinThucTap.sobuoi}
                                 </span>
                             </li>
                             <li>

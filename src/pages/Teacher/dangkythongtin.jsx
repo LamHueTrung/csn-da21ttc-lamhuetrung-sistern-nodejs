@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
-import { ImCancelCircle } from 'react-icons/im';
-import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiUsers } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
@@ -160,14 +158,16 @@ function DangKyThucTap() {
                             </li>
                             <li>
                                 <div className="nutbam">
-                                    <button
-                                        className="button_luu"
-                                        onClick={Dangky}
-                                    >
-                                        {' '}
-                                        <AiOutlineCheck className="icon_button" />
-                                        Lưu
-                                    </button>
+                                    <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}>
+                                        <button
+                                            className="button_luu"
+                                            onClick={Dangky}
+                                        >
+                                            {' '}
+                                            <AiOutlineCheck className="icon_button" />
+                                            Lưu
+                                        </button>
+                                    </Link>
                                 </div>
                             </li>
                         </ul>

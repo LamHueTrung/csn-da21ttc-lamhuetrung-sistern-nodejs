@@ -4,6 +4,9 @@
     width: 100%;
     height: 760px;
 }
+.tintuc {
+    cursor: auto !important;
+}
 .ngancach {
     border-bottom: 1px solid #6060602b;
 }

@@ -35,8 +35,6 @@ function ThongTinDangKyGV() {
     var ThongTinCongTy = {};
     var tblThucTap = {};
 
-    const myFile = require("../../uploads/dkhm.pdf");
-    console.log(myFile);
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -306,12 +304,6 @@ function ThongTinDangKyGV() {
                             </li>
                         </ul>
                         <ul className="thongtintaikhoan">
-                            <li>
-                                <span className="lable">Số buổi/tuần</span>
-                                <span className="info">
-                                    {tblThucTap.sobuoi}
-                                </span>
-                            </li>
                             <li>
                                 <span className="lable">Số tuần</span>
                                 <span className="info">

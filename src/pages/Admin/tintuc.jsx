@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiUsers } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
@@ -55,12 +54,22 @@ function Tintuc() {
                         </a>
                     </Link>
                     <Link
+                        to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                    >
+                        <a href="">
+                            <li id="thuctap">
+                                <FiUsers className="icon" />
+                                Đợt thực tập
+                            </li>
+                        </a>
+                    </Link>
+                    <Link
                         to={`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`}
                     >
                         <a href="">
                             <li id="thuctap">
                                 <FiUsers className="icon" />
-                                Thực tập
+                                Duyệt đơn
                             </li>
                         </a>
                     </Link>
@@ -104,44 +113,18 @@ function Tintuc() {
                 <div className="content">
                     <h1 className="lable">Tin tức</h1>
                     <ul className="items">
-                        <Link>
                             {TinTucs.map((tintuc) => {
-                                if (tintuc.thongbaogiaovien != null)
+                                if (tintuc.thongbaoadmin != null)
                                     return (
-                                        <li>
+                                        <li className='tintuc'>
                                             <h2>
-                                                THÔNG BÁO GIÁO VIÊN:{' '}
-                                                {tintuc.thongbaogiaovien}
+                                                THÔNG BÁO:{' '}
+                                                {tintuc.thongbaoadmin}
                                             </h2>
                                             <span> ({tintuc.thoigian}) </span>
                                         </li>
                                     );
                             })}
-                            {TinTucs.map((tintuc) => {
-                                if (tintuc.thongbaosinhvien != null)
-                                    return (
-                                        <li>
-                                            <h2>
-                                                THÔNG BÁO SINH VIÊN:{' '}
-                                                {tintuc.thongbaosinhvien}
-                                            </h2>
-                                            <span> ({tintuc.thoigian}) </span>
-                                        </li>
-                                    );
-                            })}
-                            {TinTucs.map((tintuc) => {
-                                if (tintuc.thongbaocongty != null)
-                                    return (
-                                        <li>
-                                            <h2>
-                                                THÔNG BÁO CÔNG TY:{' '}
-                                                {tintuc.thongbaocongty}
-                                            </h2>
-                                            <span> ({tintuc.thoigian}) </span>
-                                        </li>
-                                    );
-                            })}
-                        </Link>
                     </ul>
                 </div>
             </div>

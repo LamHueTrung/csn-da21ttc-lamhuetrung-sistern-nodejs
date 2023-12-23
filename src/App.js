@@ -12,10 +12,6 @@ import XulyLogin from '../src/pages/xulylogin';
 import Tintuc from '../src/pages/Student/tintuc';
 import Thuctap from '../src/pages/Student/thuctap';
 import DonThuctap from '../src/pages/Student/dondangky';
-import TintucCT from '../src/pages/Company/tintuc';
-import Dangkythuctap from '../src/pages/Company/dangkythuctap';
-import Danhsachdangky from '../src/pages/Company/danhsachdangky';
-import Danhsachcanbo from '../src/pages/Company/canbohuongdan';
 import TintucAD from '../src/pages/Admin/tintuc';
 import Thongtindangky from '../src/pages/Admin/thongtindangky';
 import Quanlythuctap from '../src/pages/Admin/quanlythuctap';
@@ -26,15 +22,34 @@ import TintucGV from '../src/pages/Teacher/tintuc';
 import SinhvienDangKyGV from '../src/pages/Teacher/sinhvien';
 import DonThucTapGV from '../src/pages/Teacher/quanlythuctap';
 import ThongTinDangKyGV from '../src/pages/Teacher/thongtindangky';
-import ThongTinDangKyCT from '../src/pages/Company/thongtindangky';
 import ThongTinGV from '../src/pages/Teacher/dangkythongtin';
 import XemBaoCao from '../src/pages/Teacher/xembaocao';
+import ThemCongTy from './pages/Admin/themcongty';
+import DotThucTap from './pages/Admin/dotthuctap';
+import QuanLyDotThucTap from './pages/Admin/quanlydotthuctap';
+import ThemDotThucTap from './pages/Admin/themdulieuthuctap';
 
 
 const router = createBrowserRouter([
     {
         path: '/admin/quanlythuctap/:slug',
         element: <Quanlythuctap />,
+    },
+    {
+        path: '/admin/themdotthuctap/:slug',
+        element: <ThemDotThucTap />,
+    },
+    {
+        path: '/admin/danhsachdotthuctap/:slug',
+        element: <QuanLyDotThucTap />,
+    },
+    {
+        path: '/admin/quanlydotthuctap/:slug',
+        element: <DotThucTap />,
+    },
+    {
+        path: '/admin/themcongty/:slug',
+        element: <ThemCongTy />,
     },
     {
         path: '/admin/congty/:slug',
@@ -86,30 +101,6 @@ const router = createBrowserRouter([
     },
     {
         path: '/teacher',
-        element: <Login />,
-    },
-    {
-        path: '/company/tintuc/:slug',
-        element: <TintucCT />,
-    },
-    {
-        path: '/company/dangkythuctap/:slug',
-        element: <Dangkythuctap />,
-    },
-    {
-        path: '/company/danhsachdangky/:slug',
-        element: <Danhsachdangky />,
-    },
-    {
-        path: '/company/canbohuongdan/:slug',
-        element: <Danhsachcanbo />,
-    },
-    {
-        path: '/company/quanlythuctap/thongtindangky/:slug',
-        element: <ThongTinDangKyCT />,
-    },
-    {
-        path: '/company',
         element: <Login />,
     },
     {

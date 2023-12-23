@@ -124,6 +124,9 @@
     border-radius: 5px;
     width: 100%;
 }
+.hienthithongtin {
+    margin-left: 5%;
+}
 /* Trang sinh viên: thực tập */
 
 .thongtincanhan,
@@ -249,7 +252,7 @@
 
 .danhsachcongty,
 .danhsachcanbo {
-    height: 300px !important;
+    height: 370px !important;
     width: 100% !important;
     display: block !important;
     margin-top: 60px !important;

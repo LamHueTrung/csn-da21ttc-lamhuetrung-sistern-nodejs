@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
@@ -18,20 +17,32 @@ import '../../css/base.css';
 
 function QuanLyThucTap() {
     const [thuctaps, setthuctap] = useState([]);
+    const [danhsachthuctaps, setdanhsachthuctap] = useState([]);
     const [canbohds, setCanBoHD] = useState([]);
     const [congtys, setCongTy] = useState([]);
     const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
+    const [danhsachs, setDanhsachs] = useState([]);
+
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
 
     var ThongTinGiaoVien = {};
     var ThongTinCanBoHD = '';
-    var ThongTinSinhVien = '';
+    var ThongTinSinhVien = {};
     var ThongTinCongTy = '';
     var tblThucTap = [];
 
+    useEffect(() => {
+        axios
+            .get(`${port}/student/danhsachsinhvien`) // Điều chỉnh URL tương ứng với tuyến đường API
+            .then((response) => setDanhsachs(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
+    
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -72,16 +83,19 @@ function QuanLyThucTap() {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    var TenGVCuaTK = '';
+    var MaGV = '';
     Giaoviens.map((gv) => {
         if (gv.email == taikhoan) {
-            TenGVCuaTK = gv.tengiaovien;
+            MaGV = gv.magiaovien;
         }
     });
     const mathuctap = thuctaps.map((tttt) => {
         sinhViens.map((sv) => {
             if (sv.masinhvien == tttt.masinhvien) {
-                ThongTinSinhVien = sv.hoten;
+                ThongTinSinhVien = {
+                    tensinhvien: sv.hoten,
+                    lop: sv.lop
+                };
             }
         });
         Giaoviens.map((gv) => {
@@ -105,13 +119,20 @@ function QuanLyThucTap() {
         tblThucTap.push({
             _id: tttt._id,
             mathuctap: tttt.mathuctap,
-            tensinhvien: ThongTinSinhVien,
+            magiaovien: tttt.magiaovien,
+            tensinhvien: ThongTinSinhVien.tensinhvien,
             tengiaovien: ThongTinGiaoVien.tengiaovien,
             tencanbo: ThongTinCanBoHD,
             tencongty: ThongTinCongTy,
             trangthaidon: tttt.trangthaidon,
+            noidungthuctap: tttt.noidungthuctap,
+            dotthuctap: tttt.loai,
+            lop: ThongTinSinhVien.lop
         });
     });
+    function loading() {
+        setDanhsachs(tblThucTap);
+    }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -120,9 +141,30 @@ function QuanLyThucTap() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    var tukhoa = '';
+    var danhsachtimkiem = tblThucTap;
+    var tukhoa = '';
+    function timkiemsinhvien() {
+        tukhoa = document.getElementById('tukhoa').value;
+        console.log(tukhoa == '')
+        if(tukhoa == '') {
+            document.querySelector('.danhsachall').classList.remove('close');
+            document.querySelector('.danhsachtimkiem').classList.add('close');
+        } else {
+            danhsachtimkiem = [];
+            danhsachtimkiem = tblThucTap.filter((sv) => {
+                return (sv.lop == tukhoa || sv.trangthaisinhvien == tukhoa);
+              });
+            setDanhsachs(danhsachtimkiem);
+            document.querySelector('.danhsachall').classList.add('close');
+            document.querySelector('.danhsachtimkiem').classList.remove('close');
+
+        }
+    }
     var urlDuyetDon = "/teacher/quanlythuctap/thongtindangky/duyetdonthuctap";
     return (
         <div className="container">
+
             <a onClick={openMenu} className="mobile-navbar">
                 <CiSettings className="icon" />
             </a>
@@ -188,36 +230,35 @@ function QuanLyThucTap() {
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="Công ty" />
-                            <button className="button_search">
-                                {' '}
-                                <AiOutlineSearch className="icon_button" />
-                                Tìm kiếm
-                            </button>
-                            <table>
+                            <input type="text" placeholder="Từ khoá" id='tukhoa'/>
+                                <button className="button_search" onClick={timkiemsinhvien}>
+                                    {' '}
+                                    <AiOutlineSearch className="icon_button" />
+                                    Tìm kiếm
+                                </button>
+                            <table className='danhsachall'>
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
-                                        <th id="masinhvien">Tên sinh viên</th>
+                                        <th id="tensinhvien">Đợt thực tập</th>
+                                        <th id="tensinhvien">Tên sinh viên</th>
                                         <th id="tensinhvien">
-                                            Giáo viên hướng dẫn
+                                            Lớp
                                         </th>
                                         <th id="emailsinhvien">
                                             Công ty đăng ký
                                         </th>
                                         <th id="ngaytaodon">Người phụ trách</th>
+                                        <th id="ngaytaodon">Nội dung thực tập</th>
                                         <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {tblThucTap.map((dtt, index) => {
                                         if (
-                                            TenGVCuaTK == dtt.tengiaovien &&
+                                            MaGV == dtt.magiaovien &&
                                             dtt.tengiaovien != null
                                         )
-                                        if(dtt.trangthaidon == "Đã duyệt") {
-                                            urlDuyetDon = "/teacher/quanlythuctap/xembaocao/xembaocao"
-                                        }
                                             return (
                                                 <Link
                                                     to={`${urlDuyetDon}?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}
@@ -226,17 +267,81 @@ function QuanLyThucTap() {
                                                         <th id="stt">
                                                             {index + 1}
                                                         </th>
-                                                        <th id="masinhvien">
+                                                        <th id="tensinhvien">
+                                                            {dtt.dotthuctap}
+                                                        </th>
+                                                        <th id="tensinhvien">
                                                             {dtt.tensinhvien}
                                                         </th>
                                                         <th id="tensinhvien">
-                                                            {dtt.tengiaovien}
+                                                            {dtt.lop}
                                                         </th>
                                                         <th id="emailsinhvien">
                                                             {dtt.tencongty}
                                                         </th>
                                                         <th id="ngaytaodon">
                                                             {dtt.tencanbo}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                        {dtt.noidungthuctap}
+                                                        </th>
+                                                        <th id="trangthai">
+                                                            {dtt.trangthaidon}
+                                                        </th>
+                                                    </tr>
+                                                </Link>
+                                            );
+                                    })}
+                                </tbody>
+                            </table>
+                            <table className='danhsachtimkiem close'>
+                                <thead>
+                                    <tr className="tieude_table">
+                                        <th id="stt">STT</th>
+                                        <th id="tensinhvien">Đợt thực tập</th>
+                                        <th id="tensinhvien">Tên sinh viên</th>
+                                        <th id="tensinhvien">
+                                            Lớp
+                                        </th>
+                                        <th id="emailsinhvien">
+                                            Công ty đăng ký
+                                        </th>
+                                        <th id="ngaytaodon">Người phụ trách</th>
+                                        <th id="ngaytaodon">Nội dung thực tập</th>
+                                        <th id="trangthai">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {danhsachs.map((dtt, index) => {
+                                        if (
+                                            MaGV == dtt.magiaovien &&
+                                            dtt.tengiaovien != null
+                                        )
+                                            return (
+                                                <Link
+                                                    to={`${urlDuyetDon}?mathuctap=${dtt.mathuctap}&id=${dtt._id}&taikhoan=${taikhoan}`}
+                                                >
+                                                    <tr className="info">
+                                                        <th id="stt">
+                                                            {index + 1}
+                                                        </th>
+                                                        <th id="tensinhvien">
+                                                            {dtt.dotthuctap}
+                                                        </th>
+                                                        <th id="tensinhvien">
+                                                            {dtt.tensinhvien}
+                                                        </th>
+                                                        <th id="tensinhvien">
+                                                            {dtt.lop}
+                                                        </th>
+                                                        <th id="emailsinhvien">
+                                                            {dtt.tencongty}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                            {dtt.tencanbo}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                        {dtt.noidungthuctap}
                                                         </th>
                                                         <th id="trangthai">
                                                             {dtt.trangthaidon}
