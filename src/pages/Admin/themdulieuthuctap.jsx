@@ -14,6 +14,8 @@ import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
 import '../../css/responsive.css';
+import '../../css/admin.css';
+
 import port from '../../port';
 
 function QuanLyThucTap() {
@@ -189,7 +191,7 @@ function QuanLyThucTap() {
                     <span id="route">/Quản lý đợt thực tập</span>
                 </div>
                 <div className="content">
-                <div className="thongtincanhan">
+                <div className="thongtincanhan mobile_taidulieu">
                         <h1 className="lable_chitiet">
                             Đợt thực tập
                         </h1>
@@ -227,9 +229,9 @@ function QuanLyThucTap() {
                         </ul>
                     </div>
                 <div className="thongtincanhan">
-                        <h1 className="lable_chitiet tieuDeDulieu">Danh sách dữ liệu công bố</h1>
+                        <h1 className="lable_chitiet tieuDeDulieu">Dữ liệu công bố</h1>
                         <div className="danhsachdondangky">
-                        <ul className="thongtintaikhoan">
+                        <ul className="thongtintaikhoan mobile_dulieucongbo">
                             <table className='dsDeDulieu'>
                                 <thead>
                                     <tr className="tieude_table">

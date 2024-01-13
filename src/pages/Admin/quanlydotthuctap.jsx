@@ -121,14 +121,14 @@ function QuanLyThucTap() {
                         <h1 className="lable_chitiet">Danh sách đợt thực tập</h1>
                         <div className="danhsachdondangky">
                         <Link to={`/admin/quanlydotthuctap/taikhoan?taikhoan=${taikhoan}`}>
-                                <button className="icon_dotthuctap">
+                                <button className="icon_dotthuctap themdotmoi">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm đợt mới
                                 </button>
                             </Link>
                             <Link to={`/admin/themdotthuctap/taikhoan?taikhoan=${taikhoan}`}>
-                                <button className="icon_dotthuctap">
+                                <button className="icon_dotthuctap themdulieu">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm dữ liệu đợt

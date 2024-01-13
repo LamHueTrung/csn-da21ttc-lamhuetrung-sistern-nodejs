@@ -1,0 +1,20 @@
+@media screen  and (max-width: 768px) {
+    .thongtincanhan .thongtintaikhoan .themgiaovienhuongdan select {
+        width: 100%;
+    }
+    .thongtincanhan .thongtintaikhoan .themgiaovienhuongdan {
+        margin-bottom: 5%;
+    }
+    .mobile_taidulieu {
+        height: 240px;
+    }
+    .tieuDeDulieu {
+        margin-top: 5%;
+    }
+    .mobile_dulieucongbo {
+        margin-top: 15%;
+    }
+    .mobile_button_seach {
+        margin-top: 15% !important;
+    }
+}

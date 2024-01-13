@@ -369,6 +369,9 @@
     min-width: 100px;
 }
 @media screen and (max-width: 767px) {
+    .motacongty {
+        padding-left: 10px;
+    }
     .danhsachcongty table tr,
     .danhsachcanbo table tr {
         height: 60px;

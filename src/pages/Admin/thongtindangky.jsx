@@ -465,7 +465,7 @@ function ThongTinDangKy() {
                             </li>
                         </ul>
                     </div>
-                    <div className="thongtincanhan">
+                    <div className="thongtincanhan mobile_taidulieu">
                         <h1 className="lable_chitiet">
                             Thêm giáo viên hướng dẫn
                         </h1>

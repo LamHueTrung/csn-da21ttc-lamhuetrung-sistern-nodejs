@@ -35,7 +35,7 @@
         min-width: 350px;
     }
     .dangxuat {
-        margin-top: 415px !important;
+        margin-top: 330px !important;
     }
     #masinhvien {
         min-width: 125px;
@@ -70,7 +70,7 @@
         border: none;
     }
     .danhsachdondangky table .info {
-        height: 55px;
+        height: auto;
     }
     .danhsachdondangky table tr {
         height: 57px;
@@ -166,6 +166,17 @@
     }
     body {
         margin: 0;
+    }
+    .icon_dotthuctap {
+        width: 100%;
+        margin: 0;
+    }
+    .themdulieu {
+        margin-bottom: 10%;
+        margin-top: 5%;
+    }
+    .description {
+        margin-left: 0;
     }
     .box {
         display: block;

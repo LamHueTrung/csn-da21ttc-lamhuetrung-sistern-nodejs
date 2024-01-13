@@ -118,7 +118,7 @@ function Congty() {
                         <h1 className="lable_chitiet">Công ty thực tập</h1>
                         <div className="danhsachdondangky">
                             <Link to={`/admin/themcongty/taikhoan?taikhoan=${taikhoan}`}>
-                                <button className="button_search">
+                                <button className="button_search mobile_button_seach">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm công ty
