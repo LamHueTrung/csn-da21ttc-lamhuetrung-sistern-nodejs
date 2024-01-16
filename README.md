@@ -24,7 +24,7 @@
         + GIÁO VIÊN: Danh sách giáo viên & tìm kiếm <br>
     BACK-END <br>
     ## MÔ TẢ: sử dụng Node.js và Express để lấy dữ liệu từ monggoDB theo mô hình MVC ( với view là front-end reactjs)
-    - Lấy danh sách sinh viên, thêm sinh viên, cập nhật trạng thái sinh viên, danh sách tin tức,danh sách đơn thực tập, thêm thông tin sinh viên, thông tin báo cáo & nộp báo cáo, đăng ký thực tập và thêm thông báo.
-    - Lấy danh sách giáo viên, thêm thông tin giáo viên, thêm báo cáo & danh sách tin tức.
-    - Lấy danh sách công ty, cán bộ hướng dẫn, thêm công ty & cán bộ, thêm thông báo và tin tức.
-    - Lấy danh sách đợt thực tập & thêm đợt thực tập, danh sách công việc và thêm công việc, import công việc bằng file excel.
+    - Lấy danh sách sinh viên, thêm sinh viên, cập nhật trạng thái sinh viên, danh sách tin tức,danh sách đơn thực tập, thêm thông tin sinh viên, thông tin báo cáo & nộp báo cáo, đăng ký thực tập và thêm thông báo.<br>
+    - Lấy danh sách giáo viên, thêm thông tin giáo viên, thêm báo cáo & danh sách tin tức.<br>
+    - Lấy danh sách công ty, cán bộ hướng dẫn, thêm công ty & cán bộ, thêm thông báo và tin tức.<br>
+    - Lấy danh sách đợt thực tập & thêm đợt thực tập, danh sách công việc và thêm công việc, import công việc bằng file excel.<br>
