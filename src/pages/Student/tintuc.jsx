@@ -81,7 +81,7 @@ function Tintuc() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Tin tức</span>
+                    <span id="route">/Sinh viên /Tin tức</span>
                 </div>
                 <div className="content">
                     <h1 className="lable">Tin tức</h1>

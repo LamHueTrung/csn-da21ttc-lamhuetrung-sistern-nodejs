@@ -230,7 +230,7 @@ function ThongTinDangKyGV() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Xem báo cáo thực tập</span>
+                    <span id="route">/Xem báo cáo thực tập/ {tblThucTap.tensinhvien}</span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">

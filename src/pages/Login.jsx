@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import port from '../port';
+import axios from 'axios';
 import '../css/login.css';
 
 function Login() {
@@ -11,11 +13,21 @@ function Login() {
     const [sodienthoais, setsodienthoai] = useState('');
     const [ngaysinhs, setngaysinh] = useState('');
     const [lops, setlop] = useState('');
+    const [TaiKhoans, setTaiKhoans] = useState([]);
     
     const navigate = useNavigate();
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const loaiTK = urlParams.get('loaitaikhoan');
+
+    useEffect(() => {
+        axios
+            .get(`${port}/taikhoan/dangnhaptaikhoan`)
+            .then((response) => setTaiKhoans(response.data))
+            .catch((error) => {
+                console.error('Lỗi react:', error);
+            });
+    }, []);
 
     const handleLogin = (event) => {
         const tendangnhap = document.getElementById('tendangnhap');
@@ -28,15 +40,101 @@ function Login() {
             matkhau.focus();
         }
     };
+    const handleSignupGV = (event) => {
+        const matkhau = document.getElementById('matkhauDK');
+        const email = document.getElementById('emailDk');
+        var erorr_dangky = 0;
+       if (email.value == '') {
+            alert('Không bỏ trống email');
+            erorr_dangky = 1;
+            email.focus();
+        }  else if (matkhau.value == '') {
+            alert('Không bỏ trống mật khẩu');
+            erorr_dangky = 1;
+            matkhau.focus();
+        }  else {
+            if (email.value != '') {
+                var temp = 0;
+                TaiKhoans.map(taikhoan => {
+                        if(taikhoan.taikhoan == email.value) {
+                            temp = 1;
+                        }
+                })
+                if(temp == 1) {
+                    alert("Email đã sử dụng");
+                    erorr_dangky = 1;
+                    email.focus();
+                }
+            } 
+            if(erorr_dangky == 0) {
+                navigate(`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`);
+            }
+        }
+    };
     const handleSignup = (event) => {
         const matkhau = document.getElementById('matkhauDK');
         const email = document.getElementById('emailDk');
-        if (email.value == '') {
+        const tensinhvien = document.getElementById('tensinhvienlDk');
+        const masinhvien = document.getElementById('masinhvienlDk');
+        const ngaysinh = document.getElementById('ngaysinhDk');
+        const sodienthoail = document.getElementById('sodienthoailDk');
+        const lop = document.getElementById('lopDk');
+        var erorr_dangky = 0;
+        if(tensinhvien.value == '') {
+            erorr_dangky = 1;
+            alert('không bỏ trống họ tên');
+            tensinhvien.focus();
+        } else if (masinhvien.value.length != 9) {
+            alert('Mã sinh viên phải 9 chữ số');
+            erorr_dangky = 1;
+            masinhvien.focus();
+        } else if (email.value == '') {
             alert('Không bỏ trống email');
+            erorr_dangky = 1;
             email.focus();
+        }  else if (ngaysinh.value.length == '') {
+            alert('Không bỏ trống ngày sinh');
+            erorr_dangky = 1;
+            ngaysinh.focus();
+        } else if (sodienthoail.value.length != 10) {
+            alert('Số điện thoại không hợp lệ');
+            erorr_dangky = 1;
+            sodienthoail.focus();
+        } else if (lop.value.length == '') {
+            alert('Không bỏ trống lớp');
+            erorr_dangky = 1;
+            lop.focus();
         } else if (matkhau.value == '') {
             alert('Không bỏ trống mật khẩu');
+            erorr_dangky = 1;
             matkhau.focus();
+        }  else {
+            if(ngaysinh.value.length != '') {
+                const myDate = new Date(ngaysinh.value);
+                const currentDate = new Date();
+                const age = currentDate.getFullYear() - myDate.getFullYear();
+                if(age < 18) {
+                    alert(`Bạn ${age} tuổi không phải sinh viên đại học`);
+                    erorr_dangky = 1;
+                    ngaysinh.focus();
+                }
+            } 
+            if (email.value != '') {
+                var temp = 0;
+                TaiKhoans.map(taikhoan => {
+                        if(taikhoan.taikhoan == email.value) {
+                            temp = 1;
+                        }
+                })
+                if(temp == 1) {
+                    alert("Email đã sử dụng");
+                    erorr_dangky = 1;
+                    email.focus();
+                }
+            } 
+            if(erorr_dangky == 0) {
+                navigate(`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`);
+            }
         }
     };
     function Dangky() {
@@ -121,9 +219,9 @@ function Login() {
                         />
                     </div>
                     <Link
-                        to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}
+                        // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}
                     >
-                        <button onClick={handleSignup}>Đăng Ký</button>
+                        <button onClick={handleSignupGV}>Đăng Ký</button>
                     </Link>
                 </form>
             </div>
@@ -152,7 +250,7 @@ function Login() {
                         <input
                             id="masinhvienlDk"
                             placeholder="Mã số sinh viên"
-                            type="text"
+                            type="number"
                             value={masinhviens}
                             onChange={(e) => setmasinhvien(e.target.value)}
                         />
@@ -203,7 +301,7 @@ function Login() {
                         />
                     </div>
                     <Link
-                        to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`}
+                        // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`}
                     >
                         <button onClick={handleSignup}>Đăng Ký</button>
                     </Link>

@@ -224,7 +224,7 @@ function QuanLyThucTap() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Quản lý thực tập</span>
+                    <span id="route">/{ThongTinGiaoVien.tengiaovien} /Quản lý thực tập</span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">

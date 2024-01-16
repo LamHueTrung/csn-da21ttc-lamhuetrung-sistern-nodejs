@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import { GrNotification } from 'react-icons/gr';
@@ -25,6 +25,7 @@ function Thuctap() {
     const [thongtincongbos, setThongtincongbos] = useState([]);
     const [selectedTTCB, setSelectedTTCB] = useState(null);
     const url = window.location.search;
+    const navigate = useNavigate();
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
 
@@ -70,8 +71,7 @@ function Thuctap() {
     var ThongTinSinhVien = {};
     sinhViens.map((sv) => {
         if (
-            sv.email ==
-            taikhoan
+            sv.email == taikhoan
         ) {
             ThongTinSinhVien = {
                 idsinhvien: sv._id,
@@ -80,9 +80,11 @@ function Thuctap() {
                 ngaysinh: sv.ngaysinh,
                 lop: sv.lop,
                 sodienthoai: sv.sodienthoai,
+                trangthaisinhvien: sv.trangthaisinhvien
             };
         }
     });
+    
     var LopDotthuctap = [];
     var AllLopThucTap = [];
     Dotthuctaps.map(dtt => {
@@ -193,96 +195,109 @@ function Thuctap() {
         }
     };
     function dang_ky_thuc_tap() {
-        var tuanbatdau = document.getElementById('ngaybatdau').textContent.split('/');
-        var tuanketthuc = document.getElementById('ngayketthuc').textContent.split('/');
-        var ngaydb = parseInt(tuanbatdau[0]);
-        var thangdb = parseInt(tuanbatdau[1]);
-        var namdb = parseInt(tuanbatdau[2]);
-        var ngaykt = parseInt(tuanketthuc[0]);
-        var thangkt = parseInt(tuanketthuc[1]);
-        var namkt = parseInt(tuanketthuc[2]);
+        const congviecthuctap_KT = document.getElementById('congviecthuctap').textContent;
+        if(congviecthuctap_KT == '') {
+            alert('Bạn chưa chọn chương trình thực tập');
+            navigate(`/student/dondangky/taikhoan?taikhoan=${taikhoan}`);
+        } else {    
+            if(ThongTinSinhVien.trangthaisinhvien == 'Đã đăng ký' || ThongTinSinhVien.trangthaisinhvien == 'Đã được duyệt' || ThongTinSinhVien.trangthaisinhvien == 'Đang thực tập') {
+                alert(`Sinh viên ${ThongTinSinhVien.trangthaisinhvien}`);
+                navigate(`/student/thuctap/taikhoan?taikhoan=${taikhoan}`);
+            } else {
 
-        var tuan = 0;
-        while( thangdb != thangkt) {
-            ngaydb = ngaydb + 7;
-            tuan = tuan + 1;
-            switch(thangdb) {
-                case 1, 3, 5, 7, 8, 10, 12:
-                    if(ngaydb > 31) {
-                        thangdb = thangdb + 1;
-                        ngaydb = 1;
-                    }
-                case 2:
-                    if(namdb%4==0) {
-                        if(namdb %100 == 0 && namdb%400 == 0) {
-                            if(ngaydb > 29) {
+                var tuanbatdau = document.getElementById('ngaybatdau').textContent.split('/');
+                var tuanketthuc = document.getElementById('ngayketthuc').textContent.split('/');
+                var ngaydb = parseInt(tuanbatdau[0]);
+                var thangdb = parseInt(tuanbatdau[1]);
+                var namdb = parseInt(tuanbatdau[2]);
+                var ngaykt = parseInt(tuanketthuc[0]);
+                var thangkt = parseInt(tuanketthuc[1]);
+                var namkt = parseInt(tuanketthuc[2]);
+        
+                var tuan = 0;
+                while( thangdb != thangkt) {
+                    ngaydb = ngaydb + 7;
+                    tuan = tuan + 1;
+                    switch(thangdb) {
+                        case 1, 3, 5, 7, 8, 10, 12:
+                            if(ngaydb > 31) {
                                 thangdb = thangdb + 1;
                                 ngaydb = 1;
                             }
-                        }
-                    } 
-                default:
-                    if(ngaydb > 30) {
-                        thangdb = thangdb + 1;
-                        ngaydb = 1;
+                        case 2:
+                            if(namdb%4==0) {
+                                if(namdb %100 == 0 && namdb%400 == 0) {
+                                    if(ngaydb > 29) {
+                                        thangdb = thangdb + 1;
+                                        ngaydb = 1;
+                                    }
+                                }
+                            } 
+                        default:
+                            if(ngaydb > 30) {
+                                thangdb = thangdb + 1;
+                                ngaydb = 1;
+                            }
                     }
-            }
-            if(thangdb > 12) {
-                namdb = namdb + 1;
-                thangdb = 1;
+                    if(thangdb > 12) {
+                        namdb = namdb + 1;
+                        thangdb = 1;
+                    }
+                }
+                const dataToAdd = {
+                    trangthaidon: 'Chưa duyệt',
+                    mathuctap: ThongTinSinhVien.idsinhvien,
+                    idsinhvien: ThongTinSinhVien.idsinhvien,
+                    masinhvien: ThongTinSinhVien.masinhvien,
+                    loai: document.getElementById('dotthuctap').textContent,
+                    magiaovien: 'chưa gán',
+                    macongty: selectedTTCB.macongty,
+                    macanbohuongdan: selectedTTCB.macanbo,
+                    ngaybatdau: document.getElementById('ngaybatdau').textContent,
+                    ngayketthuc: document.getElementById('ngayketthuc').textContent,
+                    sotuan: tuan,
+                    noidungthuctap: document.getElementById('congviecthuctap').textContent,
+                };
+        
+                axios
+                    .post(`${port}/student/dangkythuctap`, dataToAdd)
+                    .then((response) => {
+                        alert('Đăng ký thực tập thành công, chờ xét duyệt');
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+        
+                var DateNow = new Date();
+                var ThongBao = {
+                    thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                    thongbaoadmin: `${ThongTinSinhVien.tensinhvien} vừa đăng ký thực tập ${dataToAdd.loai}`,
+                };
+                axios
+                    .post(`${port}/student/themthongbao`, ThongBao)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+                const dataToadd2 = {
+                    trangthaisinhvien: 'Đã đăng ký',
+                };
+                axios
+                    .put(`${port}/student/capnhattrangthai/${dataToAdd.idsinhvien}`, dataToadd2)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+                    });
+    
+                    navigate(`/student/thuctap/taikhoan?taikhoan=${taikhoan}`);
             }
         }
-        const dataToAdd = {
-            trangthaidon: 'Chưa duyệt',
-            mathuctap: ThongTinSinhVien.idsinhvien,
-            idsinhvien: ThongTinSinhVien.idsinhvien,
-            masinhvien: ThongTinSinhVien.masinhvien,
-            loai: document.getElementById('dotthuctap').textContent,
-            magiaovien: 'chưa gán',
-            macongty: selectedTTCB.macongty,
-            macanbohuongdan: selectedTTCB.macanbo,
-            ngaybatdau: document.getElementById('ngaybatdau').textContent,
-            ngayketthuc: document.getElementById('ngayketthuc').textContent,
-            sotuan: tuan,
-            noidungthuctap: document.getElementById('congviecthuctap').textContent,
-        };
-        console.log(dataToAdd)
-
-        axios
-            .post(`${port}/student/dangkythuctap`, dataToAdd)
-            .then((response) => {
-                alert('Đăng ký thực tập thành công, chờ xét duyệt');
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaoadmin: `${ThongTinSinhVien.tensinhvien} vừa đăng ký thực tập ${dataToAdd.loai}`,
-        };
-        axios
-            .post(`${port}/student/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        const dataToadd2 = {
-            trangthaisinhvien: 'Đã đăng ký',
-        };
-        axios
-            .put(`${port}/student/capnhattrangthai/${dataToAdd.idsinhvien}`, dataToadd2)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-            });
     }
     
     function openMenu() {
@@ -294,7 +309,6 @@ function Thuctap() {
         Navbar.classList.remove('openMenu');
     }
 
-    
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -333,7 +347,6 @@ function Thuctap() {
                             </li>
                         </a>
                     </Link>
-                    {/* <Link to="/student/thongtintaikhoan"><a href=""><li id='thongtin' ><AiOutlineInfoCircle className='icon'/>Thông tin</li></a></Link> */}
                 </ul>
                 <Link to="/">
                     <a id="dangxuat" href="" className="dangxuatsinhvien">
@@ -345,7 +358,7 @@ function Thuctap() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Đăng ký thực tập</span>
+                    <span id="route">/{ThongTinSinhVien.tensinhvien} /Đăng ký thực tập </span>
                 </div>
                 <div id="dondangky" className="content">
                     <div className="thongtincanhan ">
@@ -535,10 +548,15 @@ function Thuctap() {
                         </ul>
                     </div>
                     <div className="nutbam">
+                    <Link
+                        to={`/student/dondangky/taikhoan?taikhoan=${taikhoan}`}
+                    >
                         <button className="button_huy">
                             <ImCancelCircle className="icon_button" />
                             Hủy
                         </button>
+                    </Link>
+                    
                         <button
                             className="button_luu"
                             onClick={dang_ky_thuc_tap}

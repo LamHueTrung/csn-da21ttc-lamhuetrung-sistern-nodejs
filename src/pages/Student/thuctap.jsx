@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
@@ -19,6 +19,7 @@ function Thuctap() {
     const [BaoCaos, setBaoCaos] = useState([]);
     const [Dotthuctaps, setDotthuctaps] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
+    const navigate = useNavigate();
 
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
@@ -32,7 +33,7 @@ function Thuctap() {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    // lấy thông tin sinh viên từ tài khoản trên :slug
+    
     useEffect(() => {
         axios
             .get(`${port}/student/danhsachsinhvien`)
@@ -227,65 +228,93 @@ function Thuctap() {
         const file = event.target.files[0];
         if (file.type !== "application/pdf") {
         alert("Chỉ được upload file PDF!");
-        return;
+        event.target.value = '';
+        } else {
+            setSelectedFile(file);
         }
-        setSelectedFile(file);
       };
     
       const handleUploadFile = async () => {
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-        formData.append("name", `${tblThucTap.mathuctap}.pdf`);
-        try {
-          const response = await axios.post(`${port}/api/upload`, formData);
-          console.log("Upload thành công:", formData);
-        } catch (error) {
-          console.error("Upload thất bại:", error);
+        if(document.getElementById('fileBaoCao').value == '') {
+            alert('Bạn chưa chọn file để nộp');
+        } else {
+
+            var tuanthuctap_kt = document.getElementById('tuanthuctap').value;
+            var trangthai_kt = document.getElementById('trangthaibaocao').textContent;
+            var alert_nopbai = 0;
+            BaoCaos.map(baocaosinhvien => {
+                if(baocaosinhvien.mathuctap == tblThucTap.mathuctap) {
+                    if(baocaosinhvien.trangthai == trangthai_kt && baocaosinhvien.tuan == tuanthuctap_kt) {
+                        alert_nopbai = 1;
+                    }
+                }
+            })
+            if(alert_nopbai == 1) {
+                alert(`Bạn đã nộp báo cáo tuần ${tuanthuctap_kt} `);
+            } else {
+                const formData = new FormData();
+                formData.append("file", selectedFile);
+                formData.append("name", `${tblThucTap.mathuctap}.pdf`);
+                try {
+                  const response = await axios.post(`${port}/api/upload`, formData);
+                  console.log("Upload thành công:", formData);
+                } catch (error) {
+                  console.error("Upload thất bại:", error);
+                }
+                var DateNow = new Date();
+                const dataToAdd = {
+                    mathuctap: tblThucTap.mathuctap,
+                    filename: selectedFile.name,
+                    tuan: document.querySelector('.tuanthuctap').value,
+                    hannop: document.querySelector('.hannop').textContent,
+                    ngaynop: format(DateNow, 'dd/MM/yyyy'),
+                    trangthai: "Đã nộp"
+                };
+                axios
+                    .post(`${port}/student/baocao`, dataToAdd)
+                    .then((response) => {
+                        alert('Nộp báo cáo thành công');
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+                const dataToadd2 = {
+                        trangthaisinhvien: 'Đang thực tập',
+                    };
+                    axios
+                        .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
+                        .then((response) => {
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+                        });    
+                var ThongBao = {
+                    thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                    thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa nộp báo cáo thực tập tuần ${dataToAdd.tuan}`,
+                };
+                axios
+                    .post(`${port}/student/themthongbao`, ThongBao)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+                    window.location.reload();
+                    navigate(`/student/thuctap/taikhoan?taikhoan=${taikhoan}`);
+            }
         }
-        var DateNow = new Date();
-        const dataToAdd = {
-            mathuctap: tblThucTap.mathuctap,
-            filename: selectedFile.name,
-            tuan: document.querySelector('.tuanthuctap').value,
-            hannop: document.querySelector('.hannop').textContent,
-            ngaynop: format(DateNow, 'dd/MM/yyyy'),
-            trangthai: "Đã nộp"
-        };
-        axios
-            .post(`${port}/student/baocao`, dataToAdd)
-            .then((response) => {
-                alert('Nộp báo cáo thành công');
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        const dataToadd2 = {
-                trangthaisinhvien: 'Đang thực tập',
-            };
-            axios
-                .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                });    
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaogiaovien: `${ThongTinSinhVien.hoten} vừa nộp báo cáo thực tập tuần ${dataToAdd.tuan}`,
-        };
-        axios
-            .post(`${port}/student/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
     }
-      
+    const handleUploadFileTongKet = async () => {
+        if(document.getElementById('baocaotongket').value == '') {
+            alert('Bạn chưa chọn file để nộp');
+        } else {
+            alert('Chức năng chưa cập nhật');
+        }
+    }  
     var TrangthaiBaoCao = [];
     BaoCaos.map((bc) => {
         if (bc.mathuctap == tblThucTap.mathuctap) {
@@ -345,7 +374,7 @@ function Thuctap() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Thực tập</span>
+                    <span id="route">/{ThongTinSinhVien.hoten} /Chi tiết đơn thực tập </span>
                 </div>
                 <div id="thongtinthuctap" className="content">
                     <div className="thongtincanhan ">
@@ -510,7 +539,7 @@ function Thuctap() {
                         <ul className="thongtintaikhoan thongtinthuctap">
                             <li>
                                 <span className="lable">Tình trạng nộp: </span>
-                                <span className="info trangthaibaocao"></span>
+                                <span className="info trangthaibaocao" id='trangthaibaocao'></span>
                             </li>
                             <li>
                                 <span className="lable">Hạn nộp: </span>
@@ -527,7 +556,9 @@ function Thuctap() {
                                     onChange={handleChangeFile}
                                 />
                             </li>
-                            <button onClick={handleUploadFile} className="button_chinhsua">Nộp bài</button>
+
+                                <button onClick={handleUploadFile} className="button_chinhsua">Nộp bài</button>
+
                         </ul>
                     </div>
                     <div className="thongtincanhan baocaotongket close">
@@ -539,9 +570,10 @@ function Thuctap() {
                                     className="fullsize_input"
                                     type="file"
                                     placeholder="Nội dung thực tập"
+                                    onChange={handleChangeFile}
                                 />
                             </li>
-                            <button className="button_chinhsua">Nộp bài</button>
+                            <button onClick={handleUploadFileTongKet} className="button_chinhsua">Nộp bài</button>
                         </ul>
                     </div>
                 </div>
