@@ -4,8 +4,6 @@ const db = require('./config/db/index');
 const mongoose = require("mongoose");
 const fs = require('fs');
 const multer = require("multer");
-const xlsx = require('xlsx');
-const csv = require('csvtojson');
 const fastcsv = require('fast-csv');
 
 const SinhVienRoutes = require('./routes/SinhVienRoutes');
@@ -58,6 +56,11 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
       res.status(500).json({ message: "Upload thất bại!" });
     }
   });
+  // app.get("/api/files/",  (req, res) => {
+  //   FileModel.find()
+  //     .then((file) => res.json(file))
+  //     .catch((err) => res.json('Lỗi /student: ' + err));
+  // });
   
   app.get("/api/files/:filename", async (req, res) => {
     const filename = req.params.filename;

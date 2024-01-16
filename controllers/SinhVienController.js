@@ -12,7 +12,7 @@ class SinhVienController {
             // Lặp qua tất cả các bản ghi
             sinhvien.forEach((record) => {
                 // Chọn thông tin duy nhất để xác định tính duy nhất của bản ghi
-                const uniqueKey = record.fieldName; // Thay "fieldName" bằng tên trường bạn muốn sử dụng
+                const uniqueKey = record.hoten; // Thay "fieldName" bằng tên trường bạn muốn sử dụng
 
                 // Nếu chưa có trong Map, thêm vào Map
                 if (!uniqueRecordsMap.has(uniqueKey)) {
