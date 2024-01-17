@@ -36,6 +36,9 @@ function Giaovien() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    const ERORR = (event, dtt) => {
+        alert("Chức năng chưa thiết lập");
+    };
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -118,7 +121,7 @@ function Giaovien() {
                         <h1 className="lable_chitiet">Thông tin sinh viên</h1>
                         <div className="danhsachdondangky">
                             <input type="text" placeholder="từ khóa" />
-                            <button className="button_search">
+                            <button className="button_search" onClick={ERORR}>
                                 {' '}
                                 <AiOutlineSearch className="icon_button" />
                                 Tìm kiếm

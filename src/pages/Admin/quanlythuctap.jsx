@@ -11,6 +11,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import { MdDoneAll } from "react-icons/md";
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
@@ -123,6 +124,16 @@ function QuanLyThucTap() {
             
         });
     });
+    const ERORR = (event, dtt) => {
+        alert("Chức năng chưa thiết lập xong ");
+    };
+    const DuyetToanBo = (event, dtt) => {
+        const updatedData = [];
+        tblThucTap.map(ttt => {
+        if(ttt.trangthaidon == 'Chưa duyệt') {
+            console.log(ttt);
+        }})
+    };
     // function duyettatca() {
     //     const updatedData = [];
     //     tblThucTap.map(ttt => {
@@ -258,9 +269,9 @@ function QuanLyThucTap() {
                 <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                                <button className="icon_dotthuctap" >
+                                <button className="icon_dotthuctap" onClick={ERORR}>
                                     {' '}
-                                    <IoIosAddCircleOutline className="icon_button" />
+                                    <MdDoneAll className="icon_button" />
                                     Duyệt toàn bộ
                                 </button>
                             <table>

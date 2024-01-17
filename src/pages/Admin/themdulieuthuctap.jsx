@@ -66,33 +66,50 @@ function QuanLyThucTap() {
     }
     const handleChangeFile = (event) => {
         const file = event.target.files[0];
-        setFile(file);
+
+        if (file) {
+            const fileName = file.name;
+            const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+
+            // Kiểm tra nếu phần mở rộng là "csv"
+            if (fileExtension.toLowerCase() === 'csv') {
+                setFile(file);
+            } else {
+                alert("Chỉ chấp nhận file CSV. Vui lòng chọn lại.");
+                event.target.value = '';
+            }
+        }
       };
       const handleUpload = async () => {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("name", `thongtincongviec.pdf`);
-        try {
-          const response = await axios.post(`${port}/api/themcongviec/${selectedDotThucTap}`, formData);
-          setThongTinCongViecs(response.data);
-          var DateNow = new Date();
-            var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaoadmin: `Dữ liệu đợt thực tập ${TenDotThucTap} vừa được cập nhật`,
-        };
-        axios
-            .post(`${port}/company/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-          alert("Thành công");
-          console.log("Upload thành công:", formData);
-        } catch (error) {
-            alert("Thất bại");
-          console.error("Upload thất bại:", error);
+        const dtt_kt = document.querySelector('#thongtingiaovien').value;
+        if(dtt_kt == '') {
+            alert('Chưa chọn đợt thực tập');
+        } else {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("name", `thongtincongviec.pdf`);
+            try {
+              const response = await axios.post(`${port}/api/themcongviec/${selectedDotThucTap}`, formData);
+              setThongTinCongViecs(response.data);
+              var DateNow = new Date();
+                var ThongBao = {
+                thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                thongbaoadmin: `Dữ liệu đợt thực tập ${TenDotThucTap} vừa được cập nhật`,
+            };
+            axios
+                .post(`${port}/company/themthongbao`, ThongBao)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+              alert("Thành công");
+              console.log("Upload thành công:", formData);
+            } catch (error) {
+                alert("Thất bại");
+              console.error("Upload thất bại:", error);
+            }
         }
       };
       ThongTinCongViec.map(ttcv=> {
@@ -204,6 +221,7 @@ function QuanLyThucTap() {
                                     >
                                         <option value="">--Chọn đợt thực tập--</option>
                                         {DotThucTaps.map((dtt) => {
+                                            if(dtt.deleted != 'deleted') {
                                             return (
                                                 <option
                                                     value={dtt._id}
@@ -211,7 +229,7 @@ function QuanLyThucTap() {
                                                     {dtt.tendotthuctap}
                                                 </option>
                                             );
-                                        })}
+                                        }})}
                                     </select>
                             </li>
                             <li>

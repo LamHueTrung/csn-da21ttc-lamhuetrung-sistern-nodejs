@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import { HiOutlineNewspaper } from 'react-icons/hi';
@@ -22,6 +22,7 @@ function ThongTinDangKy() {
     const [Giaoviens, setGiaoviens] = useState([]);
     const [sinhViens, setSinhViens] = useState([]);
     const [selectedGiaovien, setSelectedGiaovien] = useState('');
+    const navigate = useNavigate();
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const madon = urlParams.get('mathuctap');
@@ -117,6 +118,8 @@ function ThongTinDangKy() {
                 }
             });
             tblThucTap = {
+                _id: tttt._id,
+                magiaovien: tttt.magiaovien,
                 trangthaidon: tttt.trangthaidon,
                 tensinhvien: ThongTinSinhVien.hoten,
                 emailsinhvien: ThongTinSinhVien.email,
@@ -138,7 +141,6 @@ function ThongTinDangKy() {
             };
         }
     });
-    console.log(tblThucTap)
     const handleGiaovienChange = (event) => {
         setSelectedGiaovien(event.target.value);
     };
@@ -152,48 +154,59 @@ function ThongTinDangKy() {
         }
     });
     function DuyetDon() {
-        const updatedData = {
-            trangthaidon: 'Đã duyệt',
-            magiaovien: ThongTinGiaoVien.magiaovien
-        };
-        axios
-            .put(
-                `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
-                updatedData,
-            )
-            .then((response) => {
-                console.log('Dữ liệu sau khi cập nhật:', response.data);
-                alert('Duyệt đơn thành công');
-            })
-            .catch((error) => {
-                alert('Duyệt đơn thất bại');
-                console.error('Lỗi cập nhật dữ liệu:', error);
-            });
-            const dataToadd2 = {
-                trangthaisinhvien: 'Đã được duyệt',
-            };
-            axios
-                .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                });
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaosinhvien: `Đơn thực tập của bạn đã được người phê duyệt với giao viên hướng dẫn là ${ThongTinGiaoVien.tengiaovien} `,
-            thongbaogiaovien: `Bạn được phân công hướng dẫn sinh viên ${tblThucTap.tensinhvien}`,
-        };
-        axios
-            .post(`${port}/teacher/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
+        if(tblThucTap.magiaovien == null) {
+            if(selectedGiaovien == '') {
+                alert("Chưa có giáo viên hướng dẫn");
+            } else {
+                console.log(tblThucTap.magiaovien)
+                navigate(`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`);
+                const updatedData = {
+                    trangthaidon: 'Đã duyệt',
+                    magiaovien: ThongTinGiaoVien.magiaovien
+                };
+                axios
+                    .put(
+                        `${port}/teacher/duyetdonthuctap/${_IdDonThucTap}`,
+                        updatedData,
+                    )
+                    .then((response) => {
+                        console.log('Dữ liệu sau khi cập nhật:', response.data);
+                        alert('Duyệt đơn thành công');
+                    })
+                    .catch((error) => {
+                        alert('Duyệt đơn thất bại');
+                        console.error('Lỗi cập nhật dữ liệu:', error);
+                    });
+                    const dataToadd2 = {
+                        trangthaisinhvien: 'Đã được duyệt',
+                    };
+                    axios
+                        .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
+                        .then((response) => {
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+                        });
+                var DateNow = new Date();
+                var ThongBao = {
+                    thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                    thongbaosinhvien: `Đơn thực tập của bạn đã được người phê duyệt với giao viên hướng dẫn là ${ThongTinGiaoVien.tengiaovien} `,
+                    thongbaogiaovien: `Bạn được phân công hướng dẫn sinh viên ${tblThucTap.tensinhvien}`,
+                };
+                axios
+                    .post(`${port}/teacher/themthongbao`, ThongBao)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+            } 
+        } else {
+            alert("Đơn thực tập này đã được duyệt");
+            navigate(`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`);
+        }
     }
     function TuChoiDon() {
         const updatedData = {
@@ -505,12 +518,12 @@ function ThongTinDangKy() {
                                 <ImCancelCircle className="icon_button" />
                                 Từ chối
                             </button>
+                        </Link>
                             <button className="button_luu" onClick={DuyetDon}>
                                 {' '}
                                 <AiOutlineCheck className="icon_button" />
                                 Đồng ý
                             </button>
-                        </Link>
                     </div>
                 </div>
             </div>

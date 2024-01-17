@@ -6,6 +6,7 @@ import { LiaUserCogSolid } from 'react-icons/lia';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
+import { ImCancelCircle } from 'react-icons/im';
 import { format } from 'date-fns';
 import port from '../../port';
 import '../../css/student.css';
@@ -173,8 +174,10 @@ function Thuctap() {
     if (ThongTinThucTap.trangthaidon == 'Đã duyệt') {
         const baocaotiendo = document.querySelector('.baocaotiendo');
         const baocaotongket = document.querySelector('.baocaotongket');
+        const nutbam = document.querySelector('.nutbam');
         baocaotongket.classList.remove('close');
         baocaotiendo.classList.remove('close');
+        nutbam.classList.remove('close');
         
     }
     function openMenu() {
@@ -324,6 +327,9 @@ function Thuctap() {
             });
         }
     });
+    const ERORR = (event, dtt) => {
+        alert("Chức năng chưa thiết lập xong ");
+    };
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -575,6 +581,12 @@ function Thuctap() {
                             </li>
                             <button onClick={handleUploadFileTongKet} className="button_chinhsua">Nộp bài</button>
                         </ul>
+                    </div> 
+                    <div className="nutbam">
+                    <button className="button_huy" onClick={ERORR}>
+                            <ImCancelCircle className="icon_button" />
+                            Hủy đơn đăng ký
+                        </button>
                     </div>
                 </div>
             </div>

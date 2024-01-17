@@ -10,6 +10,8 @@ import { TbHomeEco } from 'react-icons/tb';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
+import { MdOutlineCancel } from "react-icons/md";
+
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
@@ -36,6 +38,39 @@ function Congty() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+
+    var DanhSachCongTyChange = [];
+    const handleCTChange = (event, dtt) => {
+        if (event.target.checked) {
+            DanhSachCongTyChange.push(dtt);
+        } 
+    };
+    const DeleteCT = (event, dtt) => {
+        if(DanhSachCongTyChange.length === 0) {
+            alert("Bạn chưa chọn công ty muốn xoá");
+        } else {
+            const userConfirmed = window.confirm("Bạn muốn xoá các đợt thực tập đã chọn?");
+            if (userConfirmed) {
+                const dataToadd2 = {
+                    deleted: 'deleted',
+                };
+                DanhSachCongTyChange.map(ct => {
+                    axios
+                    .put(`${port}/company/xoacongty/${ct._id}`, dataToadd2)
+                    .then((response) => {
+                        alert("Xoá thành công");
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu công ty:', error);
+                    });
+                })
+            } else {
+                alert("Đã hủy bỏ xoá công ty");
+            }
+        }
+
+    };
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -117,6 +152,11 @@ function Congty() {
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Công ty thực tập</h1>
                         <div className="danhsachdondangky">
+                            <button className="icon_dotthuctap themdulieu" onClick={DeleteCT}>
+                                    {' '}
+                                    <MdOutlineCancel className="icon_button" />
+                                    Xoá công ty
+                            </button>
                             <Link to={`/admin/themcongty/taikhoan?taikhoan=${taikhoan}`}>
                                 <button className="button_search mobile_button_seach">
                                     {' '}
@@ -127,6 +167,7 @@ function Congty() {
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
+                                        <th id="checked"></th>
                                         <th id="macongty">Mã công ty</th>
                                         <th id="admin_tencongty">
                                             Tên công ty
@@ -145,8 +186,22 @@ function Congty() {
                                 </thead>
                                 <tbody>
                                     {congtys.map((congty) => {
+                                        if(congty.deleted != 'deleted') {
                                         return (
                                             <tr className="info">
+                                                <th id="checked">
+                                                        <input
+                                                            id="choncongty"
+                                                            // checked = {selectedTTCB === ttcb}
+                                                            type="checkbox"
+                                                            onChange= {(event) =>
+                                                                handleCTChange(
+                                                                    event,
+                                                                    congty,
+                                                                )
+                                                            }
+                                                        />
+                                                    </th>
                                                 <th id="macongty">
                                                     {congty.macongty}
                                                 </th>
@@ -167,7 +222,7 @@ function Congty() {
                                                 </th>
                                             </tr>
                                         );
-                                    })}
+                                    }})}
                                 </tbody>
                             </table>
                         </div>

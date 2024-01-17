@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate  } from 'react-router-dom';
 import { AiOutlineCheck } from 'react-icons/ai';
-import { ImCancelCircle } from 'react-icons/im';
 import { GrNotification } from 'react-icons/gr';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { LiaUserCogSolid } from 'react-icons/lia';
@@ -84,80 +83,83 @@ function Thuctap() {
             };
         }
     });
-    
-    var LopDotthuctap = [];
-    var AllLopThucTap = [];
+    var MaDotThucTap_Defaul = '';
     Dotthuctaps.map(dtt => {
+        var LopDotthuctap = [];
+        var AllLopThucTap = [];
         AllLopThucTap.push(dtt.danhsachlop.split(","));
+        LopDotthuctap = [...new Set(AllLopThucTap.flat())];
+        LopDotthuctap.map(ldtt2 => {
+            if(ldtt2 == ThongTinSinhVien.lop) {
+                MaDotThucTap_Defaul = dtt._id;
+            }
+        })
     })
-    LopDotthuctap = [...new Set(AllLopThucTap.flat())];
     var ThongTinCongBo = [];
     var ThongTinDotThucTap = {};
     var ThongTinCongTyThucTap = {};
     var ThongTinCanBoHuongDan = {};
-    thongtincongbos.map(ttcb => {
-        LopDotthuctap.map(ltt => {
-            if(ltt == ThongTinSinhVien.lop) {
 
-                Dotthuctaps.map(dtt => {
-                    if(dtt._id == ttcb.madotthuctap) {
-                        ThongTinDotThucTap = {
-                            tendotthuctap: dtt.tendotthuctap,
-                            ngaybatdau: dtt.ngaybatdau,
-                            ngayketthuc: dtt.ngayketthuc,
-                            danhsachlop: dtt.danhsachlop,
-                            ghichu: dtt.ghichu
-                        }
+    thongtincongbos.map(ttcb => {
+        if(ttcb.madotthuctap == MaDotThucTap_Defaul) {
+            Dotthuctaps.map(dtt => {
+                if(dtt._id == ttcb.madotthuctap) {
+                    ThongTinDotThucTap = {
+                        _id: dtt._id,
+                        tendotthuctap: dtt.tendotthuctap,
+                        ngaybatdau: dtt.ngaybatdau,
+                        ngayketthuc: dtt.ngayketthuc,
+                        danhsachlop: dtt.danhsachlop,
+                        ghichu: dtt.ghichu
                     }
-                })
-        
-                congtys.map(ct => {
-                    if(ct.macongty == ttcb.macongty) {
-                        ThongTinCongTyThucTap = {
-                            macongty: ct.macongty,
-                            tencongty: ct.tencongty,
-                            diachi: ct.diachi,
-                            macanbo: ct.macanbo,
-                            sodienthoai: ct.sodienthoai,
-                        }
+                }
+            })
+    
+            congtys.map(ct => {
+                if(ct.macongty == ttcb.macongty) {
+                    ThongTinCongTyThucTap = {
+                        macongty: ct.macongty,
+                        tencongty: ct.tencongty,
+                        diachi: ct.diachi,
+                        macanbo: ct.macanbo,
+                        sodienthoai: ct.sodienthoai,
                     }
-                })
-        
-                canbohds.map(cbhd => {
-                    if(cbhd.macongty == ttcb.macongty) {
-                        ThongTinCanBoHuongDan = {
-                            macanbo: cbhd.macanbo,
-                            tencanbo: cbhd.tencanbo,
-                            sotaikhoan: cbhd.sotaikhoan,
-                            sodienthoai:cbhd.sodienthoai
-                        }
-        
+                }
+            })
+    
+            canbohds.map(cbhd => {
+                if(cbhd.macongty == ttcb.macongty) {
+                    ThongTinCanBoHuongDan = {
+                        macanbo: cbhd.macanbo,
+                        tencanbo: cbhd.tencanbo,
+                        sotaikhoan: cbhd.sotaikhoan,
+                        sodienthoai:cbhd.sodienthoai
                     }
-                })
-                
-                ThongTinCongBo.push(
-                    {
-                        tendotthuctap: ThongTinDotThucTap.tendotthuctap,
-                        ngaybatdau: ThongTinDotThucTap.ngaybatdau,
-                        ngayketthuc: ThongTinDotThucTap.ngayketthuc,
-                        danhsachlop: ThongTinDotThucTap.danhsachlop,
-                        ghichu: ThongTinDotThucTap.ghichu,
-                        macongty: ThongTinCongTyThucTap.macongty,   
-                        tencongty: ThongTinCongTyThucTap.tencongty,   
-                        diachi: ThongTinCongTyThucTap.diachi,   
-                        sodienthoaicongty: ThongTinCongTyThucTap.sodienthoai,   
-                        macanbo: ThongTinCanBoHuongDan.macanbo,   
-                        tencanbo: ThongTinCanBoHuongDan.tencanbo,   
-                        sotaikhoan: ThongTinCanBoHuongDan.sotaikhoan,   
-                        sodienthoaicanbo: ThongTinCanBoHuongDan.sodienthoai,   
-                        congviecthuctap: ttcb.congviecthuctap,
-                        motacongviec: ttcb.ghichu
-                    }
-                )
-            }
-        })
+    
+                }
+            })
+            
+            ThongTinCongBo.push(
+                {
+                    tendotthuctap: ThongTinDotThucTap.tendotthuctap,
+                    ngaybatdau: ThongTinDotThucTap.ngaybatdau,
+                    ngayketthuc: ThongTinDotThucTap.ngayketthuc,
+                    danhsachlop: ThongTinDotThucTap.danhsachlop,
+                    ghichu: ThongTinDotThucTap.ghichu,
+                    macongty: ThongTinCongTyThucTap.macongty,   
+                    tencongty: ThongTinCongTyThucTap.tencongty,   
+                    diachi: ThongTinCongTyThucTap.diachi,   
+                    sodienthoaicongty: ThongTinCongTyThucTap.sodienthoai,   
+                    macanbo: ThongTinCanBoHuongDan.macanbo,   
+                    tencanbo: ThongTinCanBoHuongDan.tencanbo,   
+                    sotaikhoan: ThongTinCanBoHuongDan.sotaikhoan,   
+                    sodienthoaicanbo: ThongTinCanBoHuongDan.sodienthoai,   
+                    congviecthuctap: ttcb.congviecthuctap,
+                    motacongviec: ttcb.ghichu
+                }
+            )
+        }
     })
-    console.log( ThongTinCongBo)
     const LOADING = () => setCongViec(ThongTinCongBo);
     const handleCongtyChange = (event, ttcb) => {
         const tencongty = document.querySelector('.info_tencongty');
@@ -548,14 +550,6 @@ function Thuctap() {
                         </ul>
                     </div>
                     <div className="nutbam">
-                    <Link
-                        to={`/student/dondangky/taikhoan?taikhoan=${taikhoan}`}
-                    >
-                        <button className="button_huy">
-                            <ImCancelCircle className="icon_button" />
-                            Hủy
-                        </button>
-                    </Link>
                     
                         <button
                             className="button_luu"

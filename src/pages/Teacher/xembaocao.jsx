@@ -169,6 +169,8 @@ function ThongTinDangKyGV() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
+    var count = [0];
+    var count_var = 0;
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -324,9 +326,10 @@ function ThongTinDangKyGV() {
                         </h1>
                         <ul className="thongtintaikhoan">
                         {
+                            
                             BaoCaos.map(baocao => {
-                                
                                 if(baocao.mathuctap == tblThucTap.mathuctap) {
+                                    count_var = count + 1;
                                     return<li>
                                         <span className="lable">Tuần: {baocao.tuan}</span>
                                         <span className="lable">Hạn nộp: {baocao.hannop}</span>
@@ -344,6 +347,13 @@ function ThongTinDangKyGV() {
                                         </li>
                                         <span className="lable baocao_mobile">****************************** </span>
                                     </li>
+                                }
+                            })
+                        }
+                        {
+                            count.map(defaul => {
+                                if(count_var == 0) {
+                                    return <span className="lable">Chưa có báo cáo nào được nộp. </span>
                                 }
                             })
                         }

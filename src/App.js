@@ -28,6 +28,7 @@ import ThemCongTy from './pages/Admin/themcongty';
 import DotThucTap from './pages/Admin/dotthuctap';
 import QuanLyDotThucTap from './pages/Admin/quanlydotthuctap';
 import ThemDotThucTap from './pages/Admin/themdulieuthuctap';
+import SuaDotThucTap from './pages/Admin/thaydoidulieuthuctap';
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     {
         path: '/admin/themdotthuctap/:slug',
         element: <ThemDotThucTap />,
+    },
+    {
+        path: '/admin/thaydoidotthuctap/:slug',
+        element: <SuaDotThucTap />,
     },
     {
         path: '/admin/danhsachdotthuctap/:slug',
