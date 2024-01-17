@@ -37,8 +37,3 @@ Trong thu mục Pages chứa các file giao diện của ứng dụng.<br>
     - Hiển thị thông tin báo cáo tuần của sinh viên và chức năng tải file báo cáo về máy.<br>
     - Sửa lỗi css admin.<br>
     - Fix lỗi sinh viên và giáo viên.<br>
-
-    
-    
-
-
