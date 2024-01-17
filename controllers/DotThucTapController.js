@@ -34,6 +34,24 @@ class DotThucTapController {
                 res.status(500).json({ error: err });
             });
     }
+    //xoá đợt thực tập 
+    static xoadotthuctap = async (req, res) => {
+        try {
+            const { DTTID } = req.params;
+            const updatedData = req.body; // Dữ liệu cần cập nhật
+
+            const dotthuctap = await DotThucTap.findByIdAndUpdate(
+                DTTID,
+                updatedData,
+                {
+                    new: true,
+                },
+            );
+            res.json(dotthuctap);
+        } catch (error) {
+            res.status(500).json({ error: 'Lỗi xoá đợt thực tập' });
+        }
+    };
 }
 
 module.exports = DotThucTapController;

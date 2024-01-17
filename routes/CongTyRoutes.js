@@ -14,6 +14,6 @@ router.get('/donthuctap', ThuctapController.layDanhSachThuctap);
 router.post('/themcanbo', CongTyController.themCanBo);
 router.post('/themthongbao', TintucController.themThongBao);
 router.post('/dangkythongtin', CongTyController.Dangkythongtin);
-router.put('/duyetdonthuctap/:ThucTapID', ThuctapController.DuyetDonThucTap);
+router.put('/xoacongty/:CTID', CongTyController.xoacongty);
 
 module.exports = router;
