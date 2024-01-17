@@ -8,22 +8,26 @@ class CongViecController {
     }
     static xoaCongViec = async (req, res) => {
         try {
-            const { DTTID } = req.params; 
+            const { DTTID } = req.params;
             // Kiểm tra xem DTTID có đúng định dạng ObjectId không
             if (!ObjectId.isValid(DTTID)) {
                 return res.status(400).json({ error: 'ID không hợp lệ' });
             }
-    
+
             const result = await CongViec.deleteOne({ _id: DTTID });
-    
+
             if (result.deletedCount > 0) {
                 return res.json({ message: 'Xóa công việc thành công' });
             } else {
-                return res.status(404).json({ error: 'Không tìm thấy công việc với ID đã cho' });
+                return res
+                    .status(404)
+                    .json({ error: 'Không tìm thấy công việc với ID đã cho' });
             }
         } catch (error) {
             console.error('Lỗi xóa công việc:', error);
-            res.status(500).json({ error: 'Lỗi xóa công việc: ' + error.message });
+            res.status(500).json({
+                error: 'Lỗi xóa công việc: ' + error.message,
+            });
         }
     };
 }

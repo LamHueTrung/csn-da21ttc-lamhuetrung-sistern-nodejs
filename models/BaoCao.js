@@ -7,7 +7,7 @@ const BaoCaoSchema = new mongoose.Schema({
     hannop: String,
     ngaynop: String,
     filename: String,
-    trangthai: String
+    trangthai: String,
 });
 
 const BaoCao = mongoose.model('tblBaoCao', BaoCaoSchema);

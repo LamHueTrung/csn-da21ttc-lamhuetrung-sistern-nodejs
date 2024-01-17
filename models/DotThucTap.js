@@ -6,7 +6,7 @@ const DotThucTapSchema = new mongoose.Schema({
     ngayketthuc: String,
     danhsachlop: String,
     ghichu: String,
-    deleted: String
+    deleted: String,
 });
 
 const DotThucTap = mongoose.model('tbldotthuctap', DotThucTapSchema);

@@ -38,13 +38,9 @@ class CongtyController {
             const { CTID } = req.params;
             const updatedData = req.body; // Dữ liệu cần cập nhật
 
-            const congty = await Congty.findByIdAndUpdate(
-                CTID,
-                updatedData,
-                {
-                    new: true,
-                },
-            );
+            const congty = await Congty.findByIdAndUpdate(CTID, updatedData, {
+                new: true,
+            });
             res.json(congty);
         } catch (error) {
             res.status(500).json({ error: 'Lỗi xoá công ty' });

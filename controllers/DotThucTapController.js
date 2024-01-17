@@ -34,7 +34,7 @@ class DotThucTapController {
                 res.status(500).json({ error: err });
             });
     }
-    //xoá đợt thực tập 
+    //xoá đợt thực tập
     static xoadotthuctap = async (req, res) => {
         try {
             const { DTTID } = req.params;

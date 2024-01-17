@@ -5,8 +5,11 @@ const ThongTinCongBoSchema = new mongoose.Schema({
     macongty: String,
     madotthuctap: String,
     congviecthuctap: String,
-    ghichu: String
+    ghichu: String,
 });
 
-const ThongTinCongBo = mongoose.model('tblThongTinCongBo', ThongTinCongBoSchema);
+const ThongTinCongBo = mongoose.model(
+    'tblThongTinCongBo',
+    ThongTinCongBoSchema,
+);
 module.exports = ThongTinCongBo;
