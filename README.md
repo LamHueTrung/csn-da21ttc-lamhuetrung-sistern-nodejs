@@ -4,7 +4,6 @@
 ### SỬ DỤNG HOSTING NETLIFY.COM, LINK FRONT-END: https://sisterntvu.netlify.app/
   <pre>
     ## Mô tả: Cần cài đặt các thư viên sau: <br>
-        
         "axios": "^1.6.0",<br>
         "date-fns": "^2.30.0",<br>
         "prettier": "^3.1.0",<br>
