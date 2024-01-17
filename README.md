@@ -1,5 +1,6 @@
 # HỆ THỐNG QUẢN LÝ SINH VIÊN THỰC TẬP CỦA BỘ MÔN CÔNG NGHỆ THÔNG TIN <br>
 ### Nhánh FRONT-END lưu code giao diện.
+### DEMO: https://sisterntvu.netlify.app/.
 ### Nhánh BACK-END lưu code để lấy dữ liệu và thực hiện các tính năng.
 ### Nhánh DOC lưu các tài liệu liên quan đến đồ án cơ sở ngành.
   <pre>
