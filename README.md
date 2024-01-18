@@ -46,3 +46,5 @@
     - Update chức năng của hệ thống.<br>
     - update chức năng tải file báo cáo của sinh viên.<br>
     - Fix lỗi đơn thực tập sinh viên.<br>
+    - Nâng cấp chức năng admin.<br>
+    - Cập nhật một số chức năng cho hướng phát triển sau này.<br>
