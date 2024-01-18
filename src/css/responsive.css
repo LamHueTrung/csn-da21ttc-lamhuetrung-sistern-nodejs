@@ -12,7 +12,10 @@
         height: 96%;
         width: 100%;
     }
-    .thongtincanhan, .luachoncongty, .thongtincongty, .dinhkem {
+    .thongtincanhan,
+    .luachoncongty,
+    .thongtincongty,
+    .dinhkem {
         margin: 15px 5px;
     }
     .danhsachdondangky table {
@@ -159,7 +162,7 @@
     }
 }
 
-@media screen  and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     html {
         padding: 0;
         height: 765px;

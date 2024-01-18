@@ -11,7 +11,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { MdDoneAll } from "react-icons/md";
+import { MdDoneAll } from 'react-icons/md';
 import '../../css/student.css';
 import '../../css/base.css';
 import '../../css/teacher.css';
@@ -101,7 +101,7 @@ function QuanLyThucTap() {
             if (ct.macongty == tttt.macongty) {
                 ThongTinCongTy = {
                     tencongty: ct.tencongty,
-                    vitrithuctap: ct.vitrithuctap
+                    vitrithuctap: ct.vitrithuctap,
                 };
             }
         });
@@ -120,19 +120,19 @@ function QuanLyThucTap() {
             tencongty: ThongTinCongTy.tencongty,
             trangthaidon: tttt.trangthaidon,
             noidungthuctap: tttt.noidungthuctap,
-            dotthuctap: tttt.loai
-            
+            dotthuctap: tttt.loai,
         });
     });
     const ERORR = (event, dtt) => {
-        alert("Chức năng chưa thiết lập xong ");
+        alert('Chức năng chưa thiết lập xong ');
     };
     const DuyetToanBo = (event, dtt) => {
         const updatedData = [];
-        tblThucTap.map(ttt => {
-        if(ttt.trangthaidon == 'Chưa duyệt') {
-            console.log(ttt);
-        }})
+        tblThucTap.map((ttt) => {
+            if (ttt.trangthaidon == 'Chưa duyệt') {
+                console.log(ttt);
+            }
+        });
     };
     // function duyettatca() {
     //     const updatedData = [];
@@ -184,7 +184,7 @@ function QuanLyThucTap() {
     //                     console.error('Lỗi khi thêm dữ liệu:', error);
     //                 });
     //             })
-                
+
     //         }
     //     })
     // }
@@ -202,7 +202,7 @@ function QuanLyThucTap() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -266,14 +266,14 @@ function QuanLyThucTap() {
                     <span id="route">/Quản lý thực tập</span>
                 </div>
                 <div className="content">
-                <div className="thongtincanhan">
+                    <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                                <button className="icon_dotthuctap" onClick={ERORR}>
-                                    {' '}
-                                    <MdDoneAll className="icon_button" />
-                                    Duyệt toàn bộ
-                                </button>
+                            <button className="icon_dotthuctap" onClick={ERORR}>
+                                {' '}
+                                <MdDoneAll className="icon_button" />
+                                Duyệt toàn bộ
+                            </button>
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
@@ -287,7 +287,9 @@ function QuanLyThucTap() {
                                             Công ty đăng ký
                                         </th>
                                         <th id="ngaytaodon">Người phụ trách</th>
-                                        <th id="ngaytaodon">Nội dung thực tập</th>
+                                        <th id="ngaytaodon">
+                                            Nội dung thực tập
+                                        </th>
                                         <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>

@@ -113,18 +113,17 @@ function Tintuc() {
                 <div className="content">
                     <h1 className="lable">Tin tức</h1>
                     <ul className="items">
-                            {TinTucs.map((tintuc) => {
-                                if (tintuc.thongbaoadmin != null)
-                                    return (
-                                        <li className='tintuc'>
-                                            <h2>
-                                                THÔNG BÁO:{' '}
-                                                {tintuc.thongbaoadmin}
-                                            </h2>
-                                            <span> ({tintuc.thoigian}) </span>
-                                        </li>
-                                    );
-                            })}
+                        {TinTucs.map((tintuc) => {
+                            if (tintuc.thongbaoadmin != null)
+                                return (
+                                    <li className="tintuc">
+                                        <h2>
+                                            THÔNG BÁO: {tintuc.thongbaoadmin}
+                                        </h2>
+                                        <span> ({tintuc.thoigian}) </span>
+                                    </li>
+                                );
+                        })}
                     </ul>
                 </div>
             </div>

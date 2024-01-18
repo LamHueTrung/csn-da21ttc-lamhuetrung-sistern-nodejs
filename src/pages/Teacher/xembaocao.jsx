@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 // import { AiOutlineCheck } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
-import { IoMdDownload } from "react-icons/io";
+import { IoMdDownload } from 'react-icons/io';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineHome } from 'react-icons/ai';
@@ -156,11 +156,11 @@ function ThongTinDangKyGV() {
                 sobuoi: tttt.sobuoi,
                 sotuan: tttt.sotuan,
                 noidung: tttt.noidungthuctap,
-                mathuctap: tttt.mathuctap
+                mathuctap: tttt.mathuctap,
             };
         }
     });
-    
+
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.add('openMenu');
@@ -232,7 +232,9 @@ function ThongTinDangKyGV() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Xem báo cáo thực tập/ {tblThucTap.tensinhvien}</span>
+                    <span id="route">
+                        /Xem báo cáo thực tập/ {tblThucTap.tensinhvien}
+                    </span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">
@@ -321,43 +323,56 @@ function ThongTinDangKyGV() {
                         </ul>
                     </div>
                     <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">
-                            Báo cáo thực tập
-                        </h1>
+                        <h1 className="lable_chitiet">Báo cáo thực tập</h1>
                         <ul className="thongtintaikhoan">
-                        {
-                            
-                            BaoCaos.map(baocao => {
-                                if(baocao.mathuctap == tblThucTap.mathuctap) {
+                            {BaoCaos.map((baocao) => {
+                                if (baocao.mathuctap == tblThucTap.mathuctap) {
                                     count_var = count + 1;
-                                    return<li>
-                                        <span className="lable">Tuần: {baocao.tuan}</span>
-                                        <span className="lable">Hạn nộp: {baocao.hannop}</span>
-                                        <span className="lable">Ngày nộp: {baocao.ngaynop}</span>
-                                        <span className="lable">Trạng thái: {baocao.trangthai}</span>
-                                        <span className="lable">Tên file: {baocao.filename} </span>
-                                        <li className="lable">
-                                            <Link to={`${port}/api/files/${baocao.filename}`} >
-                                                <button className="button_taive">
-                                                    {' '}
-                                                    <IoMdDownload className="icon_button" />
-                                                    Tải về 
-                                                </button>
-                                            </Link>
+                                    return (
+                                        <li>
+                                            <span className="lable">
+                                                Tuần: {baocao.tuan}
+                                            </span>
+                                            <span className="lable">
+                                                Hạn nộp: {baocao.hannop}
+                                            </span>
+                                            <span className="lable">
+                                                Ngày nộp: {baocao.ngaynop}
+                                            </span>
+                                            <span className="lable">
+                                                Trạng thái: {baocao.trangthai}
+                                            </span>
+                                            <span className="lable">
+                                                Tên file: {baocao.filename}{' '}
+                                            </span>
+                                            <li className="lable">
+                                                <Link
+                                                    to={`${port}/api/files/${baocao.filename}`}
+                                                >
+                                                    <button className="button_taive">
+                                                        {' '}
+                                                        <IoMdDownload className="icon_button" />
+                                                        Tải về
+                                                    </button>
+                                                </Link>
+                                            </li>
+                                            <span className="lable baocao_mobile">
+                                                ******************************{' '}
+                                            </span>
                                         </li>
-                                        <span className="lable baocao_mobile">****************************** </span>
-                                    </li>
+                                    );
                                 }
-                            })
-                        }
-                        {
-                            count.map(defaul => {
-                                if(count_var == 0) {
-                                    return <span className="lable">Chưa có báo cáo nào được nộp. </span>
+                            })}
+                            {count.map((defaul) => {
+                                if (count_var == 0) {
+                                    return (
+                                        <span className="lable">
+                                            Chưa có báo cáo nào được nộp.{' '}
+                                        </span>
+                                    );
                                 }
-                            })
-                        }
-                            </ul>
+                            })}
+                        </ul>
                     </div>
                     {/* <Iframe src="../../uploads/dkhm.pdf" /> */}
                     <div className="nutbam">

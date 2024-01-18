@@ -142,7 +142,7 @@
     float: left;
     display: block;
 }
-.thongtincanhan .thongtintaikhoan .themgiaovienhuongdan select{
+.thongtincanhan .thongtintaikhoan .themgiaovienhuongdan select {
     width: 40%;
     height: 50px;
     font-size: 18px;
@@ -222,7 +222,6 @@
     .thongtincongty .thongtindangkythuctap li {
         margin-bottom: 15px;
         width: 100% !important;
-
     }
     .thongtincongty .thongtindangkythuctap li input {
         width: 100% !important;

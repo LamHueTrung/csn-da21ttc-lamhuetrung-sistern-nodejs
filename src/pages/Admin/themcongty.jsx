@@ -36,55 +36,108 @@ function DangKyThucTap() {
             };
         }
     });
-    function Dangky() {
-        var ThongTinDangKy = {};
-        const macongty = Math.floor(Math.random() * 100000) + 1;
-        ThongTinDangKy = {
-            macongty: macongty,
-            tencongty: document.getElementById('tencongty').value,
-            diachi: document.getElementById('diachi').value,
-            macanbo: document.getElementById('macanbo').textContent,
-            sodienthoai: document.getElementById('sodienthoai').value,
-            motacongviec: document.getElementById('motacongviec').value,
-        };
-        axios
-            .post(`${port}/company/dangkythongtin`, ThongTinDangKy)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaoadmin: `Công ty ${ThongTinDangKy.tencongty} vừa được thêm vào chương trình thực tập`,
-        };
-        axios
-            .post(`${port}/company/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        var ThongTinCanBo = {};
-        ThongTinCanBo = {
-            macanbo: document.getElementById('macanbo').textContent,
-            macongty: macongty,
-            tencanbo: document.getElementById('tencanbo').value,
-            sotaikhoan: document.getElementById('sotaikhoan').value,
-            sodienthoai: document.getElementById('sodienthoai').value,
-        };
-        axios
-            .post(`${port}/company/themcanbo`, ThongTinCanBo)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        alert('Thêm công ty thực tập thành công');
+    function isValidPhoneNumber(phoneNumber) {
+        phoneNumber = String(phoneNumber).trim();
+
+        var phoneRegex = /^\+?[0-9]+$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            return false;
+        }
+        if (phoneNumber.length !== 10) {
+            return false;
+        }
+        return true;
+    }
+    function isValidNganHang(stk) {
+        stk = String(stk).trim();
+
+        var phoneRegex = /^\+?[0-9]+$/;
+        if (!phoneRegex.test(stk)) {
+            return false;
+        }
+        if (stk.length > 10 && stk.length < 16) {
+            return false;
+        }
+        return true;
+    }
+    function Dangky(event) {
+        var tencongty = document.getElementById('tencongty').value;
+        var diachi = document.getElementById('diachi').value;
+        var macanbo = document.getElementById('macanbo').textContent;
+        var sodienthoai = document.getElementById('sodienthoai').value;
+        var sodienthoaicanbo =
+            document.getElementById('sodienthoaicanbo').value;
+        var motacongviec = document.getElementById('motacongviec').value;
+        if (
+            tencongty == '' ||
+            diachi == '' ||
+            macanbo == '' ||
+            sodienthoai == '' ||
+            motacongviec == ''
+        ) {
+            alert('Điền đầy đủ thông tin');
+            event.preventDefault();
+        } else if (!isValidPhoneNumber(sodienthoai)) {
+            alert('Số điện thoại công ty không hợp lệ');
+            event.preventDefault();
+        } else if (!isValidPhoneNumber(sodienthoaicanbo)) {
+            alert('Số điện thoại cán bộ không hợp lệ');
+            event.preventDefault();
+        } else if (
+            isValidNganHang(document.getElementById('sotaikhoan').value)
+        ) {
+            alert('Số tài khoản cán bộ không hợp lệ');
+            event.preventDefault();
+        } else {
+            var ThongTinDangKy = {};
+            const macongty = Math.floor(Math.random() * 100000) + 1;
+            ThongTinDangKy = {
+                macongty: macongty,
+                tencongty: document.getElementById('tencongty').value,
+                diachi: document.getElementById('diachi').value,
+                macanbo: document.getElementById('macanbo').textContent,
+                sodienthoai: document.getElementById('sodienthoai').value,
+                motacongviec: document.getElementById('motacongviec').value,
+            };
+            axios
+                .post(`${port}/company/dangkythongtin`, ThongTinDangKy)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+            var DateNow = new Date();
+            var ThongBao = {
+                thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                thongbaoadmin: `Công ty ${ThongTinDangKy.tencongty} vừa được thêm vào chương trình thực tập`,
+            };
+            axios
+                .post(`${port}/company/themthongbao`, ThongBao)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+            var ThongTinCanBo = {};
+            ThongTinCanBo = {
+                macanbo: document.getElementById('macanbo').textContent,
+                macongty: macongty,
+                tencanbo: document.getElementById('tencanbo').value,
+                sotaikhoan: document.getElementById('sotaikhoan').value,
+                sodienthoai: document.getElementById('sodienthoaicanbo').value,
+            };
+            axios
+                .post(`${port}/company/themcanbo`, ThongTinCanBo)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+            alert('Thêm công ty thực tập thành công');
+        }
     }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
@@ -108,7 +161,7 @@ function DangKyThucTap() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -199,7 +252,7 @@ function DangKyThucTap() {
                                 <input
                                     id="sodienthoai"
                                     placeholder="Số điện thoại"
-                                    type="text"
+                                    type="number"
                                 />
                             </li>
                         </ul>
@@ -213,14 +266,13 @@ function DangKyThucTap() {
                                 />
                             </li>
                         </ul>
-                       
                     </div>
                     <div className="thongtincongty company">
                         <h1 className="lable_chitiet">
                             Thông tin cán bộ hướng dẫn
                         </h1>
                         <ul className="thongtindangkythuctap email_dangky">
-                            <li className="thong_tin_email close" >
+                            <li className="thong_tin_email close">
                                 <span className="lable">
                                     Mã người phụ trách{' '}
                                 </span>
@@ -237,23 +289,24 @@ function DangKyThucTap() {
                             </li>
                             <li>
                                 <input
-                                    id="sodienthoai"
+                                    id="sodienthoaicanbo"
                                     placeholder="Số điện thoại"
-                                    type="text"
+                                    type="number"
                                 />
                             </li>
                             <li>
                                 <input
                                     id="sotaikhoan"
                                     placeholder="Số tài khoản"
-                                    type="text"
+                                    type="number"
                                 />
                             </li>
                         </ul>
-                        
                     </div>
                     <div className="nutbam">
-                        <Link to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}>
+                        <Link
+                            to={`/admin/congty/taikhoan?taikhoan=${taikhoan}`}
+                        >
                             <button className="button_huy">
                                 {' '}
                                 <ImCancelCircle className="icon_button" />

@@ -46,13 +46,13 @@ function QuanLyThucTap() {
             });
     }, []);
     var ThongTinCongBo = [];
-    var TenCongTy = ''; 
+    var TenCongTy = '';
     var TenDotThucTap = '';
-    DotThucTaps.map(dtt => {
-        if(dtt._id == selectedDotThucTap) {
+    DotThucTaps.map((dtt) => {
+        if (dtt._id == selectedDotThucTap) {
             TenDotThucTap = dtt.tendotthuctap;
         }
-    })
+    });
     const handleGiaovienChange = (event) => {
         setSelectedDotThucTap(event.target.value);
     };
@@ -69,67 +69,72 @@ function QuanLyThucTap() {
 
         if (file) {
             const fileName = file.name;
-            const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+            const fileExtension = fileName.slice(
+                ((fileName.lastIndexOf('.') - 1) >>> 0) + 2,
+            );
 
             // Kiểm tra nếu phần mở rộng là "csv"
             if (fileExtension.toLowerCase() === 'csv') {
                 setFile(file);
             } else {
-                alert("Chỉ chấp nhận file CSV. Vui lòng chọn lại.");
+                alert('Chỉ chấp nhận file CSV. Vui lòng chọn lại.');
                 event.target.value = '';
             }
         }
-      };
-      const handleUpload = async () => {
+    };
+    const handleUpload = async () => {
         const dtt_kt = document.querySelector('#thongtingiaovien').value;
-        if(dtt_kt == '') {
+        if (dtt_kt == '') {
             alert('Chưa chọn đợt thực tập');
         } else {
             const formData = new FormData();
-            formData.append("file", file);
-            formData.append("name", `thongtincongviec.pdf`);
+            formData.append('file', file);
+            formData.append('name', `thongtincongviec.pdf`);
             try {
-              const response = await axios.post(`${port}/api/themcongviec/${selectedDotThucTap}`, formData);
-              setThongTinCongViecs(response.data);
-              var DateNow = new Date();
+                const response = await axios.post(
+                    `${port}/api/themcongviec/${selectedDotThucTap}`,
+                    formData,
+                );
+                setThongTinCongViecs(response.data);
+                var DateNow = new Date();
                 var ThongBao = {
-                thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-                thongbaoadmin: `Dữ liệu đợt thực tập ${TenDotThucTap} vừa được cập nhật`,
-            };
-            axios
-                .post(`${port}/company/themthongbao`, ThongBao)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error('Lỗi khi thêm dữ liệu:', error);
-                });
-              alert("Thành công");
-              console.log("Upload thành công:", formData);
+                    thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                    thongbaoadmin: `Dữ liệu đợt thực tập ${TenDotThucTap} vừa được cập nhật`,
+                };
+                axios
+                    .post(`${port}/company/themthongbao`, ThongBao)
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu:', error);
+                    });
+                alert('Thành công');
+                console.log('Upload thành công:', formData);
             } catch (error) {
-                alert("Thất bại");
-              console.error("Upload thất bại:", error);
+                alert('Thất bại');
+                console.error('Upload thất bại:', error);
             }
         }
-      };
-      ThongTinCongViec.map(ttcv=> {
-        congtys.map(ct => {
-            if(ttcv.macongty == ct.macongty) {
+    };
+    ThongTinCongViec.map((ttcv) => {
+        congtys.map((ct) => {
+            if (ttcv.macongty == ct.macongty) {
                 TenCongTy = ct.tencongty;
             }
-        })
-        DotThucTaps.map(dtt => {
-            if(dtt._id == ttcv.madotthuctap) {
+        });
+        DotThucTaps.map((dtt) => {
+            if (dtt._id == ttcv.madotthuctap) {
                 TenDotThucTap = dtt.tendotthuctap;
             }
-        })
+        });
         ThongTinCongBo.push({
             tendotthuctap: TenDotThucTap,
             tencongty: TenCongTy,
             congviec: ttcv.congviecthuctap,
-            ghichu: ttcv.ghichu
-        })
-    })
+            ghichu: ttcv.ghichu,
+        });
+    });
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -144,7 +149,7 @@ function QuanLyThucTap() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -208,65 +213,73 @@ function QuanLyThucTap() {
                     <span id="route">/Quản lý đợt thực tập</span>
                 </div>
                 <div className="content">
-                <div className="thongtincanhan mobile_taidulieu">
-                        <h1 className="lable_chitiet">
-                            Đợt thực tập
-                        </h1>
+                    <div className="thongtincanhan mobile_taidulieu">
+                        <h1 className="lable_chitiet">Đợt thực tập</h1>
                         <ul className="thongtintaikhoan">
-                            <li className='themgiaovienhuongdan'>
+                            <li className="themgiaovienhuongdan">
                                 <select
-                                        name=""
-                                        id="thongtingiaovien"
-                                        onChange={handleGiaovienChange}
-                                    >
-                                        <option value="">--Chọn đợt thực tập--</option>
-                                        {DotThucTaps.map((dtt) => {
-                                            if(dtt.deleted != 'deleted') {
+                                    name=""
+                                    id="thongtingiaovien"
+                                    onChange={handleGiaovienChange}
+                                >
+                                    <option value="">
+                                        --Chọn đợt thực tập--
+                                    </option>
+                                    {DotThucTaps.map((dtt) => {
+                                        if (dtt.deleted != 'deleted') {
                                             return (
-                                                <option
-                                                    value={dtt._id}
-                                                >
+                                                <option value={dtt._id}>
                                                     {dtt.tendotthuctap}
                                                 </option>
                                             );
-                                        }})}
-                                    </select>
+                                        }
+                                    })}
+                                </select>
                             </li>
                             <li>
                                 <input
-                                    id='fileBaoCao'
+                                    id="fileBaoCao"
                                     className="fullsize_input"
                                     placeholder="Nội dung thực tập"
-                                    type="file" 
+                                    type="file"
                                     onChange={handleChangeFile}
                                 />
                             </li>
                             <li>
-                                <button onClick={handleUpload} className="button_chinhsua">Tải lên</button>
+                                <button
+                                    onClick={handleUpload}
+                                    className="button_chinhsua"
+                                >
+                                    Tải lên
+                                </button>
                             </li>
                         </ul>
                     </div>
-                <div className="thongtincanhan">
-                        <h1 className="lable_chitiet tieuDeDulieu">Dữ liệu công bố</h1>
+                    <div className="thongtincanhan">
+                        <h1 className="lable_chitiet tieuDeDulieu">
+                            Dữ liệu công bố
+                        </h1>
                         <div className="danhsachdondangky">
-                        <ul className="thongtintaikhoan mobile_dulieucongbo">
-                            <table className='dsDeDulieu'>
-                                <thead>
-                                    <tr className="tieude_table">
-                                        <th id="stt">STT</th>
-                                        <th id="tensinhvien">Tên đợt thực tập</th>
-                                        <th id="tensinhvien">
-                                            Tên công ty
-                                        </th>
-                                        <th id="emailsinhvien">
-                                            Công việc
-                                        </th>
-                                        <th id="ngaytaodon">Ghi chú</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {ThongTinCongBo.map((dtt, index) => {
-                                        return (
+                            <ul className="thongtintaikhoan mobile_dulieucongbo">
+                                <table className="dsDeDulieu">
+                                    <thead>
+                                        <tr className="tieude_table">
+                                            <th id="stt">STT</th>
+                                            <th id="tensinhvien">
+                                                Tên đợt thực tập
+                                            </th>
+                                            <th id="tensinhvien">
+                                                Tên công ty
+                                            </th>
+                                            <th id="emailsinhvien">
+                                                Công việc
+                                            </th>
+                                            <th id="ngaytaodon">Ghi chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ThongTinCongBo.map((dtt, index) => {
+                                            return (
                                                 <tr className="info">
                                                     <th id="stt">
                                                         {index + 1}
@@ -284,12 +297,11 @@ function QuanLyThucTap() {
                                                         {dtt.ghichu}
                                                     </th>
                                                 </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-
-                        </ul>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </ul>
                         </div>
                     </div>
                 </div>

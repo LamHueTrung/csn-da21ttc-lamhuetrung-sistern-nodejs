@@ -38,40 +38,59 @@ function DangKyDotThucTap() {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    
-    function Dangky() {
+
+    function Dangky(event) {
         var ThongTinDangKy = {};
-        ThongTinDangKy = {
-            tendotthuctap: document.getElementById('tendotthuctap').value,
-            ngaybatdau: document.getElementById('Ngaybatdau').value,
-            ngayketthuc: document.getElementById('ngayketthuc').value,
-            ghichu: document.getElementById('ghichu').value,
-            danhsachlop: document.getElementById('danhsachlop').value
-        };
-        axios
-            .post(`${port}/admin/themdotthuctap`, ThongTinDangKy)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        var DateNow = new Date();
-        var ThongBao = {
-            thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
-            thongbaosinhvien: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
-            thongbaogiaovien: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
-            thongbaoadmin: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
-        };
-        axios
-            .post(`${port}/company/themthongbao`, ThongBao)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm dữ liệu:', error);
-            });
-        alert('Thêm đợt thực tập thành công');
+        var tendotthuctap = document.getElementById('tendotthuctap').value;
+        var ngaybatdau = document.getElementById('Ngaybatdau').value;
+        var ngayketthuc = document.getElementById('ngayketthuc').value;
+        var ghichu = document.getElementById('ghichu').value;
+        var danhsachlop = document.getElementById('danhsachlop').value;
+        if (
+            tendotthuctap == '' ||
+            ngaybatdau == '' ||
+            ngayketthuc == '' ||
+            ghichu == '' ||
+            danhsachlop == ''
+        ) {
+            alert('Điền đầy đủ thông tin');
+            event.preventDefault();
+        } else if (ngayketthuc < ngaybatdau) {
+            alert('Ngày kết thúc không hợp lệ');
+            event.preventDefault();
+        } else {
+            ThongTinDangKy = {
+                tendotthuctap: document.getElementById('tendotthuctap').value,
+                ngaybatdau: document.getElementById('Ngaybatdau').value,
+                ngayketthuc: document.getElementById('ngayketthuc').value,
+                ghichu: document.getElementById('ghichu').value,
+                danhsachlop: document.getElementById('danhsachlop').value,
+            };
+            axios
+                .post(`${port}/admin/themdotthuctap`, ThongTinDangKy)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+            var DateNow = new Date();
+            var ThongBao = {
+                thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
+                thongbaosinhvien: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
+                thongbaogiaovien: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
+                thongbaoadmin: `Thực tập ${ThongTinDangKy.tendotthuctap} đã mở ${ThongTinDangKy.ghichu}`,
+            };
+            axios
+                .post(`${port}/company/themthongbao`, ThongBao)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error('Lỗi khi thêm dữ liệu:', error);
+                });
+            alert('Thêm đợt thực tập thành công');
+        }
     }
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
@@ -173,14 +192,14 @@ function DangKyDotThucTap() {
                                 <input
                                     id="Ngaybatdau"
                                     placeholder="Ngày bắt đầu"
-                                    type="text"
+                                    type="Date"
                                 />
                             </li>
                             <li>
                                 <input
                                     id="ngayketthuc"
                                     placeholder="Ngày kết thúc"
-                                    type="text"
+                                    type="Date"
                                 />
                             </li>
                         </ul>
@@ -206,7 +225,9 @@ function DangKyDotThucTap() {
                         </ul>
                     </div>
                     <div className="nutbam">
-                        <Link to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}>
+                        <Link
+                            to={`/admin/danhsachdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                        >
                             <button className="button_huy">
                                 {' '}
                                 <ImCancelCircle className="icon_button" />

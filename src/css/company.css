@@ -25,7 +25,7 @@
     justify-content: space-evenly;
 }
 .thongtincongty .thongtindangkythuctap li {
-    width: 350px ;
+    width: 350px;
 }
 .thongtincongty .thongtindangkythuctap li input {
     width: 350px !important;
@@ -98,12 +98,12 @@
     background: none;
 }
 /*Update V.1 */
-.thongtincongty  .thongtindangkythuctap .vitrithuctap {
+.thongtincongty .thongtindangkythuctap .vitrithuctap {
     width: 91%;
     float: left;
     text-align: justify;
 }
-.vitrithuctap #vitrithuctap{
+.vitrithuctap #vitrithuctap {
     float: left;
 }
 .thongtincongty .them {
@@ -113,13 +113,13 @@
 }
 .icon_them {
     font-size: 25px;
-
 }
 @media screen and (max-width: 767px) {
     .company {
         height: auto !important;
     }
-    .thongtindangkythuctap #vitri, #vitrihuongdan {
+    .thongtindangkythuctap #vitri,
+    #vitrihuongdan {
         width: 80% !important;
         font-size: 20px;
         min-width: 100px !important;

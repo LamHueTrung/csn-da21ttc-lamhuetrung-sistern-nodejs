@@ -158,7 +158,9 @@ function DangKyThucTap() {
                             </li>
                             <li>
                                 <div className="nutbam">
-                                    <Link to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}>
+                                    <Link
+                                        to={`/teacher/tintuc/taikhoan?taikhoan=${taikhoan}`}
+                                    >
                                         <button
                                             className="button_luu"
                                             onClick={Dangky}

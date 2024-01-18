@@ -10,7 +10,7 @@ import { TbHomeEco } from 'react-icons/tb';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel } from 'react-icons/md';
 
 import '../../css/student.css';
 import '../../css/base.css';
@@ -43,33 +43,37 @@ function Congty() {
     const handleCTChange = (event, dtt) => {
         if (event.target.checked) {
             DanhSachCongTyChange.push(dtt);
-        } 
+        }
     };
     const DeleteCT = (event, dtt) => {
-        if(DanhSachCongTyChange.length === 0) {
-            alert("Bạn chưa chọn công ty muốn xoá");
+        if (DanhSachCongTyChange.length === 0) {
+            alert('Bạn chưa chọn công ty muốn xoá');
         } else {
-            const userConfirmed = window.confirm("Bạn muốn xoá các đợt thực tập đã chọn?");
+            const userConfirmed = window.confirm(
+                'Bạn muốn xoá các đợt thực tập đã chọn?',
+            );
             if (userConfirmed) {
                 const dataToadd2 = {
                     deleted: 'deleted',
                 };
-                DanhSachCongTyChange.map(ct => {
+                DanhSachCongTyChange.map((ct) => {
                     axios
-                    .put(`${port}/company/xoacongty/${ct._id}`, dataToadd2)
-                    .then((response) => {
-                        alert("Xoá thành công");
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.error('Lỗi khi thêm dữ liệu công ty:', error);
-                    });
-                })
+                        .put(`${port}/company/xoacongty/${ct._id}`, dataToadd2)
+                        .then((response) => {
+                            alert('Xoá thành công');
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                'Lỗi khi thêm dữ liệu công ty:',
+                                error,
+                            );
+                        });
+                });
             } else {
-                alert("Đã hủy bỏ xoá công ty");
+                alert('Đã hủy bỏ xoá công ty');
             }
         }
-
     };
     return (
         <div className="container">
@@ -85,7 +89,7 @@ function Congty() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -152,13 +156,18 @@ function Congty() {
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Công ty thực tập</h1>
                         <div className="danhsachdondangky">
-                            <button className="icon_dotthuctap themdulieu" onClick={DeleteCT}>
-                                    {' '}
-                                    <MdOutlineCancel className="icon_button" />
-                                    Xoá công ty
+                            <button
+                                className="icon_dotthuctap themdulieu"
+                                onClick={DeleteCT}
+                            >
+                                {' '}
+                                <MdOutlineCancel className="icon_button" />
+                                Xoá công ty
                             </button>
-                            <Link to={`/admin/themcongty/taikhoan?taikhoan=${taikhoan}`}>
-                                <button className="button_search mobile_button_seach">
+                            <Link
+                                to={`/admin/themcongty/taikhoan?taikhoan=${taikhoan}`}
+                            >
+                                <button className="themdulieu icon_dotthuctap mobile_button_seach">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm công ty
@@ -173,28 +182,22 @@ function Congty() {
                                             Tên công ty
                                         </th>
                                         <th id="admin_diachicongty">Địa chỉ</th>
-                                        <th id="vitri">
-                                            Số điện thoại
-                                        </th>
-                                        <th id="admin_diachicongty">
-                                            Mô tả
-                                        </th>
-                                        <th id="vitri">
-                                            Mã cán bộ 
-                                        </th>
+                                        <th id="vitri">Số điện thoại</th>
+                                        <th id="admin_diachicongty">Mô tả</th>
+                                        <th id="vitri">Mã cán bộ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {congtys.map((congty) => {
-                                        if(congty.deleted != 'deleted') {
-                                        return (
-                                            <tr className="info">
-                                                <th id="checked">
+                                        if (congty.deleted != 'deleted') {
+                                            return (
+                                                <tr className="info">
+                                                    <th id="checked">
                                                         <input
                                                             id="choncongty"
                                                             // checked = {selectedTTCB === ttcb}
                                                             type="checkbox"
-                                                            onChange= {(event) =>
+                                                            onChange={(event) =>
                                                                 handleCTChange(
                                                                     event,
                                                                     congty,
@@ -202,27 +205,28 @@ function Congty() {
                                                             }
                                                         />
                                                     </th>
-                                                <th id="macongty">
-                                                    {congty.macongty}
-                                                </th>
-                                                <th id="admin_tencongty">
-                                                    {congty.tencongty}
-                                                </th>
-                                                <th id="admin_diachicongty">
-                                                    {congty.diachi}
-                                                </th>
-                                                <th id="vitri">
-                                                    {congty.sodienthoai}
-                                                </th>
-                                                <th id="admin_diachicongty">
-                                                    {congty.motacongviec}
-                                                </th>
-                                                <th id="vitri">
-                                                    {congty.macanbo}
-                                                </th>
-                                            </tr>
-                                        );
-                                    }})}
+                                                    <th id="macongty">
+                                                        {congty.macongty}
+                                                    </th>
+                                                    <th id="admin_tencongty">
+                                                        {congty.tencongty}
+                                                    </th>
+                                                    <th id="admin_diachicongty">
+                                                        {congty.diachi}
+                                                    </th>
+                                                    <th id="vitri">
+                                                        {congty.sodienthoai}
+                                                    </th>
+                                                    <th id="admin_diachicongty">
+                                                        {congty.motacongviec}
+                                                    </th>
+                                                    <th id="vitri">
+                                                        {congty.macanbo}
+                                                    </th>
+                                                </tr>
+                                            );
+                                        }
+                                    })}
                                 </tbody>
                             </table>
                         </div>

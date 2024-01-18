@@ -14,7 +14,7 @@ function Login() {
     const [ngaysinhs, setngaysinh] = useState('');
     const [lops, setlop] = useState('');
     const [TaiKhoans, setTaiKhoans] = useState([]);
-    
+
     const navigate = useNavigate();
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
@@ -44,30 +44,32 @@ function Login() {
         const matkhau = document.getElementById('matkhauDK');
         const email = document.getElementById('emailDk');
         var erorr_dangky = 0;
-       if (email.value == '') {
+        if (email.value == '') {
             alert('Không bỏ trống email');
             erorr_dangky = 1;
             email.focus();
-        }  else if (matkhau.value == '') {
+        } else if (matkhau.value == '') {
             alert('Không bỏ trống mật khẩu');
             erorr_dangky = 1;
             matkhau.focus();
-        }  else {
+        } else {
             if (email.value != '') {
                 var temp = 0;
-                TaiKhoans.map(taikhoan => {
-                        if(taikhoan.taikhoan == email.value) {
-                            temp = 1;
-                        }
-                })
-                if(temp == 1) {
-                    alert("Email đã sử dụng");
+                TaiKhoans.map((taikhoan) => {
+                    if (taikhoan.taikhoan == email.value) {
+                        temp = 1;
+                    }
+                });
+                if (temp == 1) {
+                    alert('Email đã sử dụng');
                     erorr_dangky = 1;
                     email.focus();
                 }
-            } 
-            if(erorr_dangky == 0) {
-                navigate(`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`);
+            }
+            if (erorr_dangky == 0) {
+                navigate(
+                    `/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`,
+                );
             }
         }
     };
@@ -80,7 +82,7 @@ function Login() {
         const sodienthoail = document.getElementById('sodienthoailDk');
         const lop = document.getElementById('lopDk');
         var erorr_dangky = 0;
-        if(tensinhvien.value == '') {
+        if (tensinhvien.value == '') {
             erorr_dangky = 1;
             alert('không bỏ trống họ tên');
             tensinhvien.focus();
@@ -92,7 +94,7 @@ function Login() {
             alert('Không bỏ trống email');
             erorr_dangky = 1;
             email.focus();
-        }  else if (ngaysinh.value.length == '') {
+        } else if (ngaysinh.value.length == '') {
             alert('Không bỏ trống ngày sinh');
             erorr_dangky = 1;
             ngaysinh.focus();
@@ -108,32 +110,34 @@ function Login() {
             alert('Không bỏ trống mật khẩu');
             erorr_dangky = 1;
             matkhau.focus();
-        }  else {
-            if(ngaysinh.value.length != '') {
+        } else {
+            if (ngaysinh.value.length != '') {
                 const myDate = new Date(ngaysinh.value);
                 const currentDate = new Date();
                 const age = currentDate.getFullYear() - myDate.getFullYear();
-                if(age < 18) {
+                if (age < 18) {
                     alert(`Bạn ${age} tuổi không phải sinh viên đại học`);
                     erorr_dangky = 1;
                     ngaysinh.focus();
                 }
-            } 
+            }
             if (email.value != '') {
                 var temp = 0;
-                TaiKhoans.map(taikhoan => {
-                        if(taikhoan.taikhoan == email.value) {
-                            temp = 1;
-                        }
-                })
-                if(temp == 1) {
-                    alert("Email đã sử dụng");
+                TaiKhoans.map((taikhoan) => {
+                    if (taikhoan.taikhoan == email.value) {
+                        temp = 1;
+                    }
+                });
+                if (temp == 1) {
+                    alert('Email đã sử dụng');
                     erorr_dangky = 1;
                     email.focus();
                 }
-            } 
-            if(erorr_dangky == 0) {
-                navigate(`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`);
+            }
+            if (erorr_dangky == 0) {
+                navigate(
+                    `/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`,
+                );
             }
         }
     };
@@ -143,10 +147,10 @@ function Login() {
         const signUpSV = document.querySelector('.signUpSV');
         if (urlParams.get('loaitaikhoan') == 'admin') {
             alert('Không thể đăng ký tài khoản quản trị');
-        } else if(urlParams.get('loaitaikhoan') == 'sinhvien') {
+        } else if (urlParams.get('loaitaikhoan') == 'sinhvien') {
             Login.classList.add('close');
             signUpSV.classList.remove('close');
-        }else {
+        } else {
             Login.classList.add('close');
             signUp.classList.remove('close');
         }
@@ -219,7 +223,7 @@ function Login() {
                         />
                     </div>
                     <Link
-                        // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}
+                    // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}`}
                     >
                         <button onClick={handleSignupGV}>Đăng Ký</button>
                     </Link>
@@ -301,7 +305,7 @@ function Login() {
                         />
                     </div>
                     <Link
-                        // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`}
+                    // to={`/xuly/?xuly=dangky&loaitaikhoan=${loaiTK}&taikhoan=${emails}&matkhau=${password}&tensinhvien=${tensinhviens}&masinhvien=${masinhviens}&ngaysinh=${ngaysinhs}&sodienthoai=${sodienthoais}&lop=${lops}`}
                     >
                         <button onClick={handleSignup}>Đăng Ký</button>
                     </Link>

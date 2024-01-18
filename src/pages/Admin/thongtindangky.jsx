@@ -86,7 +86,7 @@ function ThongTinDangKy() {
                         lop: sv.lop,
                         masinhvien: sv.masinhvien,
                         ngaysinh: sv.ngaysinh,
-                        _id: sv._id
+                        _id: sv._id,
                     };
                 }
             });
@@ -154,15 +154,16 @@ function ThongTinDangKy() {
         }
     });
     function DuyetDon() {
-        if(tblThucTap.magiaovien == null) {
-            if(selectedGiaovien == '') {
-                alert("Chưa có giáo viên hướng dẫn");
+        console.log(tblThucTap.magiaovien);
+        if (tblThucTap.magiaovien == 'chưa gán') {
+            if (selectedGiaovien == '') {
+                alert('Chưa có giáo viên hướng dẫn');
             } else {
-                console.log(tblThucTap.magiaovien)
+                console.log(tblThucTap.magiaovien);
                 navigate(`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`);
                 const updatedData = {
                     trangthaidon: 'Đã duyệt',
-                    magiaovien: ThongTinGiaoVien.magiaovien
+                    magiaovien: ThongTinGiaoVien.magiaovien,
                 };
                 axios
                     .put(
@@ -177,17 +178,20 @@ function ThongTinDangKy() {
                         alert('Duyệt đơn thất bại');
                         console.error('Lỗi cập nhật dữ liệu:', error);
                     });
-                    const dataToadd2 = {
-                        trangthaisinhvien: 'Đã được duyệt',
-                    };
-                    axios
-                        .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
-                        .then((response) => {
-                            console.log(response);
-                        })
-                        .catch((error) => {
-                            console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                        });
+                const dataToadd2 = {
+                    trangthaisinhvien: 'Đã được duyệt',
+                };
+                axios
+                    .put(
+                        `${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`,
+                        dataToadd2,
+                    )
+                    .then((response) => {
+                        console.log(response);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+                    });
                 var DateNow = new Date();
                 var ThongBao = {
                     thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
@@ -202,9 +206,9 @@ function ThongTinDangKy() {
                     .catch((error) => {
                         console.error('Lỗi khi thêm dữ liệu:', error);
                     });
-            } 
+            }
         } else {
-            alert("Đơn thực tập này đã được duyệt");
+            alert('Đơn thực tập này đã được duyệt');
             navigate(`/admin/quanlythuctap/taikhoan?taikhoan=${taikhoan}`);
         }
     }
@@ -227,16 +231,19 @@ function ThongTinDangKy() {
                 console.error('Lỗi cập nhật dữ liệu:', error);
             });
         const dataToadd2 = {
-                trangthaisinhvien: 'Bị từ chối',
-            };
+            trangthaisinhvien: 'Bị từ chối',
+        };
         axios
-                .put(`${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`, dataToadd2)
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((error) => {
-                    console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                });
+            .put(
+                `${port}/student/capnhattrangthai/${ThongTinSinhVien._id}`,
+                dataToadd2,
+            )
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
+            });
         var DateNow = new Date();
         var ThongBao = {
             thoigian: format(DateNow, 'HH:mm:ss - dd/MM/yyyy'),
@@ -273,7 +280,7 @@ function ThongTinDangKy() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -334,7 +341,9 @@ function ThongTinDangKy() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Duyệt đơn đăng ký thực tập/ {tblThucTap.tensinhvien}</span>
+                    <span id="route">
+                        /Duyệt đơn đăng ký thực tập/ {tblThucTap.tensinhvien}
+                    </span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">
@@ -393,7 +402,7 @@ function ThongTinDangKy() {
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">
                             Thông tin công ty đăng ký thực tập
@@ -426,13 +435,17 @@ function ThongTinDangKy() {
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Số điện thoại người phụ trách</span>
+                                <span className="lable">
+                                    Số điện thoại người phụ trách
+                                </span>
                                 <span className="info">
                                     {tblThucTap.sodienthoaiCB}
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Số tài khoản người phụ trách</span>
+                                <span className="lable">
+                                    Số tài khoản người phụ trách
+                                </span>
                                 <span className="info">
                                     {tblThucTap.sotaikhoan}
                                 </span>
@@ -483,25 +496,24 @@ function ThongTinDangKy() {
                             Thêm giáo viên hướng dẫn
                         </h1>
                         <ul className="thongtintaikhoan">
-                            <li className='themgiaovienhuongdan'>
+                            <li className="themgiaovienhuongdan">
                                 <select
-                                        name=""
-                                        id="thongtingiaovien"
-                                        onChange={handleGiaovienChange}
-                                    >
-                                        <option value="">--Chọn giáo viên--</option>
-                                        {Giaoviens.map((giaovien) => {
-                                            return (
-                                                <option
-                                                    value={giaovien.tengiaovien}
-                                                >
-                                                    {giaovien.tengiaovien}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
+                                    name=""
+                                    id="thongtingiaovien"
+                                    onChange={handleGiaovienChange}
+                                >
+                                    <option value="">--Chọn giáo viên--</option>
+                                    {Giaoviens.map((giaovien) => {
+                                        return (
+                                            <option
+                                                value={giaovien.tengiaovien}
+                                            >
+                                                {giaovien.tengiaovien}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                             </li>
-                            
                         </ul>
                     </div>
                     <div className="nutbam">
@@ -519,11 +531,11 @@ function ThongTinDangKy() {
                                 Từ chối
                             </button>
                         </Link>
-                            <button className="button_luu" onClick={DuyetDon}>
-                                {' '}
-                                <AiOutlineCheck className="icon_button" />
-                                Đồng ý
-                            </button>
+                        <button className="button_luu" onClick={DuyetDon}>
+                            {' '}
+                            <AiOutlineCheck className="icon_button" />
+                            Đồng ý
+                        </button>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel } from 'react-icons/md';
 
 import '../../css/student.css';
 import '../../css/base.css';
@@ -43,43 +43,49 @@ function QuanLyThucTap() {
         Navbar.classList.remove('openMenu');
     }
 
-    // xoá - mới cập nhật 
+    // xoá - mới cập nhật
     var DanhSachDotThucTapChange = [];
     const handleDTTChange = (event, dtt) => {
         const checkbox = document.querySelector(`[name="${dtt._id}"]`);
         const parentElement = checkbox.parentNode;
-        parentElement.style.border = "2px solid #090584";
+        parentElement.style.border = '2px solid #090584';
         if (event.target.checked) {
             DanhSachDotThucTapChange.push(dtt);
-        } 
+        }
         event.preventDefault();
     };
     const DeleteDTT = (event, dtt) => {
-        if(DanhSachDotThucTapChange.length === 0) {
-            alert("Bạn chưa chọn đợt thực tập muốn xoá");
+        if (DanhSachDotThucTapChange.length === 0) {
+            alert('Bạn chưa chọn đợt thực tập muốn xoá');
         } else {
-            const userConfirmed = window.confirm("Bạn muốn xoá các đợt thực tập đã chọn?");
+            const userConfirmed = window.confirm(
+                'Bạn muốn xoá các đợt thực tập đã chọn?',
+            );
             if (userConfirmed) {
                 const dataToadd2 = {
                     deleted: 'deleted',
                 };
-                DanhSachDotThucTapChange.map(dtt => {
+                DanhSachDotThucTapChange.map((dtt) => {
                     axios
-                    .put(`${port}/admin/xoadotthuctap/${dtt._id}`, dataToadd2)
-                    .then((response) => {
-                        alert("Xoá thành công");
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                    });
-                })
+                        .put(
+                            `${port}/admin/xoadotthuctap/${dtt._id}`,
+                            dataToadd2,
+                        )
+                        .then((response) => {
+                            alert('Xoá thành công');
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                'Lỗi khi thêm dữ liệu sinh vien:',
+                                error,
+                            );
+                        });
+                });
             } else {
-                alert("Đã hủy bỏ xoá đợt thực tập");
+                alert('Đã hủy bỏ xoá đợt thực tập');
             }
-
         }
-
     };
 
     return (
@@ -160,29 +166,38 @@ function QuanLyThucTap() {
                     <span id="route">/Quản lý đợt thực tập</span>
                 </div>
                 <div className="content">
-                <div className="thongtincanhan">
-                        <h1 className="lable_chitiet">Danh sách đợt thực tập</h1>
+                    <div className="thongtincanhan">
+                        <h1 className="lable_chitiet">
+                            Danh sách đợt thực tập
+                        </h1>
                         <div className="danhsachdondangky">
-                            <button className="icon_dotthuctap themdulieu" onClick={DeleteDTT}>
-                                    {' '}
-                                    <MdOutlineCancel className="icon_button" />
-                                    Xoá đợt
+                            <button
+                                className="icon_dotthuctap themdulieu"
+                                onClick={DeleteDTT}
+                            >
+                                {' '}
+                                <MdOutlineCancel className="icon_button" />
+                                Xoá đợt
                             </button>
-                        <Link to={`/admin/quanlydotthuctap/taikhoan?taikhoan=${taikhoan}`}>
+                            <Link
+                                to={`/admin/quanlydotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                            >
                                 <button className="icon_dotthuctap themdotmoi">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm đợt mới
                                 </button>
                             </Link>
-                            <Link to={`/admin/themdotthuctap/taikhoan?taikhoan=${taikhoan}`}>
+                            <Link
+                                to={`/admin/themdotthuctap/taikhoan?taikhoan=${taikhoan}`}
+                            >
                                 <button className="icon_dotthuctap themdulieu">
                                     {' '}
                                     <IoIosAddCircleOutline className="icon_button" />
                                     Thêm dữ liệu đợt
                                 </button>
                             </Link>
-                            
+
                             <table>
                                 <thead>
                                     <tr className="tieude_table">
@@ -190,9 +205,7 @@ function QuanLyThucTap() {
                                         <th id="checked"></th>
 
                                         <th id="masinhvien">Tên đợt</th>
-                                        <th id="tensinhvien">
-                                            Ngày bắt đầu
-                                        </th>
+                                        <th id="tensinhvien">Ngày bắt đầu</th>
                                         <th id="emailsinhvien">
                                             Ngày kết thúc
                                         </th>
@@ -202,54 +215,52 @@ function QuanLyThucTap() {
                                 </thead>
                                 <tbody>
                                     {DotThucTaps.map((dtt, index) => {
-                                        if(dtt.deleted != 'deleted') {
-                                        return (
-                                            <Link
-                                                to={`/admin/thaydoidotthuctap/thaydoidulieu?id=${dtt._id}&taikhoan=${taikhoan}`}
-                                            >
-                                                <tr className="info">
-                                                    <th id="stt">
-                                                        {index + 1}
-                                                    </th>
-                                                    <th id="checked" >
-                                                        <input
-                                                            id="choncongty"
-                                                            name={dtt._id}
-                                                            // checked = {selectedTTCB === ttcb}
-                                                            type="checkbox"
-                                                            onClick= {(event) =>
-                                                                {
+                                        if (dtt.deleted != 'deleted') {
+                                            return (
+                                                <Link
+                                                    to={`/admin/thaydoidotthuctap/thaydoidulieu?id=${dtt._id}&taikhoan=${taikhoan}`}
+                                                >
+                                                    <tr className="info">
+                                                        <th id="stt">
+                                                            {index + 1}
+                                                        </th>
+                                                        <th id="checked">
+                                                            <input
+                                                                id="choncongty"
+                                                                name={dtt._id}
+                                                                // checked = {selectedTTCB === ttcb}
+                                                                type="checkbox"
+                                                                onClick={(
+                                                                    event,
+                                                                ) => {
                                                                     handleDTTChange(
                                                                         event,
                                                                         dtt,
-                                                                    )
-                                                                    
-                                                                }
-                                                            }
-                                                            
-                                                        />
-                                                    </th>
-                                                    
-                                                    <th id="masinhvien">
-                                                        {dtt.tendotthuctap}
-                                                    </th>
-                                                    <th id="tensinhvien">
-                                                        {dtt.ngaybatdau}
-                                                    </th>
-                                                    <th id="emailsinhvien">
-                                                        {dtt.ngayketthuc}
-                                                    </th>
-                                                    <th id="ngaytaodon">
-                                                        {dtt.danhsachlop}
-                                                    </th>
-                                                    <th id="ngaytaodon">
-                                                        {dtt.ghichu}
-                                                    </th>
-                                                    
-                                                </tr>
-                                            </Link>
-                                        );
-                                    }})}
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </th>
+
+                                                        <th id="masinhvien">
+                                                            {dtt.tendotthuctap}
+                                                        </th>
+                                                        <th id="tensinhvien">
+                                                            {dtt.ngaybatdau}
+                                                        </th>
+                                                        <th id="emailsinhvien">
+                                                            {dtt.ngayketthuc}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                            {dtt.danhsachlop}
+                                                        </th>
+                                                        <th id="ngaytaodon">
+                                                            {dtt.ghichu}
+                                                        </th>
+                                                    </tr>
+                                                </Link>
+                                            );
+                                        }
+                                    })}
                                 </tbody>
                             </table>
                         </div>

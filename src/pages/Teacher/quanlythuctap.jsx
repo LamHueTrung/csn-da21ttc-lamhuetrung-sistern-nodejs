@@ -42,7 +42,7 @@ function QuanLyThucTap() {
                 console.error('Lỗi react:', error);
             });
     }, []);
-    
+
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -94,7 +94,7 @@ function QuanLyThucTap() {
             if (sv.masinhvien == tttt.masinhvien) {
                 ThongTinSinhVien = {
                     tensinhvien: sv.hoten,
-                    lop: sv.lop
+                    lop: sv.lop,
                 };
             }
         });
@@ -127,7 +127,7 @@ function QuanLyThucTap() {
             trangthaidon: tttt.trangthaidon,
             noidungthuctap: tttt.noidungthuctap,
             dotthuctap: tttt.loai,
-            lop: ThongTinSinhVien.lop
+            lop: ThongTinSinhVien.lop,
         });
     });
     function loading() {
@@ -146,25 +146,25 @@ function QuanLyThucTap() {
     var tukhoa = '';
     function timkiemsinhvien() {
         tukhoa = document.getElementById('tukhoa').value;
-        console.log(tukhoa == '')
-        if(tukhoa == '') {
+        console.log(tukhoa == '');
+        if (tukhoa == '') {
             document.querySelector('.danhsachall').classList.remove('close');
             document.querySelector('.danhsachtimkiem').classList.add('close');
         } else {
             danhsachtimkiem = [];
             danhsachtimkiem = tblThucTap.filter((sv) => {
-                return (sv.lop == tukhoa || sv.trangthaisinhvien == tukhoa);
-              });
+                return sv.lop == tukhoa || sv.trangthaisinhvien == tukhoa;
+            });
             setDanhsachs(danhsachtimkiem);
             document.querySelector('.danhsachall').classList.add('close');
-            document.querySelector('.danhsachtimkiem').classList.remove('close');
-
+            document
+                .querySelector('.danhsachtimkiem')
+                .classList.remove('close');
         }
     }
-    var urlDuyetDon = "/teacher/quanlythuctap/thongtindangky/duyetdonthuctap";
+    var urlDuyetDon = '/teacher/quanlythuctap/thongtindangky/duyetdonthuctap';
     return (
         <div className="container">
-
             <a onClick={openMenu} className="mobile-navbar">
                 <CiSettings className="icon" />
             </a>
@@ -224,32 +224,41 @@ function QuanLyThucTap() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/{ThongTinGiaoVien.tengiaovien} /Quản lý thực tập</span>
+                    <span id="route">
+                        /{ThongTinGiaoVien.tengiaovien} /Quản lý thực tập
+                    </span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Đơn đăng ký thực tập</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="Từ khoá" id='tukhoa'/>
-                                <button className="button_search" onClick={timkiemsinhvien}>
-                                    {' '}
-                                    <AiOutlineSearch className="icon_button" />
-                                    Tìm kiếm
-                                </button>
-                            <table className='danhsachall'>
+                            <input
+                                type="text"
+                                placeholder="Từ khoá"
+                                id="tukhoa"
+                            />
+                            <button
+                                className="button_search"
+                                onClick={timkiemsinhvien}
+                            >
+                                {' '}
+                                <AiOutlineSearch className="icon_button" />
+                                Tìm kiếm
+                            </button>
+                            <table className="danhsachall">
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
                                         <th id="tensinhvien">Đợt thực tập</th>
                                         <th id="tensinhvien">Tên sinh viên</th>
-                                        <th id="tensinhvien">
-                                            Lớp
-                                        </th>
+                                        <th id="tensinhvien">Lớp</th>
                                         <th id="emailsinhvien">
                                             Công ty đăng ký
                                         </th>
                                         <th id="ngaytaodon">Người phụ trách</th>
-                                        <th id="ngaytaodon">Nội dung thực tập</th>
+                                        <th id="ngaytaodon">
+                                            Nội dung thực tập
+                                        </th>
                                         <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
@@ -283,7 +292,7 @@ function QuanLyThucTap() {
                                                             {dtt.tencanbo}
                                                         </th>
                                                         <th id="ngaytaodon">
-                                                        {dtt.noidungthuctap}
+                                                            {dtt.noidungthuctap}
                                                         </th>
                                                         <th id="trangthai">
                                                             {dtt.trangthaidon}
@@ -294,20 +303,20 @@ function QuanLyThucTap() {
                                     })}
                                 </tbody>
                             </table>
-                            <table className='danhsachtimkiem close'>
+                            <table className="danhsachtimkiem close">
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>
                                         <th id="tensinhvien">Đợt thực tập</th>
                                         <th id="tensinhvien">Tên sinh viên</th>
-                                        <th id="tensinhvien">
-                                            Lớp
-                                        </th>
+                                        <th id="tensinhvien">Lớp</th>
                                         <th id="emailsinhvien">
                                             Công ty đăng ký
                                         </th>
                                         <th id="ngaytaodon">Người phụ trách</th>
-                                        <th id="ngaytaodon">Nội dung thực tập</th>
+                                        <th id="ngaytaodon">
+                                            Nội dung thực tập
+                                        </th>
                                         <th id="trangthai">Trạng thái</th>
                                     </tr>
                                 </thead>
@@ -341,7 +350,7 @@ function QuanLyThucTap() {
                                                             {dtt.tencanbo}
                                                         </th>
                                                         <th id="ngaytaodon">
-                                                        {dtt.noidungthuctap}
+                                                            {dtt.noidungthuctap}
                                                         </th>
                                                         <th id="trangthai">
                                                             {dtt.trangthaidon}

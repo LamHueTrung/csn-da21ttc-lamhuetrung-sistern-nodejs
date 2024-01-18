@@ -9,8 +9,8 @@ import { TbHomeEco } from 'react-icons/tb';
 import { CiSettings } from 'react-icons/ci';
 import { FiUsers } from 'react-icons/fi';
 import { format } from 'date-fns';
-import { MdOutlineCancel } from "react-icons/md";
-import { TbError404 } from "react-icons/tb";
+import { MdOutlineCancel } from 'react-icons/md';
+import { TbError404 } from 'react-icons/tb';
 
 import '../../css/student.css';
 import '../../css/base.css';
@@ -41,7 +41,7 @@ function QuanLyThucTap() {
             .then((response) => setDotThucTaps(response.data))
             .catch((error) => {
                 console.error('Lỗi react:', error);
-            }); 
+            });
     }, []);
     useEffect(() => {
         axios
@@ -52,7 +52,7 @@ function QuanLyThucTap() {
             });
     }, []);
     var ThongTinCongBo = [];
-    var TenCongTy = ''; 
+    var TenCongTy = '';
     var TenDotThucTap = '';
     function openMenu() {
         const Navbar = document.querySelector('.Navbar');
@@ -62,60 +62,63 @@ function QuanLyThucTap() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
-      ThongTinCongViec.map(ttcv=> {
-        if(ttcv.madotthuctap == _IdDonThucTap) {
-            congtys.map(ct => {
-                if(ttcv.macongty == ct.macongty) {
+    ThongTinCongViec.map((ttcv) => {
+        if (ttcv.madotthuctap == _IdDonThucTap) {
+            congtys.map((ct) => {
+                if (ttcv.macongty == ct.macongty) {
                     TenCongTy = ct.tencongty;
                 }
-            })
-            DotThucTaps.map(dtt => {
-                if(dtt._id == ttcv.madotthuctap) {
+            });
+            DotThucTaps.map((dtt) => {
+                if (dtt._id == ttcv.madotthuctap) {
                     TenDotThucTap = dtt.tendotthuctap;
                 }
-            })
+            });
             ThongTinCongBo.push({
                 _id: ttcv._id,
                 tendotthuctap: TenDotThucTap,
                 tencongty: TenCongTy,
                 congviec: ttcv.congviecthuctap,
-                ghichu: ttcv.ghichu
-            })
+                ghichu: ttcv.ghichu,
+            });
         }
-    })
-    console.log(DotThucTaps)
+    });
+    console.log(DotThucTaps);
     var DanhSachDotThucTapChange = [];
     const handleDTTChange = (event, dtt) => {
         if (event.target.checked) {
             DanhSachDotThucTapChange.push(dtt);
-        } 
+        }
     };
     const ERORR = (event, dtt) => {
-        alert("Chức năng chưa thiết lập xong ");
+        alert('Chức năng chưa thiết lập xong ');
     };
     const DeleteDTT = (event, dtt) => {
-        if(DanhSachDotThucTapChange.length === 0) {
-            alert("Bạn chưa chọn dữ liệu");
+        if (DanhSachDotThucTapChange.length === 0) {
+            alert('Bạn chưa chọn dữ liệu');
         } else {
-            const userConfirmed = window.confirm("Bạn muốn xoá các dữ liệu đã chọn?");
+            const userConfirmed = window.confirm(
+                'Bạn muốn xoá các dữ liệu đã chọn?',
+            );
             if (userConfirmed) {
-                DanhSachDotThucTapChange.map(dtt => {
+                DanhSachDotThucTapChange.map((dtt) => {
                     axios
-                    .delete(`${port}/admin/xoadulieucongbo/${dtt._id}`)
-                    .then((response) => {
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.error('Lỗi khi thêm dữ liệu sinh vien:', error);
-                    });
-                })
-                alert("Xoá thành công");
+                        .delete(`${port}/admin/xoadulieucongbo/${dtt._id}`)
+                        .then((response) => {
+                            console.log(response);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                'Lỗi khi thêm dữ liệu sinh vien:',
+                                error,
+                            );
+                        });
+                });
+                alert('Xoá thành công');
             } else {
-                alert("Đã hủy bỏ xoá đợt thực tập");
+                alert('Đã hủy bỏ xoá đợt thực tập');
             }
-
         }
-
     };
 
     return (
@@ -132,7 +135,7 @@ function QuanLyThucTap() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>
@@ -193,43 +196,54 @@ function QuanLyThucTap() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Quản lý đợt thực tập /Thay đổi dữ liệu {TenDotThucTap}</span>
+                    <span id="route">
+                        /Quản lý đợt thực tập /Thay đổi dữ liệu {TenDotThucTap}
+                    </span>
                 </div>
                 <div className="content">
-                <div className="thongtincanhan">
-
-                        <h1 className="lable_chitiet tieuDeDulieu">Dữ liệu {TenDotThucTap}</h1>
+                    <div className="thongtincanhan">
+                        <h1 className="lable_chitiet tieuDeDulieu">
+                            Dữ liệu {TenDotThucTap}
+                        </h1>
                         <div className="danhsachdondangky">
-                        <button className="icon_dotthuctap themdulieu" onClick={DeleteDTT}>
-                                    {' '}
-                                    <MdOutlineCancel className="icon_button" />
-                                    Xoá dữ liệu
-                        </button>
-                        <button className="icon_dotthuctap themdulieu" onClick={ERORR}>
-                                    {' '}
-                                    <TbError404 className="icon_button" />
-                                    Chỉnh sửa dữ liệu
-                        </button>
-                        <ul className="thongtintaikhoan mobile_dulieucongbo">
-                            <table className='dsDeDulieu'>
-                                <thead>
-                                    <tr className="tieude_table">
-                                        <th id="stt">STT</th>
-                                        <th id="checked"></th>
+                            <button
+                                className="icon_dotthuctap themdulieu"
+                                onClick={DeleteDTT}
+                            >
+                                {' '}
+                                <MdOutlineCancel className="icon_button" />
+                                Xoá dữ liệu
+                            </button>
+                            <button
+                                className="icon_dotthuctap themdulieu"
+                                onClick={ERORR}
+                            >
+                                {' '}
+                                <TbError404 className="icon_button" />
+                                Chỉnh sửa dữ liệu
+                            </button>
+                            <ul className="thongtintaikhoan mobile_dulieucongbo">
+                                <table className="dsDeDulieu">
+                                    <thead>
+                                        <tr className="tieude_table">
+                                            <th id="stt">STT</th>
+                                            <th id="checked"></th>
 
-                                        <th id="tensinhvien">Tên đợt thực tập</th>
-                                        <th id="tensinhvien">
-                                            Tên công ty
-                                        </th>
-                                        <th id="emailsinhvien">
-                                            Công việc
-                                        </th>
-                                        <th id="ngaytaodon">Ghi chú</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {ThongTinCongBo.map((dtt, index) => {
-                                        return (
+                                            <th id="tensinhvien">
+                                                Tên đợt thực tập
+                                            </th>
+                                            <th id="tensinhvien">
+                                                Tên công ty
+                                            </th>
+                                            <th id="emailsinhvien">
+                                                Công việc
+                                            </th>
+                                            <th id="ngaytaodon">Ghi chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ThongTinCongBo.map((dtt, index) => {
+                                            return (
                                                 <tr className="info">
                                                     <th id="stt">
                                                         {index + 1}
@@ -239,7 +253,7 @@ function QuanLyThucTap() {
                                                             id="choncongty"
                                                             // checked = {selectedTTCB === ttcb}
                                                             type="checkbox"
-                                                            onChange= {(event) =>
+                                                            onChange={(event) =>
                                                                 handleDTTChange(
                                                                     event,
                                                                     dtt,
@@ -260,12 +274,11 @@ function QuanLyThucTap() {
                                                         {dtt.ghichu}
                                                     </th>
                                                 </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-
-                        </ul>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -37,7 +37,7 @@ function Sinhvien() {
         Navbar.classList.remove('openMenu');
     }
     const ERORR = (event, dtt) => {
-        alert("Chức năng chưa thiết lập");
+        alert('Chức năng chưa thiết lập');
     };
     return (
         <div className="container">
@@ -53,7 +53,7 @@ function Sinhvien() {
                     </a>
                     <Link to={`/admin/tintuc/taikhoan?taikhoan=${taikhoan}`}>
                         <a>
-                            <li id="tintuc" >
+                            <li id="tintuc">
                                 <HiOutlineNewspaper className="icon" />
                                 Tin tức
                             </li>

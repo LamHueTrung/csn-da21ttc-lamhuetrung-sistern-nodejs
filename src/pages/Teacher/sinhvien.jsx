@@ -20,11 +20,11 @@ function Sinhvien() {
     const [sinhViens, setSinhViens] = useState([]);
     const [danhsachs, setDanhsachs] = useState([]);
     const [thuctaps, setthuctap] = useState([]);
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState('');
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const taikhoan = urlParams.get('taikhoan');
-    
+
     useEffect(() => {
         axios
             .get(`${port}/student/danhsachsinhvien`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -64,7 +64,7 @@ function Sinhvien() {
     var tukhoa = '';
     function timkiemsinhvien() {
         tukhoa = document.getElementById('tukhoa').value;
-        if(tukhoa == '') {
+        if (tukhoa == '') {
             setDanhsachs(sinhViens);
         } else {
             danhsachtimkiem = [];
@@ -76,7 +76,7 @@ function Sinhvien() {
                         masinhvien: sv.masinhvien,
                         lop: sv.lop,
                         sodienthoai: sv.sodienthoai,
-                        trangthaisinhvien: sv.trangthaisinhvien
+                        trangthaisinhvien: sv.trangthaisinhvien,
                     });
                 }
             });
@@ -92,7 +92,7 @@ function Sinhvien() {
                 macanbo: tttt.macanbohuongdan,
                 masinhvien: tttt.masinhvien,
                 ngaybatdau: tttt.ngaybatdau,
-                loai: tttt.loai
+                loai: tttt.loai,
             };
         }
     });
@@ -171,13 +171,20 @@ function Sinhvien() {
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">Thông tin sinh viên</h1>
                         <div className="danhsachdondangky">
-                            <input type="text" placeholder="Từ khoá" id='tukhoa'/>
-                                <button className="button_search" onClick={timkiemsinhvien}>
-                                    {' '}
-                                    <AiOutlineSearch className="icon_button" />
-                                    Tìm kiếm
-                                </button>
-                            <table className='danhsachall'>
+                            <input
+                                type="text"
+                                placeholder="Từ khoá"
+                                id="tukhoa"
+                            />
+                            <button
+                                className="button_search"
+                                onClick={timkiemsinhvien}
+                            >
+                                {' '}
+                                <AiOutlineSearch className="icon_button" />
+                                Tìm kiếm
+                            </button>
+                            <table className="danhsachall">
                                 <thead>
                                     <tr className="tieude_table">
                                         <th id="stt">STT</th>

@@ -35,7 +35,6 @@ function ThongTinDangKyGV() {
     var ThongTinCongTy = {};
     var tblThucTap = {};
 
-
     useEffect(() => {
         axios
             .get(`${port}/company/danhsachcongty`) // Điều chỉnh URL tương ứng với tuyến đường API
@@ -138,7 +137,7 @@ function ThongTinDangKyGV() {
                 sotuan: tttt.sotuan,
                 noidung: tttt.noidungthuctap,
                 mathuctap: tttt.mathuctap,
-                _id: tttt._id
+                _id: tttt._id,
             };
         }
     });
@@ -150,9 +149,11 @@ function ThongTinDangKyGV() {
         const Navbar = document.querySelector('.Navbar');
         Navbar.classList.remove('openMenu');
     }
-    if(tblThucTap.trangthaidon == "Đã duyệt") {
-        navigate(`/teacher/quanlythuctap/xembaocao/xembaocao?mathuctap=${tblThucTap.mathuctap}&id=${tblThucTap._id}&taikhoan=${taikhoan}`);
-    } 
+    if (tblThucTap.trangthaidon == 'Đã duyệt') {
+        navigate(
+            `/teacher/quanlythuctap/xembaocao/xembaocao?mathuctap=${tblThucTap.mathuctap}&id=${tblThucTap._id}&taikhoan=${taikhoan}`,
+        );
+    }
     return (
         <div className="container">
             <a onClick={openMenu} className="mobile-navbar">
@@ -214,7 +215,9 @@ function ThongTinDangKyGV() {
             <div className="data">
                 <div className="header">
                     <AiOutlineHome className="icon" />
-                    <span id="route">/Đơn đăng ký thực tập /{tblThucTap.tensinhvien}</span>
+                    <span id="route">
+                        /Đơn đăng ký thực tập /{tblThucTap.tensinhvien}
+                    </span>
                 </div>
                 <div className="content">
                     <div className="thongtincanhan">
@@ -273,7 +276,7 @@ function ThongTinDangKyGV() {
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div className="thongtincanhan">
                         <h1 className="lable_chitiet">
                             Thông tin công ty đăng ký thực tập
@@ -306,13 +309,17 @@ function ThongTinDangKyGV() {
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Số điện thoại người phụ trách</span>
+                                <span className="lable">
+                                    Số điện thoại người phụ trách
+                                </span>
                                 <span className="info">
                                     {tblThucTap.sodienthoaiCB}
                                 </span>
                             </li>
                             <li>
-                                <span className="lable">Số tài khoản người phụ trách</span>
+                                <span className="lable">
+                                    Số tài khoản người phụ trách
+                                </span>
                                 <span className="info">
                                     {tblThucTap.sotaikhoan}
                                 </span>

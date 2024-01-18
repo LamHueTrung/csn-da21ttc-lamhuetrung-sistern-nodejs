@@ -422,9 +422,9 @@
     .nopbai {
         height: 90px !important;
     }
-    .nopbai input, .baocaotongket .nopbai input {
+    .nopbai input,
+    .baocaotongket .nopbai input {
         margin-left: 0 !important;
-
     }
     .button_chinhsua {
         margin: auto;

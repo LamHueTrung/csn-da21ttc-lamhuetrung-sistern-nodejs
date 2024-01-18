@@ -30,7 +30,6 @@ import QuanLyDotThucTap from './pages/Admin/quanlydotthuctap';
 import ThemDotThucTap from './pages/Admin/themdulieuthuctap';
 import SuaDotThucTap from './pages/Admin/thaydoidulieuthuctap';
 
-
 const router = createBrowserRouter([
     {
         path: '/admin/quanlythuctap/:slug',
